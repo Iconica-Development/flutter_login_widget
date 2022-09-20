@@ -3,7 +3,7 @@ import 'package:flutter_login/flutter_login_view.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../extensions/widget.dart';
-import '../../model/user.dart';
+import '../../model/login_user.dart';
 import '../form/inputs/validators/phone_number_validator.dart';
 import 'login_phone_number_verify.dart';
 
@@ -141,7 +141,7 @@ class LoginPhoneNumberState extends State<LoginPhoneNumber>
                                         onLogin: _onLoggedIn,
                                       ),
                                     ),
-                                    onAutoLogin: _onLoggedIn,
+                                    onAutoLogin: (_) => _onLoggedIn,
                                     onVerificationFailed: (String errorCode) {
                                       if (errorCode == 'invalid-phone-number') {
                                         setState(() {
@@ -173,7 +173,7 @@ class LoginPhoneNumberState extends State<LoginPhoneNumber>
     );
   }
 
-  Future<void> _onLoggedIn(User? user) async {
+  Future<void> _onLoggedIn(LoginUser? user) async {
     var prefs = await SharedPreferences.getInstance();
     await prefs.setBool('autoLogin', true);
     if (user != null) {

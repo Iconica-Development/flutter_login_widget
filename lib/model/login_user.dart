@@ -1,5 +1,5 @@
-class User {
-  User({
+class LoginUser {
+  LoginUser({
     this.displayName = '',
     this.email = '',
   });

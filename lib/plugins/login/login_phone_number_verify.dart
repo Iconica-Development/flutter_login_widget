@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login_view.dart';
 import 'package:pinput/pinput.dart';
 import '../../extensions/widget.dart';
-import '../../model/confirmation_result.dart';
-import '../../model/user.dart';
+import '../../model/login_confirmation_result.dart';
+import '../../model/login_user.dart';
 
 class LoginPhoneNumberVerify extends StatefulWidget {
   const LoginPhoneNumberVerify({
@@ -16,8 +16,8 @@ class LoginPhoneNumberVerify extends StatefulWidget {
 
   final String verificationId;
   final String phoneNumber;
-  final Function(User? user) onLogin;
-  final ConfirmationResult? resultWeb;
+  final Function(LoginUser? user) onLogin;
+  final LoginConfirmationResult? resultWeb;
 
   @override
   LoginPhoneNumberVerifyState createState() => LoginPhoneNumberVerifyState(
@@ -32,7 +32,7 @@ class LoginPhoneNumberVerifyState extends State<LoginPhoneNumberVerify>
   String? code;
   bool errorMsg = false;
   String verificationId;
-  ConfirmationResult? resultWeb;
+  LoginConfirmationResult? resultWeb;
   TextEditingController pinPutController = TextEditingController();
 
   @override

@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import '../login_config.dart';
-import '../model/confirmation_result.dart';
-import '../model/user.dart';
+import '../model/login_confirmation_result.dart';
+import '../model/login_user.dart';
 
 abstract class LoginRepository with ChangeNotifier {
   String? _loggedIn = '';
@@ -37,7 +37,7 @@ abstract class LoginRepository with ChangeNotifier {
     _initialized = true;
   }
 
-  Future<User?> signInWithSocial(SocialLoginBundle bundle);
+  Future<LoginUser?> signInWithSocial(SocialLoginBundle bundle);
   Future<bool?> userprofileExists();
   Future sendLoginEmail(String input);
   Future<void> trySignInWithPhoneNumber({
@@ -45,20 +45,20 @@ abstract class LoginRepository with ChangeNotifier {
     void Function(
       String verificationId,
       int? resendToken,
-      ConfirmationResult? resultWeb,
+      LoginConfirmationResult? resultWeb,
     )?
         onCodeSent,
     void Function(String errorCode)? onVerificationFailed,
-    void Function(User? user)? onAutoLogin,
+    void Function(LoginUser? user)? onAutoLogin,
   });
-  Future<User?> signInWithSMSCode(
+  Future<LoginUser?> signInWithSMSCode(
     String verificationId,
     String smsCode,
     String phoneNumber, {
-    ConfirmationResult? resultWeb,
+    LoginConfirmationResult? resultWeb,
   });
   Future<bool> forgotPassword(String email);
-  Future<bool> isRegistrationRequired(User user);
+  Future<bool> isRegistrationRequired(LoginUser user);
   Future<void> reLogin();
-  Future<User?> signInAnonymous();
+  Future<LoginUser?> signInAnonymous();
 }
