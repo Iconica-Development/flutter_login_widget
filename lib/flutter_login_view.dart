@@ -13,6 +13,8 @@ export '../plugins/login/forgot_password_form.dart';
 export '../plugins/login/login_email_password.dart';
 export 'buttons.dart';
 export 'login_config.dart';
+export 'model/login_confirmation_result.dart';
+export 'model/login_user.dart';
 export 'plugins/settings/control.dart' show Control;
 
 class FlutterLogin extends InheritedWidget with FlutterLoginSdk {
