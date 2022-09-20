@@ -5,14 +5,18 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MaterialApp(home: FlutterEmailPasswordLoginDemo()));
+  runApp(
+    const MaterialApp(
+      home: FlutterLoginDemo(),
+    ),
+  );
 }
 
-class FlutterEmailPasswordLoginDemo extends StatelessWidget {
-  const FlutterEmailPasswordLoginDemo({Key? key}) : super(key: key);
+class FlutterLoginDemo extends StatelessWidget {
+  const FlutterLoginDemo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Text('FlutterEmailPasswordLoginDemo'));
+    return const Scaffold(body: Text('FlutterLoginDemo'));
   }
 }
