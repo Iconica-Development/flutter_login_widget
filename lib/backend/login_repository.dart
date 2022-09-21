@@ -9,7 +9,6 @@ abstract class LoginRepository {
   String getLoginError() => loginError;
   Future<bool> login(String username, String password);
   Future<LoginUser?> signInWithSocial(SocialLoginBundle bundle);
-  Future<bool?> userprofileExists();
   Future sendLoginEmail(String input);
   Future<void> trySignInWithPhoneNumber({
     required String phoneNumber,
