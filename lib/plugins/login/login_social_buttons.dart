@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_login/backend/login_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../flutter_login_view.dart';
 
@@ -15,7 +16,7 @@ class LoginSocialButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var config = FlutterLogin.of(context).config;
-    var repository = context.loginRepository();
+    var repository = context.loginRepository() as LoginRepositoryWithSocial;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,

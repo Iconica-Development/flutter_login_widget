@@ -8,8 +8,18 @@ abstract class LoginRepository {
   String loginError = '';
   String getLoginError() => loginError;
   Future<bool> login(String username, String password);
-  Future<LoginUser?> signInWithSocial(SocialLoginBundle bundle);
   Future sendLoginEmail(String input);
+
+  Future<bool> forgotPassword(String email);
+  Future<bool> isRegistrationRequired(LoginUser user);
+  Future<void> reLogin({required VoidCallback onLoggedIn});
+}
+
+abstract class LoginRespositoryWithAnonymous extends LoginRepository {
+  Future<LoginUser?> signInAnonymous();
+}
+
+abstract class LoginRespositoryWithPhoneNumber extends LoginRepository {
   Future<void> trySignInWithPhoneNumber({
     required String phoneNumber,
     void Function(
@@ -27,8 +37,8 @@ abstract class LoginRepository {
     String phoneNumber, {
     LoginConfirmationResult? resultWeb,
   });
-  Future<bool> forgotPassword(String email);
-  Future<bool> isRegistrationRequired(LoginUser user);
-  Future<void> reLogin({required VoidCallback onLoggedIn});
-  Future<LoginUser?> signInAnonymous();
+}
+
+abstract class LoginRepositoryWithSocial extends LoginRepository {
+  Future<LoginUser?> signInWithSocial(SocialLoginBundle bundle);
 }

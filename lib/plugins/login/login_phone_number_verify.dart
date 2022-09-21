@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login_view.dart';
 import 'package:pinput/pinput.dart';
+import '../../backend/login_repository.dart';
 import '../../extensions/widget.dart';
 
 class LoginPhoneNumberVerify extends StatefulWidget {
@@ -35,6 +36,10 @@ class LoginPhoneNumberVerifyState extends State<LoginPhoneNumberVerify>
 
   @override
   Widget build(BuildContext context) {
+    var config = FlutterLogin.of(context).config;
+    var repository =
+        context.loginRepository() as LoginRespositoryWithPhoneNumber;
+
     return Material(
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
@@ -48,9 +53,9 @@ class LoginPhoneNumberVerifyState extends State<LoginPhoneNumberVerify>
                     top: 10,
                     left: 5,
                   ),
-                  child: context.login().config.appTheme.buttons.backButton(
-                        context: context,
-                      ),
+                  child: config.appTheme.buttons.backButton(
+                    context: context,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 40),
@@ -81,13 +86,12 @@ class LoginPhoneNumberVerifyState extends State<LoginPhoneNumberVerify>
                         errorMsg = false;
                       }),
                       onCompleted: (String code) async {
-                        var user =
-                            await context.loginRepository().signInWithSMSCode(
-                                  widget.verificationId,
-                                  code,
-                                  widget.phoneNumber,
-                                  resultWeb: widget.resultWeb,
-                                );
+                        var user = await repository.signInWithSMSCode(
+                          widget.verificationId,
+                          code,
+                          widget.phoneNumber,
+                          resultWeb: widget.resultWeb,
+                        );
                         if (user != null) {
                           widget.onLogin.call(user);
                         } else {
@@ -129,43 +133,39 @@ class LoginPhoneNumberVerifyState extends State<LoginPhoneNumberVerify>
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
-                      context.login().config.appTheme.buttons.tertiaryButton(
-                            context: context,
-                            child: Text(
-                              context.translate(
-                                'login_phone_number_verify.button.send_again',
-                              ),
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
-                            onPressed: () {
-                              context
-                                  .loginRepository()
-                                  .trySignInWithPhoneNumber(
-                                    phoneNumber: widget.phoneNumber,
-                                    onCodeSent: (
-                                      verificationId,
-                                      resendToken,
-                                      resultWeb,
-                                    ) {
-                                      this.verificationId = verificationId;
-                                      this.resultWeb = resultWeb;
-                                      pinPutController.clear();
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            context.translate(
-                                              'login_phone_verify.text.send_again',
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    onAutoLogin: (user) =>
-                                        widget.onLogin.call(user),
-                                  );
-                            },
+                      config.appTheme.buttons.tertiaryButton(
+                        context: context,
+                        child: Text(
+                          context.translate(
+                            'login_phone_number_verify.button.send_again',
                           ),
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                        onPressed: () {
+                          repository.trySignInWithPhoneNumber(
+                            phoneNumber: widget.phoneNumber,
+                            onCodeSent: (
+                              verificationId,
+                              resendToken,
+                              resultWeb,
+                            ) {
+                              this.verificationId = verificationId;
+                              this.resultWeb = resultWeb;
+                              pinPutController.clear();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    context.translate(
+                                      'login_phone_verify.text.send_again',
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                            onAutoLogin: (user) => widget.onLogin.call(user),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ],

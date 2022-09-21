@@ -1,8 +1,6 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login_view.dart';
 import '../../extensions/widget.dart';
-
 import 'resend.dart';
 
 class LoginAwaitEmailScreen extends StatefulWidget {

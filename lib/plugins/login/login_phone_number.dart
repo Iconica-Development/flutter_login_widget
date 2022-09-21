@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_login/backend/login_repository.dart';
 import 'package:flutter_login/flutter_login_view.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,6 +31,10 @@ class LoginPhoneNumberState extends State<LoginPhoneNumber>
 
   @override
   Widget build(BuildContext context) {
+    var config = FlutterLogin.of(context).config;
+    var repository =
+        context.loginRepository() as LoginRespositoryWithPhoneNumber;
+
     return Material(
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
@@ -99,68 +104,61 @@ class LoginPhoneNumberState extends State<LoginPhoneNumber>
                   ],
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
-                    child: context
-                        .login()
-                        .config
-                        .appTheme
-                        .buttons
-                        .primaryButton(
-                          context: context,
-                          isLoading: _loading,
-                          isDisabled: _loading,
-                          child: Text(
-                            context.translate(
-                              'login_phone_number.button.submit',
-                            ),
-                            style: Theme.of(context).textTheme.button,
-                            textAlign: TextAlign.center,
-                          ),
-                          onPressed: () {
-                            if (phoneNumber != null) {
-                              setState(() {
-                                errorMsg = null;
-                                _loading = true;
-                              });
-                              context
-                                  .loginRepository()
-                                  .trySignInWithPhoneNumber(
-                                    phoneNumber: phoneNumber!,
-                                    onCodeSent: (
-                                      verificationId,
-                                      resendToken,
-                                      resultWeb,
-                                    ) =>
-                                        navigateFadeTo(
-                                      context,
-                                      (ctx) => LoginPhoneNumberVerify(
-                                        resultWeb: resultWeb,
-                                        verificationId: verificationId,
-                                        phoneNumber: phoneNumber!,
-                                        onLogin: _onLoggedIn,
-                                      ),
-                                    ),
-                                    onAutoLogin: (_) => _onLoggedIn,
-                                    onVerificationFailed: (String errorCode) {
-                                      if (errorCode == 'invalid-phone-number') {
-                                        setState(() {
-                                          errorMsg = context.translate(
-                                            'login_phone_number.text.error.invalid_phone_number',
-                                          );
-                                          _loading = false;
-                                        });
-                                      } else {
-                                        setState(() {
-                                          errorMsg = context.translate(
-                                            'login_phone_number.text.error.verification_failed',
-                                          );
-                                          _loading = false;
-                                        });
-                                      }
-                                    },
-                                  );
-                            }
-                          },
+                    child: config.appTheme.buttons.primaryButton(
+                      context: context,
+                      isLoading: _loading,
+                      isDisabled: _loading,
+                      child: Text(
+                        context.translate(
+                          'login_phone_number.button.submit',
                         ),
+                        style: Theme.of(context).textTheme.button,
+                        textAlign: TextAlign.center,
+                      ),
+                      onPressed: () {
+                        if (phoneNumber != null) {
+                          setState(() {
+                            errorMsg = null;
+                            _loading = true;
+                          });
+                          repository.trySignInWithPhoneNumber(
+                            phoneNumber: phoneNumber!,
+                            onCodeSent: (
+                              verificationId,
+                              resendToken,
+                              resultWeb,
+                            ) =>
+                                navigateFadeTo(
+                              context,
+                              (ctx) => LoginPhoneNumberVerify(
+                                resultWeb: resultWeb,
+                                verificationId: verificationId,
+                                phoneNumber: phoneNumber!,
+                                onLogin: _onLoggedIn,
+                              ),
+                            ),
+                            onAutoLogin: (_) => _onLoggedIn,
+                            onVerificationFailed: (String errorCode) {
+                              if (errorCode == 'invalid-phone-number') {
+                                setState(() {
+                                  errorMsg = context.translate(
+                                    'login_phone_number.text.error.invalid_phone_number',
+                                  );
+                                  _loading = false;
+                                });
+                              } else {
+                                setState(() {
+                                  errorMsg = context.translate(
+                                    'login_phone_number.text.error.verification_failed',
+                                  );
+                                  _loading = false;
+                                });
+                              }
+                            },
+                          );
+                        }
+                      },
+                    ),
                   )
                 ],
               ),
