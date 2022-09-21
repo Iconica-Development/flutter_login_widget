@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/backend/login_repository.dart';
-import './extensions/widget.dart';
 import '../default_translation.dart';
 import '../plugins/login/login_email_password.dart';
 import 'flutter_login_sdk.dart';
@@ -101,7 +100,7 @@ extension AppShellTranslate on BuildContext {
   }
 }
 
-class LoginMain extends StatelessWidget with NavigateWidgetMixin {
+class LoginMain extends StatelessWidget {
   LoginMain({
     required this.child,
     super.key,

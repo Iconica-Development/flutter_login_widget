@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import '../extensions/widget.dart';
 import '../flutter_login_view.dart';
-import '../plugins/login/choose_login.dart';
 
-class ScreenService with NavigateWidgetMixin {
+class ScreenService {
   late bool shouldShowIntroductionScreen;
   late bool shouldShowPolicyPage;
 
@@ -39,26 +37,4 @@ class ScreenService with NavigateWidgetMixin {
       return child;
     }
   }
-
-  void openLoginScreen(BuildContext context) => navigateFadeTo(
-        context,
-        (ctx) => (FlutterLogin.of(context)
-                    .config
-                    .loginOptions
-                    .loginMethod
-                    .contains(LoginMethod.LoginInteractiveWithSocial) ||
-                FlutterLogin.of(context)
-                    .config
-                    .loginOptions
-                    .loginMethod
-                    .contains(LoginMethod.LoginInteractiveWithPhoneNumber))
-            ? ChooseLogin(
-                allowExit: true,
-                child: context.login().app,
-              )
-            : EmailPasswordLogin(
-                allowExit: true,
-                child: context.login().app,
-              ),
-      );
 }

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login_view.dart';
 import 'package:pinput/pinput.dart';
 import '../../extensions/widget.dart';
-import '../../model/login_confirmation_result.dart';
-import '../../model/login_user.dart';
 
 class LoginPhoneNumberVerify extends StatefulWidget {
   const LoginPhoneNumberVerify({

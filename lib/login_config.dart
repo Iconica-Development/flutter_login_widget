@@ -336,8 +336,7 @@ class LoginConfig extends StatefulWidget {
   State<LoginConfig> createState() => LoginConfigState();
 }
 
-class LoginConfigState extends State<LoginConfig>
-    with WidgetsBindingObserver, NavigateWidgetMixin {
+class LoginConfigState extends State<LoginConfig> with WidgetsBindingObserver {
   FlutterLogin? appShell;
   late final ConfigData configData;
   late LoginRepository repository;
