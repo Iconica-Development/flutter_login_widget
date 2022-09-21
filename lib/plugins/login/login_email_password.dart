@@ -217,12 +217,13 @@ class EmailLoginState extends LoginState<EmailPasswordLogin> {
                             style: Theme.of(context).textTheme.bodyText2,
                           ),
                           onPressed: widget.onPressedForgotPassword ??
-                              () {
-                                navigateFadeTo(
-                                  context,
-                                  (ctx) => ForgotPassword(),
-                                );
-                              },
+                              () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ForgotPassword(),
+                                    ),
+                                  ),
                         ),
                   ),
                   if (context.login().config.loginOptions.autoLoginMode !=

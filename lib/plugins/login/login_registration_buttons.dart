@@ -117,9 +117,10 @@ class LoginRegistrationButtons extends StatelessWidget
                 navigateFadeTo(
                   context,
                   (ctx) => LoginPhoneNumber(
-                      title: phoneText,
-                      navRegistration: navRegistration,
-                      navAfterLogin: navAfterLogin),
+                    title: phoneText,
+                    navRegistration: navRegistration,
+                    navAfterLogin: navAfterLogin,
+                  ),
                 );
               },
             ),

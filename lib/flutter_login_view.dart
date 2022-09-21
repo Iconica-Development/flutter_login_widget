@@ -9,7 +9,6 @@ import 'plugins/login/choose_login.dart';
 import 'widgets/custom_navigator.dart';
 export '../plugins/form/form.dart';
 export '../plugins/login/email_password_form.dart';
-export '../plugins/login/forgot_password_form.dart';
 export '../plugins/login/login_email_password.dart';
 export 'buttons.dart';
 export 'login_config.dart';
