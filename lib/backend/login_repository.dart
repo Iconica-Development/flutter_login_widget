@@ -5,9 +5,7 @@ import '../model/login_confirmation_result.dart';
 import '../model/login_user.dart';
 
 abstract class LoginRepository {
-  bool loggedIn = false;
   String loginError = '';
-
   String getLoginError() => loginError;
   Future<bool> login(String username, String password);
   Future<LoginUser?> signInWithSocial(SocialLoginBundle bundle);
