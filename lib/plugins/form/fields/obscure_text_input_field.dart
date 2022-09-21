@@ -28,7 +28,7 @@ class ObscureTextInputFieldState extends State<ObscureTextInputField> {
 
   @override
   Widget build(BuildContext context) {
-    return context.appShell().config.appTheme.inputs.textField(
+    return context.login().config.appTheme.inputs.textField(
           onSubmitted: widget.onSubmitted,
           value: widget.value ?? '',
           decoration: InputDecoration(
@@ -38,8 +38,8 @@ class ObscureTextInputFieldState extends State<ObscureTextInputField> {
               }),
               icon: Icon(
                 showText
-                    ? context.appShell().config.appTheme.icons.passwordHidden
-                    : context.appShell().config.appTheme.icons.passwordVisible,
+                    ? context.login().config.appTheme.icons.passwordHidden
+                    : context.login().config.appTheme.icons.passwordVisible,
                 color: Theme.of(context)
                     .inputDecorationTheme
                     .border

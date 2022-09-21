@@ -157,7 +157,7 @@ class AppShellDefaultButtons implements AppButtons {
       IconButton(
         onPressed: onPressed ?? () => Navigator.pop(context),
         icon: Icon(
-          context.appShell().config.appTheme.icons.backButton,
+          context.login().config.appTheme.icons.backButton,
           size: 24,
         ),
       );

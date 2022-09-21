@@ -27,10 +27,10 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm>
   Widget build(BuildContext context) {
     return Material(
       child: Scaffold(
-        body: context.appShell().screens.getAppshellScreenWrapper(
+        body: context.login().screens.getAppshellScreenWrapper(
               context,
               backgroundImg:
-                  context.appShell().config.loginOptions.backgroundImage,
+                  context.login().config.loginOptions.backgroundImage,
               child: Column(
                 children: [
                   Expanded(
@@ -40,7 +40,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm>
                           alignment: Alignment.topLeft,
                           padding: const EdgeInsets.only(top: 27, left: 5),
                           child: context
-                              .appShell()
+                              .login()
                               .config
                               .appTheme
                               .buttons
@@ -76,12 +76,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm>
                               const Padding(
                                 padding: EdgeInsets.only(bottom: 20),
                               ),
-                              context
-                                  .appShell()
-                                  .config
-                                  .appTheme
-                                  .inputs
-                                  .textField(
+                              context.login().config.appTheme.inputs.textField(
                                     title: context.translate(
                                       'forgot_password.input.email',
                                     ),
@@ -127,7 +122,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm>
                     margin: const EdgeInsets.symmetric(horizontal: 30),
                     padding: const EdgeInsets.only(bottom: 40.0),
                     child: context
-                        .appShell()
+                        .login()
                         .config
                         .appTheme
                         .buttons
@@ -144,11 +139,11 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm>
                               });
 
                               var result = await context
-                                  .appShellBackend()
+                                  .loginRepository()
                                   .forgotPassword(email!);
 
                               if (result) {
-                                await context.appShell().dialogs.showDialog(
+                                await context.login().dialogs.showDialog(
                                       context: context,
                                       builder: (ctx) =>
                                           AppShellAlertDialog.singleButtonIcon(
@@ -160,7 +155,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm>
                                         ),
                                         icon: Icon(
                                           context
-                                              .appShell()
+                                              .login()
                                               .config
                                               .appTheme
                                               .icons

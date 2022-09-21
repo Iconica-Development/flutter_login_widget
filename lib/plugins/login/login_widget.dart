@@ -36,10 +36,10 @@ abstract class LoginState<L extends Login> extends State<L>
   @override
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
-        body: context.appShell().screens.getAppshellScreenWrapper(
+        body: context.login().screens.getAppshellScreenWrapper(
               context,
               backgroundImg:
-                  context.appShell().config.loginOptions.backgroundImage,
+                  context.login().config.loginOptions.backgroundImage,
               child: SizedBox(
                 height: MediaQuery.of(context).size.height,
                 child: Stack(

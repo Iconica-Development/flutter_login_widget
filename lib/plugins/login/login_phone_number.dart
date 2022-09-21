@@ -3,7 +3,6 @@ import 'package:flutter_login/flutter_login_view.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../extensions/widget.dart';
-import '../../model/login_user.dart';
 import '../form/inputs/validators/phone_number_validator.dart';
 import 'login_phone_number_verify.dart';
 
@@ -42,10 +41,9 @@ class LoginPhoneNumberState extends State<LoginPhoneNumber>
                   Container(
                     alignment: Alignment.topLeft,
                     padding: const EdgeInsets.only(top: 10, left: 5),
-                    child:
-                        context.appShell().config.appTheme.buttons.backButton(
-                              context: context,
-                            ),
+                    child: context.login().config.appTheme.buttons.backButton(
+                          context: context,
+                        ),
                   ),
                 ],
                 Padding(
@@ -102,7 +100,7 @@ class LoginPhoneNumberState extends State<LoginPhoneNumber>
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: context
-                        .appShell()
+                        .login()
                         .config
                         .appTheme
                         .buttons
@@ -124,7 +122,7 @@ class LoginPhoneNumberState extends State<LoginPhoneNumber>
                                 _loading = true;
                               });
                               context
-                                  .appShellBackend()
+                                  .loginRepository()
                                   .trySignInWithPhoneNumber(
                                     phoneNumber: phoneNumber!,
                                     onCodeSent: (
@@ -177,7 +175,7 @@ class LoginPhoneNumberState extends State<LoginPhoneNumber>
     var prefs = await SharedPreferences.getInstance();
     await prefs.setBool('autoLogin', true);
     if (user != null) {
-      if (await context.appShellBackend().isRegistrationRequired(user)) {
+      if (await context.loginRepository().isRegistrationRequired(user)) {
         widget.navRegistration.call();
       } else {
         widget.navAfterLogin.call();

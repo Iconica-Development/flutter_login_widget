@@ -278,11 +278,8 @@ class AppShellAlertDialog extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: buttons.map(
                                 (e) {
-                                  var buttons = context
-                                      .appShell()
-                                      .config
-                                      .appTheme
-                                      .buttons;
+                                  var buttons =
+                                      context.login().config.appTheme.buttons;
                                   var child = Text(
                                     context.translate(e.text),
                                   );
@@ -319,7 +316,7 @@ class AppShellAlertDialog extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.topRight,
                         child: context
-                            .appShell()
+                            .login()
                             .config
                             .appTheme
                             .buttons
@@ -329,7 +326,7 @@ class AppShellAlertDialog extends StatelessWidget {
                                   Theme.of(context).textTheme.bodyText2!.color,
                               icon: Icon(
                                 context
-                                    .appShell()
+                                    .login()
                                     .config
                                     .appTheme
                                     .icons

@@ -76,7 +76,7 @@ class DialogPickerInputState<V> extends InputState<V> {
       showCursor: false,
       readOnly: true,
       decoration: InputDecoration(
-        suffixIcon: context.appShell().config.appTheme.buttons.iconButton(
+        suffixIcon: context.login().config.appTheme.buttons.iconButton(
               context: context,
               onPressed: () async {
                 var result = await onPick.call(context, value);
@@ -87,7 +87,7 @@ class DialogPickerInputState<V> extends InputState<V> {
                 });
               },
               icon: Icon(
-                context.appShell().config.appTheme.icons.dateTimePicker,
+                context.login().config.appTheme.icons.dateTimePicker,
                 size: 30,
                 color: Theme.of(context).colorScheme.secondary,
               ),

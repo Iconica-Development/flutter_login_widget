@@ -72,7 +72,7 @@ class RadioState<V> extends InputState<V> {
       ),
       child: Builder(
         builder: (context) {
-          return context.appShell().config.appTheme.buttons.secondaryButton(
+          return context.login().config.appTheme.buttons.secondaryButton(
                 context: context,
                 child: Text(
                   label,

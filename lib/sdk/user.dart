@@ -52,14 +52,14 @@ class UserService extends ChangeNotifier {
   }
 
   bool isLoggedIn(BuildContext context) =>
-      context.appShellBackend().isLoggedIn();
+      context.loginRepository().isLoggedIn();
 
   Future<void> logout(BuildContext context) =>
       SharedPreferences.getInstance().then(
         (value) {
           value
               .setBool('autoLogin', false)
-              .then((value) => context.appShellBackend().logout());
+              .then((value) => context.loginRepository().logout());
         },
       );
 }

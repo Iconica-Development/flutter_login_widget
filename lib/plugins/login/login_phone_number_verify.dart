@@ -50,7 +50,7 @@ class LoginPhoneNumberVerifyState extends State<LoginPhoneNumberVerify>
                     top: 10,
                     left: 5,
                   ),
-                  child: context.appShell().config.appTheme.buttons.backButton(
+                  child: context.login().config.appTheme.buttons.backButton(
                         context: context,
                       ),
                 ),
@@ -84,7 +84,7 @@ class LoginPhoneNumberVerifyState extends State<LoginPhoneNumberVerify>
                       }),
                       onCompleted: (String code) async {
                         var user =
-                            await context.appShellBackend().signInWithSMSCode(
+                            await context.loginRepository().signInWithSMSCode(
                                   widget.verificationId,
                                   code,
                                   widget.phoneNumber,
@@ -131,7 +131,7 @@ class LoginPhoneNumberVerifyState extends State<LoginPhoneNumberVerify>
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
-                      context.appShell().config.appTheme.buttons.tertiaryButton(
+                      context.login().config.appTheme.buttons.tertiaryButton(
                             context: context,
                             child: Text(
                               context.translate(
@@ -141,7 +141,7 @@ class LoginPhoneNumberVerifyState extends State<LoginPhoneNumberVerify>
                             ),
                             onPressed: () {
                               context
-                                  .appShellBackend()
+                                  .loginRepository()
                                   .trySignInWithPhoneNumber(
                                     phoneNumber: widget.phoneNumber,
                                     onCodeSent: (

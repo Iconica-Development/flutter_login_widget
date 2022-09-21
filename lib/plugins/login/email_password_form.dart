@@ -38,8 +38,8 @@ class _EmailPasswordFormState extends State<EmailPasswordForm> {
 
   @override
   Widget build(BuildContext context) {
-    var shellInputs = context.appShell().config.appTheme.inputs;
-    var buttons = context.appShell().config.appTheme.buttons;
+    var shellInputs = context.login().config.appTheme.inputs;
+    var buttons = context.login().config.appTheme.buttons;
     var textTheme = Theme.of(context).textTheme;
     return Column(
       children: [

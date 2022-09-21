@@ -90,7 +90,7 @@ class LoginRegistrationButtons extends StatelessWidget
   List<Widget> _loginButtons(BuildContext context) {
     var loginButtons = <Widget>[];
     if (context
-        .appShell()
+        .login()
         .config
         .loginOptions
         .loginMethod
@@ -103,7 +103,7 @@ class LoginRegistrationButtons extends StatelessWidget
       );
     }
     if (context
-        .appShell()
+        .login()
         .config
         .loginOptions
         .loginMethod
@@ -126,7 +126,7 @@ class LoginRegistrationButtons extends StatelessWidget
       );
     }
     if (context
-        .appShell()
+        .login()
         .config
         .loginOptions
         .loginMethod

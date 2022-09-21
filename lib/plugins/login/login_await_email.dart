@@ -22,17 +22,17 @@ class _LoginAwaitEmailScreenState extends State<LoginAwaitEmailScreen>
     with NavigateWidgetMixin {
   @override
   void initState() {
-    context.appShellBackend().addListener(registrateOrMainScreen);
+    context.loginRepository().addListener(registrateOrMainScreen);
     super.initState();
   }
 
   Future<void> registrateOrMainScreen() async {
     var data =
-        await (context.appShellBackend().userprofileExists() as FutureOr<bool>);
-    if (context.appShell().config.registrationOptions.registrationMode ==
+        await (context.loginRepository().userprofileExists() as FutureOr<bool>);
+    if (context.login().config.registrationOptions.registrationMode ==
             RegistrationMode.Disabled ||
         data) {
-      context.appShellBackend().setLoggedIn(EmailPasswordLogin.finalEmail!);
+      context.loginRepository().setLoggedIn(EmailPasswordLogin.finalEmail!);
       widget.loginComplete!();
     } else {
       debugPrint('Register');
@@ -78,12 +78,7 @@ class _LoginAwaitEmailScreenState extends State<LoginAwaitEmailScreen>
                   style: TextButton.styleFrom(shape: const CircleBorder()),
                   onPressed: null,
                   child: Icon(
-                    context
-                        .appShell()
-                        .config
-                        .appTheme
-                        .icons
-                        .magicLinkAwaitEmail,
+                    context.login().config.appTheme.icons.magicLinkAwaitEmail,
                   ),
                 ),
                 Container(height: 20),
@@ -147,7 +142,7 @@ class _LoginAwaitEmailScreenState extends State<LoginAwaitEmailScreen>
                           barrierColor: Colors.black54,
                         );
                         await context
-                            .appShellBackend()
+                            .loginRepository()
                             .sendLoginEmail(EmailPasswordLogin.finalEmail!);
                       },
                     ),

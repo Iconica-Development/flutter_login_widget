@@ -59,9 +59,9 @@ class FlutterLogin extends InheritedWidget with FlutterLoginSdk {
 
 extension AppShellRetrieval on BuildContext {
   static LoginRepository? _cachedBackend;
-  FlutterLogin appShell() => FlutterLogin.of(this);
-  LoginRepository appShellBackend() {
-    _cachedBackend ??= appShell().repository;
+  FlutterLogin login() => FlutterLogin.of(this);
+  LoginRepository loginRepository() {
+    _cachedBackend ??= login().repository;
     return _cachedBackend!;
   }
 }
@@ -90,7 +90,7 @@ extension AppShellTranslate on BuildContext {
 
   String translate(String key,
       {String? defaultValue, List<dynamic> arguments = const []}) {
-    dynamic translateFunction = appShell().config.translate;
+    dynamic translateFunction = login().config.translate;
     if (translateFunction == null) {
       return _getDefaultTranslation(key, arguments) ?? defaultValue ?? key;
     }
@@ -112,7 +112,7 @@ class LoginMain extends StatelessWidget with NavigateWidgetMixin {
   Widget _login(context) {
     return Builder(
       builder: (context) {
-        if (context.appShell().users.isLoggedIn(context)) {
+        if (context.login().users.isLoggedIn(context)) {
           return child;
         }
 

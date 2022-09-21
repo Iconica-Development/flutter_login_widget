@@ -15,7 +15,7 @@ class LoginSocialButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var config = FlutterLogin.of(context).config;
-    var backend = context.appShellBackend();
+    var repository = context.loginRepository();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -76,7 +76,7 @@ class LoginSocialButtons extends StatelessWidget {
                 ),
               ),
               onPressed: () async {
-                var user = await backend.signInWithSocial(
+                var user = await repository.signInWithSocial(
                   SocialLoginBundle(
                     method: method,
                     interactionType: SocialInteractionType.Login,
@@ -85,7 +85,7 @@ class LoginSocialButtons extends StatelessWidget {
                 var prefs = await SharedPreferences.getInstance();
                 await prefs.setBool('autoLogin', true);
                 if (user != null) {
-                  if (await backend.isRegistrationRequired(user)) {
+                  if (await repository.isRegistrationRequired(user)) {
                     navigateRegistration();
                   } else {
                     navigateLogin();
@@ -102,19 +102,19 @@ class LoginSocialButtons extends StatelessWidget {
   IconData? _iconDataForSocial(SocialLoginMethod method, BuildContext context) {
     switch (method) {
       case SocialLoginMethod.Google:
-        return context.appShell().config.appTheme.icons.google;
+        return context.login().config.appTheme.icons.google;
       case SocialLoginMethod.FaceBook:
-        return context.appShell().config.appTheme.icons.facebook;
+        return context.login().config.appTheme.icons.facebook;
       case SocialLoginMethod.Apple:
-        return context.appShell().config.appTheme.icons.apple;
+        return context.login().config.appTheme.icons.apple;
       case SocialLoginMethod.LinkedIn:
-        return context.appShell().config.appTheme.icons.linkedIn;
+        return context.login().config.appTheme.icons.linkedIn;
       case SocialLoginMethod.Microsoft:
-        return context.appShell().config.appTheme.icons.microsoft;
+        return context.login().config.appTheme.icons.microsoft;
       case SocialLoginMethod.Twitter:
-        return context.appShell().config.appTheme.icons.twitter;
+        return context.login().config.appTheme.icons.twitter;
       case SocialLoginMethod.Custom:
-        return context.appShell().config.appTheme.icons.customSocial;
+        return context.login().config.appTheme.icons.customSocial;
     }
   }
 }

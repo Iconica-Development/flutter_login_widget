@@ -25,10 +25,10 @@ class EmailPasswordLogin extends Login {
   final void Function()? onPressedForgotPassword;
 
   @override
-  _EmailLoginState createState() => _EmailLoginState();
+  EmailLoginState createState() => EmailLoginState();
 }
 
-class _EmailLoginState extends LoginState<EmailPasswordLogin> {
+class EmailLoginState extends LoginState<EmailPasswordLogin> {
   String email = '';
   String error = '';
   String password = '';
@@ -71,23 +71,23 @@ class _EmailLoginState extends LoginState<EmailPasswordLogin> {
 
     await prefs.setBool(
       'autoLogin',
-      context.appShell().config.loginOptions.autoLoginMode ==
+      context.login().config.loginOptions.autoLoginMode ==
           AutoLoginMode.defaultOn,
     );
 
     if (!passwordLess &&
         (EmailPasswordLogin.finalEmail != null) &&
         (EmailPasswordLogin.finalPassword != null)) {
-      if (!(await context.appShellBackend().login(
+      if (!(await context.loginRepository().login(
             EmailPasswordLogin.finalEmail!,
             EmailPasswordLogin.finalPassword!,
           ))) {
         setState(() {
-          error = context.appShellBackend().getLoginError();
+          error = context.loginRepository().getLoginError();
           _loading = false;
         });
       } else {
-        context.appShellBackend().setLoggedIn(EmailPasswordLogin.finalEmail!);
+        context.loginRepository().setLoggedIn(EmailPasswordLogin.finalEmail!);
         navigateFadeToReplace(
           context,
           (context) => widget.child,
@@ -96,7 +96,7 @@ class _EmailLoginState extends LoginState<EmailPasswordLogin> {
       }
     } else if (passwordLess && (EmailPasswordLogin.finalEmail != null)) {
       if (await context
-          .appShellBackend()
+          .loginRepository()
           .sendLoginEmail(EmailPasswordLogin.finalEmail!)) {
         navigateFadeToReplace(
           context,
@@ -120,13 +120,13 @@ class _EmailLoginState extends LoginState<EmailPasswordLogin> {
   @override
   Widget buildLoginPage(BuildContext context) {
     if (context
-            .appShell()
+            .login()
             .config
             .loginOptions
             .loginMethod
             .contains(LoginMethod.LoginInteractiveWithMagicLink) &&
         !context
-            .appShell()
+            .login()
             .config
             .loginOptions
             .loginMethod
@@ -170,7 +170,7 @@ class _EmailLoginState extends LoginState<EmailPasswordLogin> {
             child: Container(
               child: Column(
                 children: <Widget>[
-                  context.appShell().config.appTheme.inputs.textField(
+                  context.login().config.appTheme.inputs.textField(
                         value: EmailPasswordLogin.finalEmail ?? '',
                         onChange: (val, valid) {
                           if (valid) {
@@ -206,7 +206,7 @@ class _EmailLoginState extends LoginState<EmailPasswordLogin> {
                   Container(
                     alignment: Alignment.centerRight,
                     child: context
-                        .appShell()
+                        .login()
                         .config
                         .appTheme
                         .buttons
@@ -225,9 +225,9 @@ class _EmailLoginState extends LoginState<EmailPasswordLogin> {
                               },
                         ),
                   ),
-                  if (context.appShell().config.loginOptions.autoLoginMode !=
+                  if (context.login().config.loginOptions.autoLoginMode !=
                           AutoLoginMode.alwaysOff &&
-                      context.appShell().config.loginOptions.autoLoginMode !=
+                      context.login().config.loginOptions.autoLoginMode !=
                           AutoLoginMode.alwaysOn) ...[
                     Theme(
                       data: Theme.of(context).copyWith(
@@ -243,10 +243,10 @@ class _EmailLoginState extends LoginState<EmailPasswordLogin> {
                                   ),
                             ),
                       ),
-                      child: context.appShell().config.appTheme.inputs.checkBox(
+                      child: context.login().config.appTheme.inputs.checkBox(
                             value: autoLogin ??
                                 context
-                                        .appShell()
+                                        .login()
                                         .config
                                         .loginOptions
                                         .autoLoginMode ==
@@ -295,20 +295,10 @@ class _EmailLoginState extends LoginState<EmailPasswordLogin> {
                         ),
                         onPressed: _handleLoginPress,
                       ),
-                  if (context
-                          .appShell()
-                          .config
-                          .loginOptions
-                          .loginMethod
-                          .contains(
+                  if (context.login().config.loginOptions.loginMethod.contains(
                             LoginMethod.LoginInteractiveWithMagicLink,
                           ) &&
-                      context
-                          .appShell()
-                          .config
-                          .loginOptions
-                          .loginMethod
-                          .contains(
+                      context.login().config.loginOptions.loginMethod.contains(
                             LoginMethod.LoginInteractiveWithUsernameAndPassword,
                           )) ...[
                     FlutterLogin.of(context)
@@ -334,12 +324,12 @@ class _EmailLoginState extends LoginState<EmailPasswordLogin> {
                         )
                   ],
                   if (context
-                          .appShell()
+                          .login()
                           .config
                           .registrationOptions
                           .registrationMode ==
                       RegistrationMode.Enabled) ...[
-                    context.appShell().config.appTheme.buttons.tertiaryButton(
+                    context.login().config.appTheme.buttons.tertiaryButton(
                           context: context,
                           child: Text(
                             context.translate(

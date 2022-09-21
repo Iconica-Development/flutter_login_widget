@@ -13,7 +13,7 @@ class ScreenService with NavigateWidgetMixin {
     String? backgroundImg,
   }) {
     var bgImage =
-        backgroundImg ?? context.appShell().config.appOptions.backgroundImage;
+        backgroundImg ?? context.login().config.appOptions.backgroundImage;
     if (bgImage.isNotEmpty) {
       late AssetImage image;
       var split = bgImage.split(';');
@@ -54,11 +54,11 @@ class ScreenService with NavigateWidgetMixin {
                     .contains(LoginMethod.LoginInteractiveWithPhoneNumber))
             ? ChooseLogin(
                 allowExit: true,
-                child: context.appShell().app,
+                child: context.login().app,
               )
             : EmailPasswordLogin(
                 allowExit: true,
-                child: context.appShell().app,
+                child: context.login().app,
               ),
       );
 }
