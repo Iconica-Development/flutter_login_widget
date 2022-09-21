@@ -5,10 +5,10 @@ class Resend extends StatefulWidget {
   const Resend({super.key});
 
   @override
-  _ConfirmationState createState() => _ConfirmationState();
+  ConfirmationState createState() => ConfirmationState();
 }
 
-class _ConfirmationState extends State<Resend> {
+class ConfirmationState extends State<Resend> {
   @override
   void initState() {
     super.initState();

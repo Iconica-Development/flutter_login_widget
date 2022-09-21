@@ -14,7 +14,6 @@ class LoginImage extends StatelessWidget {
     if (config.loginImage == '') {
       image = const AssetImage(
         'assets/images/login.png',
-        package: 'appshell',
       );
     } else if (split.length < 2) {
       image = AssetImage(config.loginImage);

@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login/backend/login_repository.dart';
 import '../default_translation.dart';
 import '../plugins/login/login_email_password.dart';
-import 'flutter_login_sdk.dart';
 import 'login_config.dart';
 import 'plugins/login/choose_login.dart';
-import 'widgets/custom_navigator.dart';
 export '../plugins/form/form.dart';
 export '../plugins/login/email_password_form.dart';
 export '../plugins/login/login_email_password.dart';
@@ -15,8 +13,8 @@ export 'model/login_confirmation_result.dart';
 export 'model/login_user.dart';
 export 'plugins/settings/control.dart' show Control;
 
-class FlutterLogin extends InheritedWidget with FlutterLoginSdk {
-  FlutterLogin({
+class FlutterLogin extends InheritedWidget {
+  const FlutterLogin({
     required this.config,
     required this.repository,
     required Widget child,
@@ -24,14 +22,6 @@ class FlutterLogin extends InheritedWidget with FlutterLoginSdk {
     Key? key,
   }) : super(key: key, child: child);
 
-  FlutterLogin.from({
-    required FlutterLogin appShell,
-    required Widget child,
-    Key? key,
-  })  : config = appShell.config,
-        repository = appShell.repository,
-        app = appShell.app,
-        super(child: child, key: key);
   static Function(Object?) logError = (error) {};
   static Map<String, Map<String, String>> get defaultTranslations =>
       defaultTranslation;
@@ -41,21 +31,21 @@ class FlutterLogin extends InheritedWidget with FlutterLoginSdk {
   final Widget app;
 
   static FlutterLogin of(BuildContext context) {
-    var inheritedAppshell =
+    var inheritedLogin =
         context.dependOnInheritedWidgetOfExactType<FlutterLogin>();
-    if (inheritedAppshell == null) {
+    if (inheritedLogin == null) {
       throw FlutterError(
         'You are retrieving an flutter login from a context that does not contain an flutter login. Make sure you keep the flutter login in your inheritence tree',
       );
     }
-    return inheritedAppshell;
+    return inheritedLogin;
   }
 
   @override
   bool updateShouldNotify(FlutterLogin oldWidget) => config != oldWidget.config;
 }
 
-extension AppShellRetrieval on BuildContext {
+extension LoginRetrieval on BuildContext {
   static LoginRepository? _cachedBackend;
   FlutterLogin login() => FlutterLogin.of(this);
   LoginRepository loginRepository() {
@@ -77,7 +67,7 @@ extension StringFormat on String {
   String format(List<dynamic> params) => _interpolate(this, params);
 }
 
-extension AppShellTranslate on BuildContext {
+extension LoginTranslate on BuildContext {
   String? _getDefaultTranslation(String key, List arguments) {
     var locale = Localizations.localeOf(this);
     var code = locale.countryCode ?? 'nl';
@@ -86,8 +76,11 @@ extension AppShellTranslate on BuildContext {
     return translationMap?[key]?.toString().format(arguments);
   }
 
-  String translate(String key,
-      {String? defaultValue, List<dynamic> arguments = const []}) {
+  String translate(
+    String key, {
+    String? defaultValue,
+    List<dynamic> arguments = const [],
+  }) {
     dynamic translateFunction = login().config.translate;
     if (translateFunction == null) {
       return _getDefaultTranslation(key, arguments) ?? defaultValue ?? key;
@@ -100,53 +93,64 @@ extension AppShellTranslate on BuildContext {
   }
 }
 
-class LoginMain extends StatelessWidget {
-  LoginMain({
+class LoginMain extends StatefulWidget {
+  const LoginMain({
     required this.child,
     super.key,
   });
   final Widget child;
 
-  Widget _login(context) {
-    return Builder(
-      builder: (context) {
-        if (context.login().users.isLoggedIn(context)) {
-          return child;
-        }
-
-        return FlutterLogin.of(context)
-                    .config
-                    .loginOptions
-                    .loginMethod
-                    .contains(LoginMethod.LoginInteractiveWithSocial) ||
-                FlutterLogin.of(context)
-                    .config
-                    .loginOptions
-                    .loginMethod
-                    .contains(LoginMethod.LoginInteractiveWithPhoneNumber)
-            ? ChooseLogin(
-                child: child,
-              )
-            : EmailPasswordLogin(
-                onPressedForgotPassword: FlutterLogin.of(context)
-                    .config
-                    .loginOptions
-                    .onPressForgotPassword,
-                child: child,
-              );
-      },
-    );
-  }
-
   @override
-  CustomNavigator build(BuildContext context) => CustomNavigator(
-        pageRoute: PageRoutes.materialPageRoute,
-        home: _login(context),
-      );
+  State<LoginMain> createState() => _LoginMainState();
 }
 
-class AppShellException implements Exception {
-  AppShellException(
+class _LoginMainState extends State<LoginMain> {
+  bool _checkedIfLoggedIn = false;
+  bool _isLoggedIn = false;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_checkedIfLoggedIn) {
+      context.loginRepository().reLogin(
+            onLoggedIn: () => setState(
+              () {
+                _isLoggedIn = true;
+              },
+            ),
+          );
+
+      _checkedIfLoggedIn = true;
+    }
+
+    return _isLoggedIn
+        ? widget.child
+        : Builder(
+            builder: (context) => FlutterLogin.of(context)
+                        .config
+                        .loginOptions
+                        .loginMethod
+                        .contains(LoginMethod.LoginInteractiveWithSocial) ||
+                    FlutterLogin.of(context)
+                        .config
+                        .loginOptions
+                        .loginMethod
+                        .contains(LoginMethod.LoginInteractiveWithPhoneNumber)
+                ? ChooseLogin(
+                    child: widget.child,
+                  )
+                : EmailPasswordLogin(
+                    onPressedForgotPassword: FlutterLogin.of(context)
+                        .config
+                        .loginOptions
+                        .onPressForgotPassword,
+                    child: widget.child,
+                  ),
+          );
+  }
+}
+
+class LoginException implements Exception {
+  LoginException(
     this.error, [
     this.stackTrace = StackTrace.empty,
   ]);
@@ -158,7 +162,7 @@ class AppShellException implements Exception {
 
   @override
   String toString() {
-    return 'Unhandled error occurred in Appshell: $error\n'
+    return 'Unhandled error occurred in login: $error\n'
         '$stackTrace';
   }
 }

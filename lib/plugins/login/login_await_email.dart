@@ -15,28 +15,14 @@ class LoginAwaitEmailScreen extends StatefulWidget {
   final Widget? child;
 
   @override
-  _LoginAwaitEmailScreenState createState() => _LoginAwaitEmailScreenState();
+  LoginAwaitEmailScreenState createState() => LoginAwaitEmailScreenState();
 }
 
-class _LoginAwaitEmailScreenState extends State<LoginAwaitEmailScreen>
+class LoginAwaitEmailScreenState extends State<LoginAwaitEmailScreen>
     with NavigateWidgetMixin {
   @override
   void initState() {
-    context.loginRepository().addListener(registrateOrMainScreen);
     super.initState();
-  }
-
-  Future<void> registrateOrMainScreen() async {
-    var data =
-        await (context.loginRepository().userprofileExists() as FutureOr<bool>);
-    if (context.login().config.registrationOptions.registrationMode ==
-            RegistrationMode.Disabled ||
-        data) {
-      context.loginRepository().setLoggedIn(EmailPasswordLogin.finalEmail!);
-      widget.loginComplete!();
-    } else {
-      debugPrint('Register');
-    }
   }
 
   void navigateToEmailPage(BuildContext context) {

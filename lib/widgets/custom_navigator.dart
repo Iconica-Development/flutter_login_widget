@@ -24,10 +24,10 @@ class CustomNavigator extends StatefulWidget {
   final List<NavigatorObserver> navigatorObservers;
 
   @override
-  _CustomNavigatorState createState() => _CustomNavigatorState();
+  CustomNavigatorState createState() => CustomNavigatorState();
 }
 
-class _CustomNavigatorState extends State<CustomNavigator>
+class CustomNavigatorState extends State<CustomNavigator>
     implements WidgetsBindingObserver {
   GlobalKey<NavigatorState>? _navigator;
 
@@ -134,9 +134,11 @@ class _CustomNavigatorState extends State<CustomNavigator>
     return result;
   }
 
-  didChangeAppLifecycleState(AppLifecycleState state) {}
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {}
 
-  noSuchMethod(Invocation invocation) {
+  @override
+  void noSuchMethod(Invocation invocation) {
     var name = invocation.memberName.toString();
     debugPrint(
       'Expected a method to be called with name $name, '
@@ -147,9 +149,9 @@ class _CustomNavigatorState extends State<CustomNavigator>
 
 class PageRoutes {
   static final materialPageRoute =
-      (<T>(RouteSettings settings, WidgetBuilder builder) =>
-          MaterialPageRoute<T>(settings: settings, builder: builder));
+      <T>(RouteSettings settings, WidgetBuilder builder) =>
+          MaterialPageRoute<T>(settings: settings, builder: builder);
   static final cupertinoPageRoute =
-      (<T>(RouteSettings settings, WidgetBuilder builder) =>
-          CupertinoPageRoute<T>(settings: settings, builder: builder));
+      <T>(RouteSettings settings, WidgetBuilder builder) =>
+          CupertinoPageRoute<T>(settings: settings, builder: builder);
 }

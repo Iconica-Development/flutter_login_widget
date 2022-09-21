@@ -14,7 +14,8 @@ class ChooseLogin extends Login {
   static String? finalEmail;
   static String? finalPassword;
 
-  createState() => ChooseLoginState();
+  @override
+  ChooseLoginState createState() => ChooseLoginState();
 }
 
 class ChooseLoginState extends LoginState<ChooseLogin> {

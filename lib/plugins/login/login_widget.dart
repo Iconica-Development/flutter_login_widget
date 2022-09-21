@@ -36,43 +36,38 @@ abstract class LoginState<L extends Login> extends State<L>
   @override
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
-        body: context.login().screens.getAppshellScreenWrapper(
-              context,
-              backgroundImg:
-                  context.login().config.loginOptions.backgroundImage,
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: Stack(
-                  children: [
-                    SingleChildScrollView(
-                      child: buildLoginPage(context),
-                    ),
-                    if (widget.allowExit) ...[
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 30, right: 10),
-                          child: SizedBox(
-                            height: 48,
-                            width: 48,
-                            child: GestureDetector(
-                              key: const Key('navigateToSettings'),
-                              child: const Icon(
-                                Icons.close,
-                                size: 24,
-                              ),
-                              onTap: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
+        body: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Stack(
+            children: [
+              SingleChildScrollView(
+                child: buildLoginPage(context),
               ),
-            ),
+              if (widget.allowExit) ...[
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 30, right: 10),
+                    child: SizedBox(
+                      height: 48,
+                      width: 48,
+                      child: GestureDetector(
+                        key: const Key('navigateToSettings'),
+                        child: const Icon(
+                          Icons.close,
+                          size: 24,
+                        ),
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
       );
 
   Widget buildLoginPage(BuildContext context);

@@ -87,7 +87,7 @@ class EmailLoginState extends LoginState<EmailPasswordLogin> {
           _loading = false;
         });
       } else {
-        context.loginRepository().setLoggedIn(EmailPasswordLogin.finalEmail!);
+        context.loginRepository().loggedIn = true;
         navigateFadeToReplace(
           context,
           (context) => widget.child,

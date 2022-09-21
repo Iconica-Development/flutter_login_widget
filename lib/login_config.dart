@@ -337,7 +337,7 @@ class LoginConfig extends StatefulWidget {
 }
 
 class LoginConfigState extends State<LoginConfig> with WidgetsBindingObserver {
-  FlutterLogin? appShell;
+  FlutterLogin? login;
   late final ConfigData configData;
   late LoginRepository repository;
 
@@ -352,7 +352,6 @@ class LoginConfigState extends State<LoginConfig> with WidgetsBindingObserver {
 
     if (widget.repository != null) {
       repository = widget.repository!;
-      repository.init();
     }
 
     WidgetsBinding.instance.addObserver(this);
@@ -383,7 +382,7 @@ class LoginConfigState extends State<LoginConfig> with WidgetsBindingObserver {
                 !configData.loginOptions.socialOptions.forceAppleSignin))) {
       // check if apple login is removed by developer
       if (configData.loginOptions.socialOptions.socialLogins.isEmpty) {
-        throw AppShellException(
+        throw LoginException(
             'If you enable LoginMethod.LoginInteractiveWithSocial you must provide atleast 1 social login option!');
       }
     }
@@ -391,7 +390,7 @@ class LoginConfigState extends State<LoginConfig> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    appShell = FlutterLogin(
+    login = FlutterLogin(
       config: widget.config ?? ConfigData.example(),
       repository: repository,
       app: widget.child,
@@ -406,21 +405,10 @@ class LoginConfigState extends State<LoginConfig> with WidgetsBindingObserver {
     if (isFlutterDefaultTheme(context)) {
       return Theme(
         data: defaultTheme,
-        child: appShell!,
+        child: login!,
       );
     }
 
-    return appShell!;
+    return login!;
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-    repository.dispose();
-  }
-}
-
-class AppshellNoDisplayError {
-  AppshellNoDisplayError(this.error);
-  Object error;
 }
