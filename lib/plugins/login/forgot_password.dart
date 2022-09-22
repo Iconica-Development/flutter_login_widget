@@ -53,16 +53,6 @@ class ForgotPasswordState extends State<ForgotPassword> {
             Expanded(
               child: ListView(
                 children: [
-                  Container(
-                    alignment: Alignment.topLeft,
-                    padding: const EdgeInsets.only(
-                      top: 27,
-                      left: 5,
-                    ),
-                    child: context.login().config.appTheme.buttons.backButton(
-                          context: context,
-                        ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.all(30.0),
                     child: Text(
