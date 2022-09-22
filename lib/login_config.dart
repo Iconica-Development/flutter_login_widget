@@ -394,8 +394,11 @@ class LoginConfigState extends State<LoginConfig> with WidgetsBindingObserver {
       config: widget.config ?? ConfigData.example(),
       repository: repository,
       app: widget.child,
-      child: LoginMain(
-        child: widget.child,
+      child: CustomNavigator(
+        pageRoute: PageRoutes.materialPageRoute,
+        home: LoginMain(
+          child: widget.child,
+        ),
       ),
     );
 
