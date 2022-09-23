@@ -27,7 +27,6 @@ dependencies:
     git:
       url: https://github.com/AbdOoSaed/intl_phone_number_input
       ref: 96fc8d9e944da1b6e0d36ce7065a22f06370bcef
-  rive: ^0.9.0
 
 dev_dependencies:
   flutter_test:
