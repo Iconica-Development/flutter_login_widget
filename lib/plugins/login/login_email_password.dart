@@ -134,7 +134,6 @@ class EmailLoginState extends LoginState<EmailPasswordLogin> {
     var loginError = loginRepository.getLoginError();
 
     setState(() {
-      print(loginError);
       switch (loginError) {
         case 'login.error.invalid_email':
           _emailErrorMessage = loginError;
@@ -215,7 +214,7 @@ class EmailLoginState extends LoginState<EmailPasswordLogin> {
                           return context.translate(_emailErrorMessage);
                         }
                         if (value == null || value.isEmpty) {
-                          return 'Please enter an email address';
+                          return context.translate('login.text.enter_email');
                         }
                         return null;
                       },
@@ -238,7 +237,8 @@ class EmailLoginState extends LoginState<EmailPasswordLogin> {
                               return context.translate(_passwordErrorMessage);
                             }
                             if (value == null || value.isEmpty) {
-                              return 'Please enter a password';
+                              return context
+                                  .translate('login.text.enter_password');
                             }
                             return null;
                           },

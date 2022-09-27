@@ -7,7 +7,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'backend/login_repository.dart';
 import 'default_theme.dart';
-import 'extensions/widget.dart';
 import 'flutter_login_view.dart';
 
 enum RegistrationMode {
@@ -295,10 +294,8 @@ class RegistrationOptions {
 class ConnectionOptions {
   const ConnectionOptions({
     this.connectionSettings,
-    this.cloudFunctionsUrl,
   });
   final Map? connectionSettings;
-  final String? cloudFunctionsUrl;
 }
 
 class LoginConfig extends StatefulWidget {
