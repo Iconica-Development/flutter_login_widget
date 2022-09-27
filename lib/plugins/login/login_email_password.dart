@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../form/fields/obscure_text_input_field.dart';
 import 'forgot_password.dart';
 import 'login_await_email.dart';
 import 'login_image.dart';
@@ -30,12 +29,13 @@ class EmailPasswordLogin extends Login {
 
 class EmailLoginState extends LoginState<EmailPasswordLogin> {
   String email = '';
-  String error = '';
   String password = '';
-  bool? autoLogin;
   late SharedPreferences prefs;
   bool passwordLess = false;
   bool _loading = false;
+  final _formKey = GlobalKey<FormState>();
+  String _emailErrorMessage = '';
+  String _passwordErrorMessage = '';
 
   @override
   void initState() {
@@ -65,55 +65,84 @@ class EmailLoginState extends LoginState<EmailPasswordLogin> {
   }
 
   Future<void> _handleLoginPress() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    var loginRepository = context.loginRepository();
+
     setState(() {
       _loading = true;
     });
 
-    await prefs.setBool(
-      'autoLogin',
-      context.login().config.loginOptions.autoLoginMode ==
-          AutoLoginMode.defaultOn,
-    );
-
     if (!passwordLess &&
         (EmailPasswordLogin.finalEmail != null) &&
         (EmailPasswordLogin.finalPassword != null)) {
-      if (!(await context.loginRepository().login(
+      await loginRepository
+          .login(
             EmailPasswordLogin.finalEmail!,
             EmailPasswordLogin.finalPassword!,
-          ))) {
-        setState(() {
-          error = context.loginRepository().getLoginError();
-          _loading = false;
-        });
-      } else {
-        navigateFadeToReplace(
-          context,
-          (context) => widget.child,
-          popRemaining: true,
-        );
-      }
+          )
+          .then(
+            (response) => response
+                ? navigateFadeToReplace(
+                    context,
+                    (context) => widget.child,
+                    popRemaining: true,
+                  )
+                : setState(
+                    () {
+                      parseLoginMessage();
+                      _loading = false;
+                    },
+                  ),
+          );
     } else if (passwordLess && (EmailPasswordLogin.finalEmail != null)) {
-      if (await context
-          .loginRepository()
-          .sendLoginEmail(EmailPasswordLogin.finalEmail!)) {
-        navigateFadeToReplace(
-          context,
-          (ctx) => LoginAwaitEmailScreen(
-            child: widget.child,
-            loginComplete: () async {
-              navigateFadeToReplace(ctx, (ctx) => widget.child!);
-            },
-          ),
-          popRemaining: true,
-        );
-      } else {
-        setState(() {
-          error = 'login.error.user_or_password_unknown';
-          _loading = false;
-        });
-      }
+      await loginRepository
+          .sendLoginEmail(
+            EmailPasswordLogin.finalEmail!,
+          )
+          .then(
+            (response) => response
+                ? navigateFadeToReplace(
+                    context,
+                    (ctx) => LoginAwaitEmailScreen(
+                      child: widget.child,
+                      loginComplete: () async {
+                        navigateFadeToReplace(ctx, (ctx) => widget.child!);
+                      },
+                    ),
+                    popRemaining: true,
+                  )
+                : setState(
+                    () {
+                      _emailErrorMessage =
+                          'login.error.user_or_password_unknown';
+                      _loading = false;
+                    },
+                  ),
+          );
     }
+
+    _formKey.currentState!.validate();
+    _emailErrorMessage = '';
+    _passwordErrorMessage = '';
+  }
+
+  void parseLoginMessage() {
+    var loginRepository = context.loginRepository();
+    var loginError = loginRepository.getLoginError();
+
+    setState(() {
+      print(loginError);
+      switch (loginError) {
+        case 'login.error.invalid_email':
+          _emailErrorMessage = loginError;
+          break;
+        default:
+          _passwordErrorMessage = loginError;
+      }
+    });
   }
 
   @override
@@ -167,186 +196,163 @@ class EmailLoginState extends LoginState<EmailPasswordLogin> {
                   : 0,
             ),
             child: Container(
-              child: Column(
-                children: <Widget>[
-                  context.login().config.appTheme.inputs.textField(
-                        value: EmailPasswordLogin.finalEmail ?? '',
-                        onChange: (val, valid) {
-                          if (valid) {
-                            onEmailChanged(val);
-                          }
-                        },
-                        keyboardType: TextInputType.emailAddress,
-                        title: context.translate(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      initialValue: EmailPasswordLogin.finalEmail ?? '',
+                      onChanged: onEmailChanged,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        labelText: context.translate(
                           'login.input.email',
                           defaultValue: 'Email address',
                         ),
                       ),
-                  if (!passwordLess) ...[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: ObscureTextInputField(
-                        value: EmailPasswordLogin.finalPassword,
-                        title: context.translate(
-                          'login.input.password',
-                          defaultValue: 'Password',
-                        ),
-                        onChange: (val, valid) {
-                          if (valid) {
-                            onPasswordChanged(val);
-                          }
-                        },
-                      ),
+                      validator: (value) {
+                        if (_emailErrorMessage != '') {
+                          return context.translate(_emailErrorMessage);
+                        }
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter an email address';
+                        }
+                        return null;
+                      },
                     ),
-                  ],
-                  const Padding(
-                    padding: EdgeInsets.only(top: 20),
-                  ),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: context
-                        .login()
-                        .config
-                        .appTheme
-                        .buttons
-                        .tertiaryButton(
-                          context: context,
-                          child: Text(
-                            context.translate('login.button.forgot_password'),
-                            style: Theme.of(context).textTheme.bodyText2,
+                    if (!passwordLess) ...[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: TextFormField(
+                          initialValue: EmailPasswordLogin.finalPassword ?? '',
+                          obscureText: true,
+                          onChanged: onPasswordChanged,
+                          decoration: InputDecoration(
+                            labelText: context.translate(
+                              'login.input.password',
+                              defaultValue: 'Password',
+                            ),
                           ),
-                          onPressed: widget.onPressedForgotPassword ??
-                              () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ForgotPassword(),
-                                    ),
-                                  ),
+                          validator: (value) {
+                            if (_passwordErrorMessage != '') {
+                              return context.translate(_passwordErrorMessage);
+                            }
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a password';
+                            }
+                            return null;
+                          },
                         ),
-                  ),
-                  if (context.login().config.loginOptions.autoLoginMode !=
-                          AutoLoginMode.alwaysOff &&
-                      context.login().config.loginOptions.autoLoginMode !=
-                          AutoLoginMode.alwaysOn) ...[
-                    Theme(
-                      data: Theme.of(context).copyWith(
-                        textTheme: Theme.of(context).textTheme.copyWith(
-                              headline6: Theme.of(context)
-                                  .textTheme
-                                  .bodyText2
-                                  ?.copyWith(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .headline6
-                                        ?.color,
-                                  ),
-                            ),
                       ),
-                      child: context.login().config.appTheme.inputs.checkBox(
-                            value: autoLogin ??
-                                context
-                                        .login()
-                                        .config
-                                        .loginOptions
-                                        .autoLoginMode ==
-                                    AutoLoginMode.defaultOn,
-                            title: context.translate(
-                              'login.input.stay_logged_in',
-                              defaultValue: 'Stay logged in',
-                            ),
-                            onChange: (value, valid) => autoLogin = value,
-                          ),
+                    ],
+                    const Padding(
+                      padding: EdgeInsets.only(top: 20),
                     ),
-                  ],
-                  if (error.isNotEmpty) ...[
                     Container(
-                      padding: const EdgeInsets.only(top: 20, bottom: 20),
-                      child: Text(
-                        error == ''
-                            ? error
-                            : context.translate(
-                                error,
-                                defaultValue:
-                                    'An error occurred when logging in: $error',
-                              ),
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText1!
-                            .copyWith(color: Theme.of(context).errorColor),
-                      ),
-                    ),
-                  ],
-                  FlutterLogin.of(context)
-                      .config
-                      .appTheme
-                      .buttons
-                      .primaryButton(
-                        context: context,
-                        isLoading: _loading,
-                        isDisabled: _loading,
-                        child: Text(
-                          context.translate(
-                            'login.button.login',
-                            defaultValue: 'Log in',
+                      alignment: Alignment.centerRight,
+                      child: context
+                          .login()
+                          .config
+                          .appTheme
+                          .buttons
+                          .tertiaryButton(
+                            context: context,
+                            child: Text(
+                              context.translate('login.button.forgot_password'),
+                              style: Theme.of(context).textTheme.bodyText2,
+                            ),
+                            onPressed: widget.onPressedForgotPassword ??
+                                () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ForgotPassword(),
+                                      ),
+                                    ),
                           ),
-                          style: Theme.of(context).textTheme.button,
-                          textAlign: TextAlign.center,
-                        ),
-                        onPressed: _handleLoginPress,
-                      ),
-                  if (context.login().config.loginOptions.loginMethod.contains(
-                            LoginMethod.LoginInteractiveWithMagicLink,
-                          ) &&
-                      context.login().config.loginOptions.loginMethod.contains(
-                            LoginMethod.LoginInteractiveWithUsernameAndPassword,
-                          )) ...[
+                    ),
                     FlutterLogin.of(context)
                         .config
                         .appTheme
                         .buttons
-                        .tertiaryButton(
+                        .primaryButton(
                           context: context,
-                          child: Text(
-                            passwordLess
-                                ? context.translate(
-                                    'login.button.login_email_password',
-                                    defaultValue: 'Log in with password',
-                                  )
-                                : context.translate(
-                                    'login.button.login_email_only',
-                                    defaultValue: 'Log in with link',
-                                  ),
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
-                          onPressed: () =>
-                              setState(() => passwordLess = !passwordLess),
-                        )
-                  ],
-                  if (context
-                          .login()
-                          .config
-                          .registrationOptions
-                          .registrationMode ==
-                      RegistrationMode.Enabled) ...[
-                    context.login().config.appTheme.buttons.tertiaryButton(
-                          context: context,
+                          isLoading: _loading,
+                          isDisabled: _loading,
                           child: Text(
                             context.translate(
-                              'login.button.no_account',
-                              defaultValue: "I don't have an account yet",
+                              'login.button.login',
+                              defaultValue: 'Log in',
                             ),
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.button,
+                            textAlign: TextAlign.center,
                           ),
-                          onPressed: () {
-                            FlutterLogin.of(context)
-                                .config
-                                .loginOptions
-                                .onPressRegister!();
-                          },
+                          onPressed: _handleLoginPress,
                         ),
+                    if (context
+                            .login()
+                            .config
+                            .loginOptions
+                            .loginMethod
+                            .contains(
+                              LoginMethod.LoginInteractiveWithMagicLink,
+                            ) &&
+                        context
+                            .login()
+                            .config
+                            .loginOptions
+                            .loginMethod
+                            .contains(
+                              LoginMethod
+                                  .LoginInteractiveWithUsernameAndPassword,
+                            )) ...[
+                      FlutterLogin.of(context)
+                          .config
+                          .appTheme
+                          .buttons
+                          .tertiaryButton(
+                            context: context,
+                            child: Text(
+                              passwordLess
+                                  ? context.translate(
+                                      'login.button.login_email_password',
+                                      defaultValue: 'Log in with password',
+                                    )
+                                  : context.translate(
+                                      'login.button.login_email_only',
+                                      defaultValue: 'Log in with link',
+                                    ),
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
+                            onPressed: () =>
+                                setState(() => passwordLess = !passwordLess),
+                          )
+                    ],
+                    if (context
+                            .login()
+                            .config
+                            .registrationOptions
+                            .registrationMode ==
+                        RegistrationMode.Enabled) ...[
+                      context.login().config.appTheme.buttons.tertiaryButton(
+                            context: context,
+                            child: Text(
+                              context.translate(
+                                'login.button.no_account',
+                                defaultValue: "I don't have an account yet",
+                              ),
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
+                            onPressed: () {
+                              FlutterLogin.of(context)
+                                  .config
+                                  .loginOptions
+                                  .onPressRegister!();
+                            },
+                          ),
+                    ],
                   ],
-                ],
+                ),
               ),
             ),
           ),

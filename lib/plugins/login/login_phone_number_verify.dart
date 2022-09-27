@@ -162,7 +162,6 @@ class LoginPhoneNumberVerifyState extends State<LoginPhoneNumberVerify>
                                 ),
                               );
                             },
-                            onAutoLogin: (user) => widget.onLogin.call(user),
                           );
                         },
                       ),

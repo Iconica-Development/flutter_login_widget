@@ -30,13 +30,6 @@ enum LoginMethod {
   LoginInteractiveWithPhoneNumber,
 }
 
-enum AutoLoginMode {
-  alwaysOn,
-  alwaysOff,
-  defaultOn,
-  defaultOff,
-}
-
 enum SocialLoginMethod {
   FaceBook,
   Google,
@@ -151,7 +144,6 @@ class ConfigData {
 
 class LoginOptions {
   const LoginOptions({
-    this.autoLoginMode = AutoLoginMode.defaultOn,
     this.loginImage = '',
     this.loginEmail,
     this.loginPassword,
@@ -211,18 +203,6 @@ class LoginOptions {
   ///
   /// If you want to change the registration background image, view [RegistrationOptions.backgroundImage]
   final String? backgroundImage;
-
-  /// [AutoLoginMode.defaultOn]
-  /// Auto login can be enabled/disabled using a checkbox on the login screen.
-  /// auto login is enabled by default.
-  /// [AutoLoginMode.defaultOff]
-  /// Auto login can be enabled/disabled using a checkbox on the login screen.
-  /// auto login is disabled by default.
-  /// [AutoLoginMode.alwaysOn]
-  /// Auto login is always on, there is no way to disable it.
-  /// [AutoLoginMode.alwaysOff]
-  /// Auto login is always off, there is no way to enable it.
-  final AutoLoginMode autoLoginMode;
 
   final VoidCallback? onPressForgotPassword;
 

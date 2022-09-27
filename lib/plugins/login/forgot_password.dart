@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login_view.dart';
-import '../form/inputs/validators/email_validator.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
@@ -10,8 +9,9 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class ForgotPasswordState extends State<ForgotPassword> {
-  String? email;
-  bool showError = false;
+  String _email = '';
+  final _formKey = GlobalKey<FormState>();
+  String _emailErrorMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +40,40 @@ class ForgotPasswordState extends State<ForgotPassword> {
           ),
         );
 
+    void onPressBtn() {
+      if (!_formKey.currentState!.validate()) {
+        return;
+      }
+
+      context.loginRepository().forgotPassword(_email).then(
+        (response) {
+          if (response) {
+            showAlert(
+              title: context.translate(
+                'forgot_password.dialog.text.title',
+              ),
+              text: context.translate(
+                'forgot_password.dialog.text.body',
+                arguments: [_email],
+              ),
+              buttonTitle: context.translate(
+                'forgot_password.dialog.text.button',
+              ),
+              buttonAction: () {
+                Navigator.pop(context);
+              },
+            );
+          } else {
+            _emailErrorMessage = context.translate(
+              'forgot_password.error.email_does_not_exist',
+            );
+            _formKey.currentState?.validate();
+            _emailErrorMessage = '';
+          }
+        },
+      );
+    }
+
     return Material(
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
@@ -61,48 +95,50 @@ class ForgotPasswordState extends State<ForgotPassword> {
                       textAlign: TextAlign.left,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 30, right: 30),
-                    child: Column(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 20),
-                        ),
-                        context.login().config.appTheme.inputs.textField(
-                              title: context.translate(
+                  Form(
+                    key: _formKey,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 30,
+                        right: 30,
+                      ),
+                      child: Column(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(bottom: 20),
+                          ),
+                          TextFormField(
+                            decoration: InputDecoration(
+                              labelText: context.translate(
                                 'forgot_password.input.email',
+                                defaultValue: 'Email address',
                               ),
-                              validators: [
-                                EmailValidator(
-                                  errorMessage: context.translate(
-                                    'forgot_password.error.invalid_email',
-                                  ),
-                                )
-                              ],
-                              onChange: (value, valid) {
-                                setState(() {
-                                  showError = false;
-                                });
-                                if (valid) {
-                                  email = value;
-                                }
+                            ),
+                            onChanged: (String value) => setState(
+                              () {
+                                _email = value;
                               },
                             ),
-                        if (showError) ...[
-                          Text(
-                            context.translate(
-                              'forgot_password.error.email_does_not_exist',
-                            ),
-                            style:
-                                Theme.of(context).textTheme.bodyText2!.copyWith(
-                                      color: Theme.of(context).errorColor,
-                                    ),
+                            validator: (value) {
+                              if (_emailErrorMessage.isNotEmpty) {
+                                return _emailErrorMessage;
+                              }
+
+                              if (!RegExp(
+                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                              ).hasMatch(value!)) {
+                                return context.translate(
+                                  'forgot_password.error.invalid_email',
+                                );
+                              }
+                              return null;
+                            },
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(bottom: 30),
                           ),
                         ],
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 30),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
@@ -117,39 +153,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
                       context.translate('forgot_password.button.submit'),
                       style: Theme.of(context).textTheme.button,
                     ),
-                    onPressed: () async {
-                      if (email != null) {
-                        setState(() {
-                          showError = false;
-                        });
-
-                        var result = await context
-                            .loginRepository()
-                            .forgotPassword(email!);
-
-                        if (result) {
-                          showAlert(
-                            title: context.translate(
-                              'forgot_password.dialog.text.title',
-                            ),
-                            text: context.translate(
-                              'forgot_password.dialog.text.body',
-                              arguments: [email],
-                            ),
-                            buttonTitle: context.translate(
-                              'forgot_password.dialog.text.button',
-                            ),
-                            buttonAction: () {
-                              Navigator.pop(context);
-                            },
-                          );
-                        } else {
-                          setState(() {
-                            showError = true;
-                          });
-                        }
-                      }
-                    },
+                    onPressed: onPressBtn,
                   ),
             ),
           ],

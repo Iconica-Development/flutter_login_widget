@@ -83,8 +83,7 @@ class LoginSocialButtons extends StatelessWidget {
                     interactionType: SocialInteractionType.Login,
                   ),
                 );
-                var prefs = await SharedPreferences.getInstance();
-                await prefs.setBool('autoLogin', true);
+
                 if (user != null) {
                   if (await repository.isRegistrationRequired(user)) {
                     navigateRegistration();

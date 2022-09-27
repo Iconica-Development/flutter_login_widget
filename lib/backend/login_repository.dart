@@ -29,7 +29,6 @@ abstract class LoginRespositoryWithPhoneNumber extends LoginRepository {
     )?
         onCodeSent,
     void Function(String errorCode)? onVerificationFailed,
-    void Function(LoginUser? user)? onAutoLogin,
   });
   Future<LoginUser?> signInWithSMSCode(
     String verificationId,

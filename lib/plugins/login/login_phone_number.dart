@@ -137,7 +137,6 @@ class LoginPhoneNumberState extends State<LoginPhoneNumber>
                                 onLogin: _onLoggedIn,
                               ),
                             ),
-                            onAutoLogin: (_) => _onLoggedIn,
                             onVerificationFailed: (String errorCode) {
                               if (errorCode == 'invalid-phone-number') {
                                 setState(() {
@@ -170,8 +169,6 @@ class LoginPhoneNumberState extends State<LoginPhoneNumber>
   }
 
   Future<void> _onLoggedIn(LoginUser? user) async {
-    var prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('autoLogin', true);
     if (user != null) {
       if (await context.loginRepository().isRegistrationRequired(user)) {
         widget.navRegistration.call();
