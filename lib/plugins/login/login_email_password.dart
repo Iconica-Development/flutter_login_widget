@@ -163,14 +163,15 @@ class EmailLoginState extends LoginState<EmailPasswordLogin> {
 
     return Column(
       children: <Widget>[
-        Container(
-          padding: const EdgeInsets.only(top: 60),
-          alignment: Alignment.topCenter,
-          child: Text(
-            context.translate('login.text.title'),
-            style: Theme.of(context).textTheme.headline6,
+        if (FlutterLogin.of(context).config.loginOptions.showLoginTitle)
+          Container(
+            padding: const EdgeInsets.only(top: 60),
+            alignment: Alignment.topCenter,
+            child: Text(
+              context.translate('login.text.title'),
+              style: Theme.of(context).textTheme.headline6,
+            ),
           ),
-        ),
         Container(
           padding: const EdgeInsets.only(top: 10),
           alignment: Alignment.topCenter,

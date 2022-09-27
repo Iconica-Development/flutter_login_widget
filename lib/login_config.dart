@@ -143,6 +143,7 @@ class ConfigData {
 
 class LoginOptions {
   const LoginOptions({
+    this.showLoginTitle = true,
     this.loginImage = '',
     this.loginEmail,
     this.loginPassword,
@@ -156,6 +157,8 @@ class LoginOptions {
     this.onPressRegister,
     this.onPressForgotPassword,
   });
+
+  final bool showLoginTitle;
 
   /// The mode determining the login actions required to use the app.
   ///
