@@ -1,33 +1,39 @@
-[![pub package](https://img.shields.io/pub/v/[PACKAGE NAME ON PUB].svg)](https://github.com/Iconica-Development) [![Build status](URL TO REPO)](URL TO GITHUB ACTIONS) [![style: effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://github.com/tenhobi/effective_dart) 
+<!--
+This README describes the package. If you publish this package to pub.dev,
+this README's contents appear on the landing page for your package.
 
-Short description of what your package is, why you created it. What issues it fixes and how it works. Also mention the available platforms
+For information about how to write a good package README, see the guide for
+[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
 
-## Setup
+For general information about developing packages, see the Dart guide for
+[creating packages](https://dart.dev/guides/libraries/create-library-packages)
+and the Flutter guide for
+[developing packages and plugins](https://flutter.dev/developing-packages).
+-->
 
-What setup steps are neccesarry and why>
+TODO: Put a short description of the package here that helps potential users
+know whether this package might be useful for them.
 
-<details>
-<summary>PLATFORM</summary>
-    
-specific platform steps
+## Features
 
-</details>
+TODO: List what your package can do. Maybe include images, gifs, or videos.
 
-## How to use
+## Getting started
 
-How can we use the package descibe the most common ways with examples in 
+TODO: List prerequisites and provide or point to information on how to
+start using the package.
+
+## Usage
+
+TODO: Include short and useful examples for package users. Add longer examples
+to `/example` folder.
+
 ```dart
- codeblocks
-``` 
+const like = 'sample';
+```
 
-## Issues
+## Additional information
 
-Please file any issues, bugs or feature request as an issue on our [GitHub](REPO URL) page. Commercial support is available if you need help with integration with your app or services. You can contact us at [support@iconica.nl](mailto:support@iconica.nl).
-
-## Want to contribute
-
-If you would like to contribute to the plugin (e.g. by improving the documentation, solving a bug or adding a cool new feature), please carefully review our [contribution guide](./CONTRIBUTING.md) and send us your [pull request](URL TO PULL REQUEST TAB IN REPO).
-
-## Author
-
-This flutter_login for Flutter is developed by [Iconica](https://iconica.nl). You can contact us at <support@iconica.nl>
+TODO: Tell users more about the package: where to find more information, how to
+contribute to the package, how to file issues, what response they can expect
+from the package authors, and more.
