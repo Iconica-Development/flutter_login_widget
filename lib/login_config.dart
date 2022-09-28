@@ -160,7 +160,8 @@ class LoginOptions {
   });
 
   final bool showLoginTitle;
-  final AppBar Function(String title)? customAppbarBuilder;
+  final AppBar Function(String title, BuildContext context)?
+      customAppbarBuilder;
 
   /// The mode determining the login actions required to use the app.
   ///

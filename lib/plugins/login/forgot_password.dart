@@ -77,12 +77,10 @@ class ForgotPasswordState extends State<ForgotPassword> {
     return Material(
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
-        appBar: context
-                .login()
-                .config
-                .loginOptions
-                .customAppbarBuilder
-                ?.call(context.translate('forgot_password.text.title')) ??
+        appBar: context.login().config.loginOptions.customAppbarBuilder?.call(
+                  context.translate('forgot_password.text.title'),
+                  context,
+                ) ??
             AppBar(
               title: Text(context.translate('forgot_password.text.title')),
             ),
