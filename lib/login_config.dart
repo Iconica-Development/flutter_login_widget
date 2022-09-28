@@ -156,9 +156,11 @@ class LoginOptions {
     this.loginMode = LoginMode.NoLogin,
     this.onPressRegister,
     this.onPressForgotPassword,
+    this.customAppbarBuilder,
   });
 
   final bool showLoginTitle;
+  final AppBar Function(String title)? customAppbarBuilder;
 
   /// The mode determining the login actions required to use the app.
   ///
