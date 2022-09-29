@@ -125,39 +125,43 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    TextFormField(
-                      onChanged: _updateCurrentEmail,
-                      validator: _validateEmail,
-                      initialValue: options.initialEmail,
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      decoration: options.decoration.copyWith(
-                        prefixIcon: options.emailInputPrefix,
-                        label: options.emailLabel,
+                    options.emailInputContainerBuilder(
+                      TextFormField(
+                        onChanged: _updateCurrentEmail,
+                        validator: _validateEmail,
+                        initialValue: options.initialEmail,
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                        decoration: options.decoration.copyWith(
+                          prefixIcon: options.emailInputPrefix,
+                          label: options.emailLabel,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 24),
-                    TextFormField(
-                      obscureText: _obscurePassword,
-                      onChanged: _updateCurrentPassword,
-                      validator: _validatePassword,
-                      initialValue: options.initialPassword,
-                      keyboardType: TextInputType.visiblePassword,
-                      textInputAction: TextInputAction.done,
-                      onFieldSubmitted: (_) => _handleLogin(),
-                      decoration: options.decoration.copyWith(
-                        label: options.passwordLabel,
-                        prefixIcon: options.passwordInputPrefix,
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _obscurePassword = !_obscurePassword;
-                            });
-                          },
-                          icon: Icon(
-                            _obscurePassword
-                                ? Icons.visibility
-                                : Icons.visibility_off,
+                    options.passwordInputContainerBuilder(
+                      TextFormField(
+                        obscureText: _obscurePassword,
+                        onChanged: _updateCurrentPassword,
+                        validator: _validatePassword,
+                        initialValue: options.initialPassword,
+                        keyboardType: TextInputType.visiblePassword,
+                        textInputAction: TextInputAction.done,
+                        onFieldSubmitted: (_) => _handleLogin(),
+                        decoration: options.decoration.copyWith(
+                          label: options.passwordLabel,
+                          prefixIcon: options.passwordInputPrefix,
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _obscurePassword = !_obscurePassword;
+                              });
+                            },
+                            icon: Icon(
+                              _obscurePassword
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
                           ),
                         ),
                       ),
