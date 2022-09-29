@@ -18,11 +18,15 @@ class LoginOptions {
     this.loginButtonBuilder = _createLoginButton,
     this.forgotPasswordButtonBuilder = _createForgotPasswordButton,
     this.registrationButtonBuilder = _createRegisterButton,
+    this.emailInputContainerBuilder = _createEmailInputContainer,
+    this.passwordInputContainerBuilder = _createPasswordInputContainer,
   });
 
   final ButtonBuilder loginButtonBuilder;
   final ButtonBuilder registrationButtonBuilder;
   final ButtonBuilder forgotPasswordButtonBuilder;
+  final InputContainerBuilder emailInputContainerBuilder;
+  final InputContainerBuilder passwordInputContainerBuilder;
 
   final Widget? image;
   final Widget? title;
@@ -48,6 +52,10 @@ class LoginTranslations {
   final String emailEmpty;
   final String passwordEmpty;
 }
+
+Widget _createEmailInputContainer(Widget child) => child;
+
+Widget _createPasswordInputContainer(Widget child) => child;
 
 Widget _createLoginButton(
   BuildContext context,
@@ -95,6 +103,10 @@ typedef ButtonBuilder = Widget Function(
   BuildContext context,
   OptionalAsyncCallback onPressed,
   bool isDisabled,
+);
+
+typedef InputContainerBuilder = Widget Function(
+  Widget child,
 );
 
 typedef OptionalAsyncCallback = FutureOr<void> Function();
