@@ -1,5 +1,26 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
+
+final loginOptions = LoginOptions(
+  decoration: const InputDecoration(
+    border: OutlineInputBorder(),
+  ),
+  emailInputPrefix: const Icon(Icons.email),
+  passwordInputPrefix: const Icon(Icons.password),
+  title: const Text('Login'),
+  image: const FlutterLogo(),
+  requestForgotPasswordButtonBuilder: (context, onPressed, isDisabled) {
+    return Opacity(
+      opacity: isDisabled ? 0.5 : 1.0,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        child: const Text('Send request'),
+      ),
+    );
+  },
+);
 
 void main() {
   runApp(const LoginExample());
@@ -12,22 +33,49 @@ class LoginExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
-      home: Scaffold(
-        body: EmailPasswordLoginForm(
-          options: LoginOptions(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
+      home: LoginScreen(),
+    );
+  }
+}
+
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: EmailPasswordLoginForm(
+        options: loginOptions,
+        onLogin: (email, password) => print('$email:$password'),
+        onRegister: (email, password) => print('Register!'),
+        onForgotPassword: (email) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return const ForgotPasswordScreen();
+              },
             ),
-            emailInputPrefix: Icon(Icons.email),
-            passwordInputPrefix: Icon(Icons.password),
-            title: Text('Login'),
-            image: FlutterLogo(),
-          ),
-          // ignore: avoid_print
-          onLogin: (email, password) => print('$email:$password'),
-          onRegister: (email, password) => print('Register!'),
-          onForgotPassword: () {},
-        ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class ForgotPasswordScreen extends StatelessWidget {
+  const ForgotPasswordScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: ForgotPasswordForm(
+        options: loginOptions,
+        title: Text('Forgot password'),
+        description: Text('Hello world'),
+        onRequestForgotPassword: (email) {
+          print('Forgot password email sent to $email');
+        },
       ),
     );
   }

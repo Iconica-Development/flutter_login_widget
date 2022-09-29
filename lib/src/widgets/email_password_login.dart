@@ -13,7 +13,7 @@ class EmailPasswordLoginForm extends StatefulWidget {
   });
 
   final LoginOptions options;
-  final VoidCallback? onForgotPassword;
+  final void Function(String email)? onForgotPassword;
   final FutureOr<void> Function(String email, String password)? onRegister;
   final FutureOr<void> Function(String email, String password) onLogin;
 
@@ -40,30 +40,13 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
   }
 
   void _validate() {
-    late bool isValid = _validateEmail(_currentEmail) == null &&
-        _validatePassword(_currentPassword) == null;
+    late bool isValid =
+        widget.options.validations.validateEmail(_currentEmail) == null &&
+            widget.options.validations.validatePassword(_currentPassword) ==
+                null;
     if (isValid != _formValid.value) {
       _formValid.value = isValid;
     }
-  }
-
-  String? _validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return widget.options.translations.emailEmpty;
-    }
-    if (!RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(value)) {
-      return widget.options.translations.emailInvalid;
-    }
-    return null;
-  }
-
-  String? _validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return widget.options.translations.passwordEmpty;
-    }
-    return null;
   }
 
   Future<void> _handleLogin() async {
@@ -128,7 +111,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                     options.emailInputContainerBuilder(
                       TextFormField(
                         onChanged: _updateCurrentEmail,
-                        validator: _validateEmail,
+                        validator: widget.options.validations.validateEmail,
                         initialValue: options.initialEmail,
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
@@ -143,7 +126,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                       TextFormField(
                         obscureText: _obscurePassword,
                         onChanged: _updateCurrentPassword,
-                        validator: _validatePassword,
+                        validator: widget.options.validations.validatePassword,
                         initialValue: options.initialPassword,
                         keyboardType: TextInputType.visiblePassword,
                         textInputAction: TextInputAction.done,
@@ -173,7 +156,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                         child: options.forgotPasswordButtonBuilder(
                           context,
                           () {
-                            widget.onForgotPassword?.call();
+                            widget.onForgotPassword?.call(_currentEmail);
                           },
                           false,
                         ),

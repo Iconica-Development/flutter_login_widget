@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_login/src/service/login_validation_.dart';
+import 'package:flutter_login/src/service/validation.dart';
 
 class LoginOptions {
   const LoginOptions({
@@ -15,8 +17,11 @@ class LoginOptions {
     this.initialEmail = '',
     this.initialPassword = '',
     this.translations = const LoginTranslations(),
+    this.validationService,
     this.loginButtonBuilder = _createLoginButton,
     this.forgotPasswordButtonBuilder = _createForgotPasswordButton,
+    this.requestForgotPasswordButtonBuilder =
+        _createRequestForgotPasswordButton,
     this.registrationButtonBuilder = _createRegisterButton,
     this.emailInputContainerBuilder = _createEmailInputContainer,
     this.passwordInputContainerBuilder = _createPasswordInputContainer,
@@ -25,6 +30,7 @@ class LoginOptions {
   final ButtonBuilder loginButtonBuilder;
   final ButtonBuilder registrationButtonBuilder;
   final ButtonBuilder forgotPasswordButtonBuilder;
+  final ButtonBuilder requestForgotPasswordButtonBuilder;
   final InputContainerBuilder emailInputContainerBuilder;
   final InputContainerBuilder passwordInputContainerBuilder;
 
@@ -39,6 +45,10 @@ class LoginOptions {
   final String initialEmail;
   final String initialPassword;
   final LoginTranslations translations;
+  final ValidationService? validationService;
+
+  ValidationService get validations =>
+      validationService ?? LoginValidationService(this);
 }
 
 class LoginTranslations {
@@ -81,6 +91,20 @@ Widget _createForgotPasswordButton(
     child: TextButton(
       onPressed: onPressed,
       child: const Text('Forgot password?'),
+    ),
+  );
+}
+
+Widget _createRequestForgotPasswordButton(
+  BuildContext context,
+  OptionalAsyncCallback onPressed,
+  bool disabled,
+) {
+  return Opacity(
+    opacity: disabled ? 0.5 : 1.0,
+    child: TextButton(
+      onPressed: onPressed,
+      child: const Text('Send request'),
     ),
   );
 }
