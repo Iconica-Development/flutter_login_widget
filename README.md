@@ -1,39 +1,95 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+A package facilitating the basic ingredients for creating functional yet customizable login pages
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Create a login screen for email and password logins
+Create a forgot password screen by passing in the email from the login
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+1. install the package by adding the following to your pubspec.yaml
+   ```
+    flutter_login:
+      git:
+        url: https://github.com/Iconica-Development/flutter_login.git
+        ref: 1.0.0
+   ```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
 ```dart
-const like = 'sample';
+final loginOptions = LoginOptions(
+  decoration: const InputDecoration(
+    border: OutlineInputBorder(),
+  ),
+  emailInputPrefix: const Icon(Icons.email),
+  passwordInputPrefix: const Icon(Icons.password),
+  title: const Text('Login'),
+  image: const FlutterLogo(),
+  requestForgotPasswordButtonBuilder: (context, onPressed, isDisabled) {
+    return Opacity(
+      opacity: isDisabled ? 0.5 : 1.0,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        child: const Text('Send request'),
+      ),
+    );
+  },
+);
+
+class LoginExample extends StatelessWidget {
+  const LoginExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData.dark(),
+      home: LoginScreen(),
+    );
+  }
+}
+
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: EmailPasswordLoginForm(
+        options: loginOptions,
+        onLogin: (email, password) => print('$email:$password'),
+        onRegister: (email, password) => print('Register!'),
+        onForgotPassword: (email) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return const ForgotPasswordScreen();
+              },
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class ForgotPasswordScreen extends StatelessWidget {
+  const ForgotPasswordScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: ForgotPasswordForm(
+        options: loginOptions,
+        title: Text('Forgot password'),
+        description: Text('Hello world'),
+        onRequestForgotPassword: (email) {
+          print('Forgot password email sent to $email');
+        },
+      ),
+    );
+  }
+}
+
 ```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
