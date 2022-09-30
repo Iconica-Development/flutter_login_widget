@@ -33,7 +33,7 @@ class LoginExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
-      home: LoginScreen(),
+      home: const LoginScreen(),
     );
   }
 }
@@ -71,8 +71,8 @@ class ForgotPasswordScreen extends StatelessWidget {
       appBar: AppBar(),
       body: ForgotPasswordForm(
         options: loginOptions,
-        title: Text('Forgot password'),
-        description: Text('Hello world'),
+        title: const Text('Forgot password'),
+        description: const Text('Hello world'),
         onRequestForgotPassword: (email) {
           print('Forgot password email sent to $email');
         },
