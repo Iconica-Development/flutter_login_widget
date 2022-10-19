@@ -116,6 +116,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         decoration: options.decoration.copyWith(
+                          hintText: options.emailHintText,
                           prefixIcon: options.emailInputPrefix,
                           label: options.emailLabel,
                         ),
@@ -132,6 +133,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                         textInputAction: TextInputAction.done,
                         onFieldSubmitted: (_) => _handleLogin(),
                         decoration: options.decoration.copyWith(
+                          hintText: options.passwordHintText,
                           label: options.passwordLabel,
                           prefixIcon: options.passwordInputPrefix,
                           suffixIcon: IconButton(
