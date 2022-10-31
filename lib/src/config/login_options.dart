@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_login/src/service/login_validation_.dart';
+import 'package:flutter_login/src/service/login_validation.dart';
 import 'package:flutter_login/src/service/validation.dart';
 
 class LoginOptions {
