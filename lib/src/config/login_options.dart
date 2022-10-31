@@ -71,11 +71,12 @@ Widget _createLoginButton(
   BuildContext context,
   OptionalAsyncCallback onPressed,
   bool disabled,
+  OptionalAsyncCallback onDisabledPress,
 ) {
   return Opacity(
     opacity: disabled ? 0.5 : 1.0,
     child: ElevatedButton(
-      onPressed: onPressed,
+      onPressed: !disabled ? onPressed : onDisabledPress,
       child: const Text('Login'),
     ),
   );
@@ -85,11 +86,12 @@ Widget _createForgotPasswordButton(
   BuildContext context,
   OptionalAsyncCallback onPressed,
   bool disabled,
+  OptionalAsyncCallback onDisabledPress,
 ) {
   return Opacity(
     opacity: disabled ? 0.5 : 1.0,
-    child: TextButton(
-      onPressed: onPressed,
+    child: ElevatedButton(
+      onPressed: !disabled ? onPressed : onDisabledPress,
       child: const Text('Forgot password?'),
     ),
   );
@@ -99,11 +101,12 @@ Widget _createRequestForgotPasswordButton(
   BuildContext context,
   OptionalAsyncCallback onPressed,
   bool disabled,
+  OptionalAsyncCallback onDisabledPress,
 ) {
   return Opacity(
     opacity: disabled ? 0.5 : 1.0,
-    child: TextButton(
-      onPressed: onPressed,
+    child: ElevatedButton(
+      onPressed: !disabled ? onPressed : onDisabledPress,
       child: const Text('Send request'),
     ),
   );
@@ -113,11 +116,12 @@ Widget _createRegisterButton(
   BuildContext context,
   OptionalAsyncCallback onPressed,
   bool disabled,
+  OptionalAsyncCallback onDisabledPress,
 ) {
   return Opacity(
     opacity: disabled ? 0.5 : 1.0,
-    child: TextButton(
-      onPressed: onPressed,
+    child: ElevatedButton(
+      onPressed: !disabled ? onPressed : onDisabledPress,
       child: const Text('Create Account'),
     ),
   );
@@ -127,6 +131,7 @@ typedef ButtonBuilder = Widget Function(
   BuildContext context,
   OptionalAsyncCallback onPressed,
   bool isDisabled,
+  OptionalAsyncCallback onDisabledPress,
 );
 
 typedef InputContainerBuilder = Widget Function(

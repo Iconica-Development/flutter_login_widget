@@ -159,6 +159,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                             widget.onForgotPassword?.call(_currentEmail);
                           },
                           false,
+                          () {},
                         ),
                       ),
                     ],
@@ -170,6 +171,9 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                           context,
                           _handleLogin,
                           !_formValid.value,
+                          () {
+                            _formKey.currentState?.validate();
+                          },
                         );
                       },
                     ),
@@ -183,6 +187,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                           );
                         },
                         false,
+                        () {},
                       ),
                     ]
                   ],

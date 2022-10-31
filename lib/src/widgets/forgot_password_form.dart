@@ -33,6 +33,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
   void initState() {
     super.initState();
     _focusNode.requestFocus();
+    _currentEmail = widget.initialEmail ?? widget.options.initialEmail;
   }
 
   @override
@@ -123,11 +124,15 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                   child: widget.options.requestForgotPasswordButtonBuilder(
                     context,
                     () {
+                      _formKey.currentState?.validate();
                       if (_formValid.value) {
                         widget.onRequestForgotPassword(_currentEmail);
                       }
                     },
                     !_formValid.value,
+                    () {
+                      _formKey.currentState?.validate();
+                    },
                   ),
                 );
               },

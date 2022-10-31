@@ -11,11 +11,16 @@ final loginOptions = LoginOptions(
   passwordInputPrefix: const Icon(Icons.password),
   title: const Text('Login'),
   image: const FlutterLogo(),
-  requestForgotPasswordButtonBuilder: (context, onPressed, isDisabled) {
+  requestForgotPasswordButtonBuilder: (
+    context,
+    onPressed,
+    isDisabled,
+    onDisabledPress,
+  ) {
     return Opacity(
       opacity: isDisabled ? 0.5 : 1.0,
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: isDisabled ? onDisabledPress : onPressed,
         child: const Text('Send request'),
       ),
     );
