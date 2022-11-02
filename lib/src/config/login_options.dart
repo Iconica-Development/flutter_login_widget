@@ -25,6 +25,8 @@ class LoginOptions {
     this.registrationButtonBuilder = _createRegisterButton,
     this.emailInputContainerBuilder = _createEmailInputContainer,
     this.passwordInputContainerBuilder = _createPasswordInputContainer,
+    this.emailHintText,
+    this.passwordHintText,
   });
 
   final ButtonBuilder loginButtonBuilder;
@@ -44,6 +46,8 @@ class LoginOptions {
   final InputDecoration decoration;
   final String initialEmail;
   final String initialPassword;
+  final String? emailHintText;
+  final String? passwordHintText;
   final LoginTranslations translations;
   final ValidationService? validationService;
 
