@@ -16,6 +16,7 @@ final loginOptions = LoginOptions(
     onPressed,
     isDisabled,
     onDisabledPress,
+    translations,
   ) {
     return Opacity(
       opacity: isDisabled ? 0.5 : 1.0,

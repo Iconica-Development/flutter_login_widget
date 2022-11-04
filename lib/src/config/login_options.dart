@@ -60,11 +60,19 @@ class LoginTranslations {
     this.emailEmpty = 'Email is required',
     this.passwordEmpty = 'Password is required',
     this.emailInvalid = 'Enter a valid email address',
+    this.loginButton = 'Login',
+    this.forgotPasswordButton = 'Forgot password?',
+    this.requestForgotPasswordButton = 'Send request',
+    this.registrationButton = 'Create Account',
   });
 
   final String emailInvalid;
   final String emailEmpty;
   final String passwordEmpty;
+  final String loginButton;
+  final String forgotPasswordButton;
+  final String requestForgotPasswordButton;
+  final String registrationButton;
 }
 
 Widget _createEmailInputContainer(Widget child) => child;
@@ -76,12 +84,13 @@ Widget _createLoginButton(
   OptionalAsyncCallback onPressed,
   bool disabled,
   OptionalAsyncCallback onDisabledPress,
+  LoginTranslations translations,
 ) {
   return Opacity(
     opacity: disabled ? 0.5 : 1.0,
     child: ElevatedButton(
       onPressed: !disabled ? onPressed : onDisabledPress,
-      child: const Text('Login'),
+      child: Text(translations.loginButton),
     ),
   );
 }
@@ -91,12 +100,13 @@ Widget _createForgotPasswordButton(
   OptionalAsyncCallback onPressed,
   bool disabled,
   OptionalAsyncCallback onDisabledPress,
+  LoginTranslations translations,
 ) {
   return Opacity(
     opacity: disabled ? 0.5 : 1.0,
     child: ElevatedButton(
       onPressed: !disabled ? onPressed : onDisabledPress,
-      child: const Text('Forgot password?'),
+      child: Text(translations.forgotPasswordButton),
     ),
   );
 }
@@ -106,12 +116,13 @@ Widget _createRequestForgotPasswordButton(
   OptionalAsyncCallback onPressed,
   bool disabled,
   OptionalAsyncCallback onDisabledPress,
+  LoginTranslations translations,
 ) {
   return Opacity(
     opacity: disabled ? 0.5 : 1.0,
     child: ElevatedButton(
       onPressed: !disabled ? onPressed : onDisabledPress,
-      child: const Text('Send request'),
+      child: Text(translations.requestForgotPasswordButton),
     ),
   );
 }
@@ -121,12 +132,13 @@ Widget _createRegisterButton(
   OptionalAsyncCallback onPressed,
   bool disabled,
   OptionalAsyncCallback onDisabledPress,
+  LoginTranslations translations,
 ) {
   return Opacity(
     opacity: disabled ? 0.5 : 1.0,
     child: ElevatedButton(
       onPressed: !disabled ? onPressed : onDisabledPress,
-      child: const Text('Create Account'),
+      child: Text(translations.registrationButton),
     ),
   );
 }
@@ -136,6 +148,7 @@ typedef ButtonBuilder = Widget Function(
   OptionalAsyncCallback onPressed,
   bool isDisabled,
   OptionalAsyncCallback onDisabledPress,
+  LoginTranslations options,
 );
 
 typedef InputContainerBuilder = Widget Function(
