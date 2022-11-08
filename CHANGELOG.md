@@ -1,5 +1,5 @@
-## 2.0.2
-* Added more translatable options
+## 3.0.0
+* Added login options to loginbuilders for more customization
 
 ## 2.0.1
 

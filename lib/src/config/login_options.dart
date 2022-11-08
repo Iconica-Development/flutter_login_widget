@@ -84,13 +84,13 @@ Widget _createLoginButton(
   OptionalAsyncCallback onPressed,
   bool disabled,
   OptionalAsyncCallback onDisabledPress,
-  LoginTranslations translations,
+  LoginOptions options,
 ) {
   return Opacity(
     opacity: disabled ? 0.5 : 1.0,
     child: ElevatedButton(
       onPressed: !disabled ? onPressed : onDisabledPress,
-      child: Text(translations.loginButton),
+      child: Text(options.translations.loginButton),
     ),
   );
 }
@@ -100,13 +100,13 @@ Widget _createForgotPasswordButton(
   OptionalAsyncCallback onPressed,
   bool disabled,
   OptionalAsyncCallback onDisabledPress,
-  LoginTranslations translations,
+  LoginOptions options,
 ) {
   return Opacity(
     opacity: disabled ? 0.5 : 1.0,
     child: ElevatedButton(
       onPressed: !disabled ? onPressed : onDisabledPress,
-      child: Text(translations.forgotPasswordButton),
+      child: Text(options.translations.forgotPasswordButton),
     ),
   );
 }
@@ -116,13 +116,13 @@ Widget _createRequestForgotPasswordButton(
   OptionalAsyncCallback onPressed,
   bool disabled,
   OptionalAsyncCallback onDisabledPress,
-  LoginTranslations translations,
+  LoginOptions options,
 ) {
   return Opacity(
     opacity: disabled ? 0.5 : 1.0,
     child: ElevatedButton(
       onPressed: !disabled ? onPressed : onDisabledPress,
-      child: Text(translations.requestForgotPasswordButton),
+      child: Text(options.translations.requestForgotPasswordButton),
     ),
   );
 }
@@ -132,13 +132,13 @@ Widget _createRegisterButton(
   OptionalAsyncCallback onPressed,
   bool disabled,
   OptionalAsyncCallback onDisabledPress,
-  LoginTranslations translations,
+  LoginOptions options,
 ) {
   return Opacity(
     opacity: disabled ? 0.5 : 1.0,
     child: ElevatedButton(
       onPressed: !disabled ? onPressed : onDisabledPress,
-      child: Text(translations.registrationButton),
+      child: Text(options.translations.registrationButton),
     ),
   );
 }
@@ -148,7 +148,7 @@ typedef ButtonBuilder = Widget Function(
   OptionalAsyncCallback onPressed,
   bool isDisabled,
   OptionalAsyncCallback onDisabledPress,
-  LoginTranslations options,
+  LoginOptions options,
 );
 
 typedef InputContainerBuilder = Widget Function(

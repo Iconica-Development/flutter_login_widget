@@ -133,7 +133,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                     () {
                       _formKey.currentState?.validate();
                     },
-                    options.translations,
+                    options,
                   ),
                 );
               },

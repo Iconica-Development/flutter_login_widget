@@ -162,7 +162,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                           },
                           false,
                           () {},
-                          options.translations,
+                          options,
                         ),
                       ),
                     ],
@@ -177,7 +177,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                           () {
                             _formKey.currentState?.validate();
                           },
-                          options.translations,
+                          options,
                         );
                       },
                     ),
@@ -192,7 +192,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                         },
                         false,
                         () {},
-                        options.translations,
+                        options,
                       ),
                     ]
                   ],
