@@ -50,19 +50,24 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: EmailPasswordLoginForm(
-        options: loginOptions,
-        onLogin: (email, password) => print('$email:$password'),
-        onRegister: (email, password) => print('Register!'),
-        onForgotPassword: (email) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return const ForgotPasswordScreen();
-              },
-            ),
-          );
-        },
+      body: Center(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height * 0.8,
+          child: EmailPasswordLoginForm(
+            options: loginOptions,
+            onLogin: (email, password) => print('$email:$password'),
+            onRegister: (email, password) => print('Register!'),
+            onForgotPassword: (email) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const ForgotPasswordScreen();
+                  },
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
