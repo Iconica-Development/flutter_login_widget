@@ -1,21 +1,15 @@
+[![pub package](https://img.shields.io/pub/v/flutter_introduction_widget.svg)](https://github.com/Iconica-Development) [![Build status](https://img.shields.io/github/workflow/status/Iconica-Development/flutter_login_widget/CI)](https://github.com/Iconica-Development/flutter_login_widget/actions/new) [![style: effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://github.com/tenhobi/effective_dart) 
+
+# Login Widget
 A package facilitating the basic ingredients for creating functional yet customizable login pages
 
-## Features
+[Login GIF](flutter_login.gif)
 
-Create a login screen for email and password logins
-Create a forgot password screen by passing in the email from the login
+## Setup
 
-## Getting started
+To use this package, add `flutter_login_widget` as a dependency in your pubspec.yaml file.
 
-1. install the package by adding the following to your pubspec.yaml
-   ```
-    flutter_login:
-      git:
-        url: https://github.com/Iconica-Development/flutter_login.git
-        ref: 1.0.0
-   ```
-
-## Usage
+## How to use
 
 ```dart
 final loginOptions = LoginOptions(
@@ -93,3 +87,17 @@ class ForgotPasswordScreen extends StatelessWidget {
 }
 
 ```
+
+See the [Example Code](example/lib/main.dart) for an example on how to use this package.
+
+## Issues
+
+Please file any issues, bugs or feature request as an issue on our [GitHub](https://github.com/Iconica-Development/flutter_login_widget) page. Commercial support is available if you need help with integration with your app or services. You can contact us at [support@iconica.nl](mailto:support@iconica.nl).
+
+## Want to contribute
+
+If you would like to contribute to the plugin (e.g. by improving the documentation, solving a bug or adding a cool new feature), please carefully review our [contribution guide](./CONTRIBUTING.md) and send us your [pull request](https://github.com/Iconica-Development/flutter_login_widget/pulls).
+
+## Author
+
+This `flutter_login_widget` for Flutter is developed by [Iconica](https://iconica.nl). You can contact us at <support@iconica.nl>

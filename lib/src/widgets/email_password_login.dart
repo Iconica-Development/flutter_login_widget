@@ -65,140 +65,153 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var options = widget.options;
-    return Column(
-      children: [
-        if (options.title != null) ...[
-          const SizedBox(
-            height: 60,
-          ),
-          Align(
-            alignment: Alignment.topCenter,
-            child: _wrapWithDefaultStyle(
-              options.title,
-              theme.textTheme.headline6,
-            ),
-          )
-        ],
-        if (options.subtitle != null) ...[
-          const SizedBox(
-            height: 10,
-          ),
-          Align(
-            alignment: Alignment.topCenter,
-            child: _wrapWithDefaultStyle(
-              options.subtitle,
-              theme.textTheme.subtitle1,
-            ),
-          )
-        ],
-        if (options.image != null) ...[
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: options.image,
-          ),
-        ],
-        Expanded(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: 300,
-            ),
-            child: Form(
-              key: _formKey,
-              child: Align(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    options.emailInputContainerBuilder(
-                      TextFormField(
-                        onChanged: _updateCurrentEmail,
-                        validator: widget.options.validations.validateEmail,
-                        initialValue: options.initialEmail,
-                        keyboardType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.next,
-                        decoration: options.decoration.copyWith(
-                          hintText: options.emailHintText,
-                          prefixIcon: options.emailInputPrefix,
-                          label: options.emailLabel,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    options.passwordInputContainerBuilder(
-                      TextFormField(
-                        obscureText: _obscurePassword,
-                        onChanged: _updateCurrentPassword,
-                        validator: widget.options.validations.validatePassword,
-                        initialValue: options.initialPassword,
-                        keyboardType: TextInputType.visiblePassword,
-                        textInputAction: TextInputAction.done,
-                        onFieldSubmitted: (_) => _handleLogin(),
-                        decoration: options.decoration.copyWith(
-                          hintText: options.passwordHintText,
-                          label: options.passwordLabel,
-                          prefixIcon: options.passwordInputPrefix,
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _obscurePassword = !_obscurePassword;
-                              });
-                            },
-                            icon: Icon(
-                              _obscurePassword
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+    return CustomScrollView(
+      physics: MediaQuery.of(context).viewInsets.bottom == 0
+          ? const NeverScrollableScrollPhysics()
+          : null,
+      slivers: [
+        SliverFillRemaining(
+          fillOverscroll: true,
+          hasScrollBody: false,
+          child: Column(
+            children: [
+              if (options.title != null) ...[
+                const SizedBox(
+                  height: 60,
+                ),
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: _wrapWithDefaultStyle(
+                    options.title,
+                    theme.textTheme.headline6,
+                  ),
+                )
+              ],
+              if (options.subtitle != null) ...[
+                const SizedBox(
+                  height: 10,
+                ),
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: _wrapWithDefaultStyle(
+                    options.subtitle,
+                    theme.textTheme.subtitle1,
+                  ),
+                )
+              ],
+              if (options.image != null) ...[
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: options.image,
+                ),
+              ],
+              Expanded(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxWidth: 300,
+                  ),
+                  child: Form(
+                    key: _formKey,
+                    child: Align(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          options.emailInputContainerBuilder(
+                            TextFormField(
+                              onChanged: _updateCurrentEmail,
+                              validator:
+                                  widget.options.validations.validateEmail,
+                              initialValue: options.initialEmail,
+                              keyboardType: TextInputType.emailAddress,
+                              textInputAction: TextInputAction.next,
+                              decoration: options.decoration.copyWith(
+                                hintText: options.emailHintText,
+                                prefixIcon: options.emailInputPrefix,
+                                label: options.emailLabel,
+                              ),
                             ),
                           ),
-                        ),
+                          const SizedBox(height: 24),
+                          options.passwordInputContainerBuilder(
+                            TextFormField(
+                              obscureText: _obscurePassword,
+                              onChanged: _updateCurrentPassword,
+                              validator:
+                                  widget.options.validations.validatePassword,
+                              initialValue: options.initialPassword,
+                              keyboardType: TextInputType.visiblePassword,
+                              textInputAction: TextInputAction.done,
+                              onFieldSubmitted: (_) => _handleLogin(),
+                              decoration: options.decoration.copyWith(
+                                hintText: options.passwordHintText,
+                                label: options.passwordLabel,
+                                prefixIcon: options.passwordInputPrefix,
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _obscurePassword = !_obscurePassword;
+                                    });
+                                  },
+                                  icon: Icon(
+                                    _obscurePassword
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          if (widget.onForgotPassword != null) ...[
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: options.forgotPasswordButtonBuilder(
+                                context,
+                                () {
+                                  widget.onForgotPassword?.call(_currentEmail);
+                                },
+                                false,
+                                () {},
+                                options,
+                              ),
+                            ),
+                          ],
+                          const SizedBox(height: 8),
+                          AnimatedBuilder(
+                            animation: _formValid,
+                            builder: (context, _) {
+                              return options.loginButtonBuilder(
+                                context,
+                                _handleLogin,
+                                !_formValid.value,
+                                () {
+                                  _formKey.currentState?.validate();
+                                },
+                                options,
+                              );
+                            },
+                          ),
+                          if (widget.onRegister != null) ...[
+                            options.registrationButtonBuilder(
+                              context,
+                              () {
+                                widget.onRegister?.call(
+                                  _currentEmail,
+                                  _currentPassword,
+                                );
+                              },
+                              false,
+                              () {},
+                              options,
+                            ),
+                          ]
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 24),
-                    if (widget.onForgotPassword != null) ...[
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: options.forgotPasswordButtonBuilder(
-                          context,
-                          () {
-                            widget.onForgotPassword?.call(_currentEmail);
-                          },
-                          false,
-                          () {},
-                          options,
-                        ),
-                      ),
-                    ],
-                    const SizedBox(height: 8),
-                    AnimatedBuilder(
-                      animation: _formValid,
-                      builder: (context, _) {
-                        return options.loginButtonBuilder(
-                          context,
-                          _handleLogin,
-                          !_formValid.value,
-                          () {
-                            _formKey.currentState?.validate();
-                          },
-                          options,
-                        );
-                      },
-                    ),
-                    if (widget.onRegister != null) ...[
-                      options.registrationButtonBuilder(
-                        context,
-                        () {
-                          widget.onRegister?.call(
-                            _currentEmail,
-                            _currentPassword,
-                          );
-                        },
-                        false,
-                        () {},
-                        options,
-                      ),
-                    ]
-                  ],
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
         ),
       ],
