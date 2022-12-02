@@ -7,15 +7,15 @@ class ForgotPasswordForm extends StatefulWidget {
   const ForgotPasswordForm({
     super.key,
     required this.options,
-    required this.title,
     required this.description,
     required this.onRequestForgotPassword,
+    this.title,
     this.initialEmail,
   });
 
   final LoginOptions options;
 
-  final Widget title;
+  final Widget? title;
   final Widget description;
   final String? initialEmail;
 
