@@ -9,8 +9,10 @@ final loginOptions = LoginOptions(
   ),
   emailInputPrefix: const Icon(Icons.email),
   passwordInputPrefix: const Icon(Icons.password),
-  title: const Text('Login'),
-  image: const FlutterLogo(),
+  title: const Text('Login Demo'),
+  image: const FlutterLogo(
+    size: 200,
+  ),
   requestForgotPasswordButtonBuilder: (
     context,
     onPressed,
