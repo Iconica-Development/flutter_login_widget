@@ -62,6 +62,14 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _currentEmail = widget.options.initialEmail;
+    _currentPassword = widget.options.initialPassword;
+    _validate();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var options = widget.options;

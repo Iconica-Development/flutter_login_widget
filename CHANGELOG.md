@@ -1,3 +1,6 @@
+## 3.1.1
+* Fix login values not copied to validation
+
 ## 3.0.0
 * Added login options to loginbuilders for more customization
 
