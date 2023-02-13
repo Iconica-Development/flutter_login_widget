@@ -91,7 +91,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                   alignment: Alignment.topCenter,
                   child: _wrapWithDefaultStyle(
                     options.title,
-                    theme.textTheme.headline6,
+                    theme.textTheme.headlineSmall,
                   ),
                 )
               ],
@@ -103,7 +103,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                   alignment: Alignment.topCenter,
                   child: _wrapWithDefaultStyle(
                     options.subtitle,
-                    theme.textTheme.subtitle1,
+                    theme.textTheme.titleSmall,
                   ),
                 )
               ],
@@ -132,6 +132,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                               initialValue: options.initialEmail,
                               keyboardType: TextInputType.emailAddress,
                               textInputAction: TextInputAction.next,
+                              style: options.emailTextStyle,
                               decoration: options.decoration.copyWith(
                                 hintText: options.emailHintText,
                                 prefixIcon: options.emailInputPrefix,
@@ -149,6 +150,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                               initialValue: options.initialPassword,
                               keyboardType: TextInputType.visiblePassword,
                               textInputAction: TextInputAction.done,
+                              style: options.passwordTextStyle,
                               onFieldSubmitted: (_) => _handleLogin(),
                               decoration: options.decoration.copyWith(
                                 hintText: options.passwordHintText,

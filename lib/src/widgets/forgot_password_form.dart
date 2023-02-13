@@ -106,6 +106,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                       initialValue: options.initialEmail,
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
+                      style: options.emailTextStyle,
                       decoration: options.decoration.copyWith(
                         prefixIcon: options.emailInputPrefix,
                         label: options.emailLabel,

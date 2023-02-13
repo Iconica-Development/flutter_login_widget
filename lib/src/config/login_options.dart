@@ -13,6 +13,8 @@ class LoginOptions {
     this.passwordLabel,
     this.emailInputPrefix,
     this.passwordInputPrefix,
+    this.emailTextStyle,
+    this.passwordTextStyle,
     this.decoration = const InputDecoration(),
     this.initialEmail = '',
     this.initialPassword = '',
@@ -48,6 +50,8 @@ class LoginOptions {
   final String initialPassword;
   final String? emailHintText;
   final String? passwordHintText;
+  final TextStyle? emailTextStyle;
+  final TextStyle? passwordTextStyle;
   final LoginTranslations translations;
   final ValidationService? validationService;
 
