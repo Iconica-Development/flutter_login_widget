@@ -1,3 +1,6 @@
+## 3.1.2
+* Added textStyle option for email and password fields
+
 ## 3.1.1
 * Fix login values not copied to validation
 
