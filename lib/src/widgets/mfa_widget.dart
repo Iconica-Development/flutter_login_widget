@@ -17,13 +17,16 @@ class MFAWidget extends StatefulWidget {
       this.errorTextStyle,
       this.validator,
       this.submitButtonBuilder,
+      this.length = 6,
       super.key})
       : assert(
-          onSubmitted != null && submitButtonBuilder != null,
+          (onSubmitted == null && submitButtonBuilder == null) ||
+              (onSubmitted != null && submitButtonBuilder != null),
         );
 
   final Function(String code) onCompleted;
   final Function(String code)? onSubmitted;
+  final int length;
   final PinTheme? defaultPinTheme;
   final PinTheme? focusedPinTheme;
   final PinTheme? submittedPinTheme;
@@ -62,7 +65,7 @@ class _MFAWidgetState extends State<MFAWidget> {
           errorTextStyle: widget.errorTextStyle,
           validator: widget.validator,
           controller: _controller,
-          length: 6,
+          length: widget.length,
           onCompleted: (_) {
             widget.onCompleted(_controller.text);
           },
