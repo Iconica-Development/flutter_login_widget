@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  pinput: ^2.2.31
 
 dev_dependencies:
   flutter_test:
