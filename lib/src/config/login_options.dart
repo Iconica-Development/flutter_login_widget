@@ -9,13 +9,10 @@ class LoginOptions {
     this.image,
     this.title,
     this.subtitle,
-    this.emailLabel,
-    this.passwordLabel,
-    this.emailInputPrefix,
-    this.passwordInputPrefix,
     this.emailTextStyle,
     this.passwordTextStyle,
-    this.decoration = const InputDecoration(),
+    this.emailDecoration = const InputDecoration(),
+    this.passwordDecoration = const InputDecoration(),
     this.initialEmail = '',
     this.initialPassword = '',
     this.translations = const LoginTranslations(),
@@ -27,8 +24,6 @@ class LoginOptions {
     this.registrationButtonBuilder = _createRegisterButton,
     this.emailInputContainerBuilder = _createEmailInputContainer,
     this.passwordInputContainerBuilder = _createPasswordInputContainer,
-    this.emailHintText,
-    this.passwordHintText,
   });
 
   final ButtonBuilder loginButtonBuilder;
@@ -41,15 +36,10 @@ class LoginOptions {
   final Widget? image;
   final Widget? title;
   final Widget? subtitle;
-  final Widget? emailLabel;
-  final Widget? passwordLabel;
-  final Widget? emailInputPrefix;
-  final Widget? passwordInputPrefix;
-  final InputDecoration decoration;
+  final InputDecoration emailDecoration;
+  final InputDecoration passwordDecoration;
   final String initialEmail;
   final String initialPassword;
-  final String? emailHintText;
-  final String? passwordHintText;
   final TextStyle? emailTextStyle;
   final TextStyle? passwordTextStyle;
   final LoginTranslations translations;
@@ -79,9 +69,15 @@ class LoginTranslations {
   final String registrationButton;
 }
 
-Widget _createEmailInputContainer(Widget child) => child;
+Widget _createEmailInputContainer(Widget child) => Padding(
+      padding: const EdgeInsets.only(bottom: 15),
+      child: child,
+    );
 
-Widget _createPasswordInputContainer(Widget child) => child;
+Widget _createPasswordInputContainer(Widget child) => Padding(
+      padding: const EdgeInsets.only(bottom: 15),
+      child: child,
+    );
 
 Widget _createLoginButton(
   BuildContext context,

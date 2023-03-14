@@ -7,17 +7,20 @@ A package facilitating the basic ingredients for creating functional yet customi
 
 ## Setup
 
-To use this package, add `flutter_login_widget` as a dependency in your pubspec.yaml file.
+To use this package, add `flutter_login` as a dependency in your pubspec.yaml file.
 
 ## How to use
 
 ```dart
 final loginOptions = LoginOptions(
-  decoration: const InputDecoration(
+  emailDecoration: const InputDecoration(
+    prefixIcon: Icon(Icons.email),
     border: OutlineInputBorder(),
   ),
-  emailInputPrefix: const Icon(Icons.email),
-  passwordInputPrefix: const Icon(Icons.password),
+  passwordDecoration: const InputDecoration(
+    prefixIcon: Icon(Icons.password),
+    border: OutlineInputBorder(),
+  ),
   title: const Text('Login'),
   image: const FlutterLogo(),
   requestForgotPasswordButtonBuilder: (context, onPressed, isDisabled) {

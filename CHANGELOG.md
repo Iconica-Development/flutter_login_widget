@@ -1,3 +1,6 @@
+## 4.0.0
+* More decoration options less default padding
+
 ## 3.1.2
 * Added textStyle option for email and password fields
 
