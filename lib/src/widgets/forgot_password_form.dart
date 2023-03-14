@@ -65,60 +65,41 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
     var theme = Theme.of(context);
     return Form(
       key: _formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 32,
-              vertical: 16,
-            ),
-            child: _wrapWithDefaultStyle(
-              widget.title,
-              theme.textTheme.displaySmall,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 32,
-              vertical: 16,
-            ),
-            child: _wrapWithDefaultStyle(
-              widget.description,
-              theme.textTheme.bodyMedium,
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Align(
-              child: options.emailInputContainerBuilder(
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      maxWidth: 300,
-                    ),
-                    child: TextFormField(
-                      focusNode: _focusNode,
-                      onChanged: _updateCurrentEmail,
-                      validator: widget.options.validations.validateEmail,
-                      initialValue: options.initialEmail,
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      style: options.emailTextStyle,
-                      decoration: options.decoration.copyWith(
-                        prefixIcon: options.emailInputPrefix,
-                        label: options.emailLabel,
-                      ),
-                    ),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          maxWidth: 300,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _wrapWithDefaultStyle(
+                  widget.title,
+                  theme.textTheme.displaySmall,
+                ) ??
+                const SizedBox.shrink(),
+            _wrapWithDefaultStyle(
+                  widget.description,
+                  theme.textTheme.bodyMedium,
+                ) ??
+                const SizedBox.shrink(),
+            Expanded(
+              child: Align(
+                child: options.emailInputContainerBuilder(
+                  TextFormField(
+                    focusNode: _focusNode,
+                    onChanged: _updateCurrentEmail,
+                    validator: widget.options.validations.validateEmail,
+                    initialValue: options.initialEmail,
+                    keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
+                    style: options.emailTextStyle,
+                    decoration: options.emailDecoration,
                   ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: AnimatedBuilder(
+            AnimatedBuilder(
               animation: _formValid,
               builder: (context, snapshot) {
                 return Align(
@@ -139,8 +120,8 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                 );
               },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

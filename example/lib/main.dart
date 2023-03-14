@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 
 final loginOptions = LoginOptions(
-  decoration: const InputDecoration(
+  emailDecoration: const InputDecoration(
+    prefixIcon: Icon(Icons.email),
     border: OutlineInputBorder(),
   ),
-  emailInputPrefix: const Icon(Icons.email),
-  passwordInputPrefix: const Icon(Icons.password),
+  passwordDecoration: const InputDecoration(
+    prefixIcon: Icon(Icons.password),
+    border: OutlineInputBorder(),
+  ),
   title: const Text('Login Demo'),
   image: const FlutterLogo(
     size: 200,

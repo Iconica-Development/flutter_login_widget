@@ -133,14 +133,9 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                               keyboardType: TextInputType.emailAddress,
                               textInputAction: TextInputAction.next,
                               style: options.emailTextStyle,
-                              decoration: options.decoration.copyWith(
-                                hintText: options.emailHintText,
-                                prefixIcon: options.emailInputPrefix,
-                                label: options.emailLabel,
-                              ),
+                              decoration: options.emailDecoration,
                             ),
                           ),
-                          const SizedBox(height: 24),
                           options.passwordInputContainerBuilder(
                             TextFormField(
                               obscureText: _obscurePassword,
@@ -152,10 +147,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                               textInputAction: TextInputAction.done,
                               style: options.passwordTextStyle,
                               onFieldSubmitted: (_) => _handleLogin(),
-                              decoration: options.decoration.copyWith(
-                                hintText: options.passwordHintText,
-                                label: options.passwordLabel,
-                                prefixIcon: options.passwordInputPrefix,
+                              decoration: options.passwordDecoration.copyWith(
                                 suffixIcon: IconButton(
                                   onPressed: () {
                                     setState(() {
@@ -171,7 +163,6 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 24),
                           if (widget.onForgotPassword != null) ...[
                             Align(
                               alignment: Alignment.topRight,
