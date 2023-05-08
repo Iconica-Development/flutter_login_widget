@@ -1,3 +1,6 @@
+## 4.1.0
+* Option to add spacers between all items
+
 ## 4.0.0
 * More decoration options less default padding
 

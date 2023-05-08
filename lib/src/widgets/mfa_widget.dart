@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 
 class MFAWidget extends StatefulWidget {
-  const MFAWidget(
-      {required this.onCompleted,
-      this.onSubmitted,
-      this.defaultPinTheme,
-      this.focusedPinTheme,
-      this.submittedPinTheme,
-      this.followingPinTheme,
-      this.disabledPinTheme,
-      this.errorPinTheme,
-      this.seperatorPositions,
-      this.errorBuilder,
-      this.errorText,
-      this.errorTextStyle,
-      this.validator,
-      this.submitButtonBuilder,
-      this.length = 6,
-      super.key})
-      : assert(
+  const MFAWidget({
+    required this.onCompleted,
+    this.onSubmitted,
+    this.defaultPinTheme,
+    this.focusedPinTheme,
+    this.submittedPinTheme,
+    this.followingPinTheme,
+    this.disabledPinTheme,
+    this.errorPinTheme,
+    this.seperatorPositions,
+    this.errorBuilder,
+    this.errorText,
+    this.errorTextStyle,
+    this.validator,
+    this.submitButtonBuilder,
+    this.length = 6,
+    super.key,
+  }) : assert(
           (onSubmitted == null && submitButtonBuilder == null) ||
               (onSubmitted != null && submitButtonBuilder != null),
         );
