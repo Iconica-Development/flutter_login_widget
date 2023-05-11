@@ -1,20 +1,24 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_login/src/config/spacer_options.dart';
 import 'package:flutter_login/src/service/login_validation.dart';
 import 'package:flutter_login/src/service/validation.dart';
 
+@immutable
 class LoginOptions {
   const LoginOptions({
     this.image,
     this.title,
     this.subtitle,
+    this.maxFormWidth,
     this.emailTextStyle,
     this.passwordTextStyle,
     this.emailDecoration = const InputDecoration(),
     this.passwordDecoration = const InputDecoration(),
     this.initialEmail = '',
     this.initialPassword = '',
+    this.spacers = const LoginSpacerOptions(),
     this.translations = const LoginTranslations(),
     this.validationService,
     this.loginButtonBuilder = _createLoginButton,
@@ -36,6 +40,13 @@ class LoginOptions {
   final Widget? image;
   final Widget? title;
   final Widget? subtitle;
+
+  /// Option to modify the spacing between the title, subtitle, image, form, and button.
+  final LoginSpacerOptions spacers;
+
+  /// Maximum width of the form. Defaults to 400.
+  final double? maxFormWidth;
+
   final InputDecoration emailDecoration;
   final InputDecoration passwordDecoration;
   final String initialEmail;

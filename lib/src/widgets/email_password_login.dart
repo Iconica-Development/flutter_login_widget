@@ -95,6 +95,9 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                   ),
                 )
               ],
+              if (options.spacers.spacerAfterTitle != null) ...[
+                Spacer(flex: options.spacers.spacerAfterTitle!),
+              ],
               if (options.subtitle != null) ...[
                 const SizedBox(
                   height: 10,
@@ -107,16 +110,23 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                   ),
                 )
               ],
+              if (options.spacers.spacerAfterSubtitle != null) ...[
+                Spacer(flex: options.spacers.spacerAfterSubtitle!),
+              ],
               if (options.image != null) ...[
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: options.image,
                 ),
               ],
+              if (options.spacers.spacerAfterImage != null) ...[
+                Spacer(flex: options.spacers.spacerAfterImage!),
+              ],
               Expanded(
+                flex: options.spacers.formFlexValue,
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    maxWidth: 300,
+                  constraints: BoxConstraints(
+                    maxWidth: options.maxFormWidth ?? 300,
                   ),
                   child: Form(
                     key: _formKey,
@@ -176,6 +186,9 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                                 options,
                               ),
                             ),
+                          ],
+                          if (options.spacers.spacerAfterForm != null) ...[
+                            Spacer(flex: options.spacers.spacerAfterForm!),
                           ],
                           const SizedBox(height: 8),
                           AnimatedBuilder(

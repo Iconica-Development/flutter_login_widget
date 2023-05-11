@@ -31,3 +31,10 @@ build/
 
 .flutter-plugins-dependencies
 .flutter-plugins
+
+example/android/
+example/ios/
+example/linux/
+example/windows/
+example/macos/
+example/web/
