@@ -4,11 +4,6 @@ on:
   push:
     branches: [ master ]
   pull_request:
-    branches:
-      - master
-      - feature/*
-      - bugfix/*
-      - hotfix/*
 
 jobs:
   lint:

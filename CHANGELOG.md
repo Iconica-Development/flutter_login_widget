@@ -1,3 +1,6 @@
+## 4.1.1
+* Export default LoginValidationService
+
 ## 4.1.0
 * Option to add spacers between all items
 
