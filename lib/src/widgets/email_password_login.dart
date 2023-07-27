@@ -83,6 +83,9 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
           hasScrollBody: false,
           child: Column(
             children: [
+              if (options.spacers.spacerBeforeTitle != null) ...[
+                Spacer(flex: options.spacers.spacerBeforeTitle!),
+              ],
               if (options.title != null) ...[
                 const SizedBox(
                   height: 60,
@@ -218,7 +221,10 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                               () {},
                               options,
                             ),
-                          ]
+                          ],
+                          if (options.spacers.spacerAfterButton != null) ...[
+                            Spacer(flex: options.spacers.spacerAfterButton!),
+                          ],
                         ],
                       ),
                     ),

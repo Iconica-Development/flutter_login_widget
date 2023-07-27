@@ -1,3 +1,6 @@
+## 4.2.0
+* Option for spacers add the start and end of the form
+
 ## 4.1.1
 * Export default LoginValidationService
 
