@@ -1,3 +1,6 @@
+## 5.0.0
+* Removed the redundant initialEmail parameter from 'ForgotPasswordForm'. The only one to use now is the one in the 'LoginOptions'.
+
 ## 4.2.0
 * Option for spacers add the start and end of the form
 
