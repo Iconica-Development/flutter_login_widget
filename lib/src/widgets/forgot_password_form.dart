@@ -10,14 +10,12 @@ class ForgotPasswordForm extends StatefulWidget {
     required this.description,
     required this.onRequestForgotPassword,
     this.title,
-    this.initialEmail,
   });
 
   final LoginOptions options;
 
   final Widget? title;
   final Widget description;
-  final String? initialEmail;
 
   final FutureOr<void> Function(String email) onRequestForgotPassword;
 
@@ -33,7 +31,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
   void initState() {
     super.initState();
     _focusNode.requestFocus();
-    _currentEmail = widget.initialEmail ?? widget.options.initialEmail;
+    _currentEmail = widget.options.initialEmail;
   }
 
   @override
