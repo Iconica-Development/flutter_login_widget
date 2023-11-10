@@ -11,7 +11,13 @@ class LoginOptions {
     this.image,
     this.title,
     this.subtitle,
+    this.textFieldHeight,
+    this.textFieldWidth,
     this.maxFormWidth,
+    this.errorStyle = const TextStyle(
+      fontSize: 12.5,
+      color: Colors.red,
+    ),
     this.emailTextStyle,
     this.passwordTextStyle,
     this.emailDecoration = const InputDecoration(),
@@ -26,6 +32,7 @@ class LoginOptions {
     this.requestForgotPasswordButtonBuilder =
         _createRequestForgotPasswordButton,
     this.registrationButtonBuilder = _createRegisterButton,
+    this.errorMessageBuilder = _errorMessageBuilder,
     this.emailInputContainerBuilder = _createEmailInputContainer,
     this.passwordInputContainerBuilder = _createPasswordInputContainer,
   });
@@ -34,6 +41,7 @@ class LoginOptions {
   final ButtonBuilder registrationButtonBuilder;
   final ButtonBuilder forgotPasswordButtonBuilder;
   final ButtonBuilder requestForgotPasswordButtonBuilder;
+  final InputContainerBuilder errorMessageBuilder;
   final InputContainerBuilder emailInputContainerBuilder;
   final InputContainerBuilder passwordInputContainerBuilder;
 
@@ -47,10 +55,14 @@ class LoginOptions {
   /// Maximum width of the form. Defaults to 400.
   final double? maxFormWidth;
 
+  final double? textFieldHeight;
+  final double? textFieldWidth;
+
   final InputDecoration emailDecoration;
   final InputDecoration passwordDecoration;
   final String initialEmail;
   final String initialPassword;
+  final TextStyle? errorStyle;
   final TextStyle? emailTextStyle;
   final TextStyle? passwordTextStyle;
   final LoginTranslations translations;
@@ -81,12 +93,17 @@ class LoginTranslations {
 }
 
 Widget _createEmailInputContainer(Widget child) => Padding(
-      padding: const EdgeInsets.only(bottom: 15),
+      padding: const EdgeInsets.only(bottom: 8),
+      child: child,
+    );
+
+Widget _errorMessageBuilder(Widget child) => Padding(
+      padding: const EdgeInsets.only(left: 16, top: 4),
       child: child,
     );
 
 Widget _createPasswordInputContainer(Widget child) => Padding(
-      padding: const EdgeInsets.only(bottom: 15),
+      padding: const EdgeInsets.only(bottom: 8),
       child: child,
     );
 

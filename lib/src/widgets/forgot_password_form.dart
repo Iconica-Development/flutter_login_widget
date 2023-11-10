@@ -27,6 +27,8 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   final FocusNode _focusNode = FocusNode();
 
+  String? emailValidationText;
+
   @override
   void initState() {
     super.initState();
@@ -84,15 +86,40 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
             Expanded(
               child: Align(
                 child: options.emailInputContainerBuilder(
-                  TextFormField(
-                    focusNode: _focusNode,
-                    onChanged: _updateCurrentEmail,
-                    validator: widget.options.validations.validateEmail,
-                    initialValue: options.initialEmail,
-                    keyboardType: TextInputType.emailAddress,
-                    textInputAction: TextInputAction.next,
-                    style: options.emailTextStyle,
-                    decoration: options.emailDecoration,
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: options.textFieldHeight,
+                        width: options.textFieldWidth,
+                        child: TextFormField(
+                          focusNode: _focusNode,
+                          onChanged: _updateCurrentEmail,
+                          validator: (value) {
+                            var validationResult =
+                                widget.options.validations.validateEmail(value);
+                            setState(() {
+                              emailValidationText = validationResult;
+                            });
+                            return;
+                          },
+                          initialValue: options.initialEmail,
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.next,
+                          style: options.emailTextStyle,
+                          decoration: options.emailDecoration,
+                        ),
+                      ),
+                      if (emailValidationText != null)
+                        options.errorMessageBuilder(
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              emailValidationText!,
+                              style: options.errorStyle,
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                 ),
               ),

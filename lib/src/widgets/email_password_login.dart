@@ -26,6 +26,9 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
   final ValueNotifier<bool> _formValid = ValueNotifier(false);
   bool _obscurePassword = true;
 
+  String? emailValidationText;
+  String? passwordValidationText;
+
   String _currentEmail = '';
   String _currentPassword = '';
 
@@ -138,42 +141,93 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           options.emailInputContainerBuilder(
-                            TextFormField(
-                              onChanged: _updateCurrentEmail,
-                              validator:
-                                  widget.options.validations.validateEmail,
-                              initialValue: options.initialEmail,
-                              keyboardType: TextInputType.emailAddress,
-                              textInputAction: TextInputAction.next,
-                              style: options.emailTextStyle,
-                              decoration: options.emailDecoration,
+                            Column(
+                              children: [
+                                SizedBox(
+                                  height: options.textFieldHeight,
+                                  width: options.textFieldWidth,
+                                  child: TextFormField(
+                                    onChanged: _updateCurrentEmail,
+                                    validator: (value) {
+                                      var validationResult = widget
+                                          .options.validations
+                                          .validateEmail(value);
+                                      setState(() {
+                                        emailValidationText = validationResult;
+                                      });
+                                      return;
+                                    },
+                                    initialValue: options.initialEmail,
+                                    keyboardType: TextInputType.emailAddress,
+                                    textInputAction: TextInputAction.next,
+                                    style: options.emailTextStyle,
+                                    decoration: options.emailDecoration,
+                                  ),
+                                ),
+                                if (emailValidationText != null)
+                                  options.errorMessageBuilder(
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        emailValidationText!,
+                                        style: options.errorStyle,
+                                      ),
+                                    ),
+                                  ),
+                              ],
                             ),
                           ),
                           options.passwordInputContainerBuilder(
-                            TextFormField(
-                              obscureText: _obscurePassword,
-                              onChanged: _updateCurrentPassword,
-                              validator:
-                                  widget.options.validations.validatePassword,
-                              initialValue: options.initialPassword,
-                              keyboardType: TextInputType.visiblePassword,
-                              textInputAction: TextInputAction.done,
-                              style: options.passwordTextStyle,
-                              onFieldSubmitted: (_) => _handleLogin(),
-                              decoration: options.passwordDecoration.copyWith(
-                                suffixIcon: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _obscurePassword = !_obscurePassword;
-                                    });
-                                  },
-                                  icon: Icon(
-                                    _obscurePassword
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
+                            Column(
+                              children: [
+                                SizedBox(
+                                  height: options.textFieldHeight,
+                                  width: options.textFieldWidth,
+                                  child: TextFormField(
+                                    obscureText: _obscurePassword,
+                                    onChanged: _updateCurrentPassword,
+                                    validator: (value) {
+                                      var validationResult = widget
+                                          .options.validations
+                                          .validatePassword(value);
+                                      setState(() {
+                                        passwordValidationText =
+                                            validationResult;
+                                      });
+                                      return;
+                                    },
+                                    initialValue: options.initialPassword,
+                                    keyboardType: TextInputType.visiblePassword,
+                                    textInputAction: TextInputAction.done,
+                                    style: options.passwordTextStyle,
+                                    onFieldSubmitted: (_) => _handleLogin(),
+                                    decoration:
+                                        options.passwordDecoration.copyWith(
+                                      suffixIcon: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            _obscurePassword =
+                                                !_obscurePassword;
+                                          });
+                                        },
+                                        icon: Icon(
+                                          _obscurePassword
+                                              ? Icons.visibility
+                                              : Icons.visibility_off,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
+                                if (passwordValidationText != null)
+                                  options.errorMessageBuilder(
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(passwordValidationText!,
+                                          style: options.errorStyle),
+                                    ),
+                                  ),
+                              ],
                             ),
                           ),
                           if (widget.onForgotPassword != null) ...[
