@@ -1,6 +1,6 @@
 name: flutter_login
 description: Flutter Login Component
-version: 5.0.0
+version: 5.1.0
 
 environment:
   sdk: ">=2.18.1 <3.0.0"
