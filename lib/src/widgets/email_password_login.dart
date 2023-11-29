@@ -161,18 +161,21 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                               style: options.passwordTextStyle,
                               onFieldSubmitted: (_) => _handleLogin(),
                               decoration: options.passwordDecoration.copyWith(
-                                suffixIcon: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _obscurePassword = !_obscurePassword;
-                                    });
-                                  },
-                                  icon: Icon(
-                                    _obscurePassword
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
-                                  ),
-                                ),
+                                suffixIcon: options.showObscurePassword
+                                    ? IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            _obscurePassword =
+                                                !_obscurePassword;
+                                          });
+                                        },
+                                        icon: Icon(
+                                          _obscurePassword
+                                              ? Icons.visibility
+                                              : Icons.visibility_off,
+                                        ),
+                                      )
+                                    : null,
                               ),
                             ),
                           ),

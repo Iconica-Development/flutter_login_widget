@@ -1,3 +1,6 @@
+## 5.1.0
+* Added the option to disable the showPassword button on the passwordfield.
+
 ## 5.0.0
 * Removed the redundant initialEmail parameter from 'ForgotPasswordForm'. The only one to use now is the one in the 'LoginOptions'.
 

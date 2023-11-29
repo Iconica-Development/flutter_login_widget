@@ -28,6 +28,7 @@ class LoginOptions {
     this.registrationButtonBuilder = _createRegisterButton,
     this.emailInputContainerBuilder = _createEmailInputContainer,
     this.passwordInputContainerBuilder = _createPasswordInputContainer,
+    this.showObscurePassword = true,
   });
 
   final ButtonBuilder loginButtonBuilder;
@@ -55,6 +56,7 @@ class LoginOptions {
   final TextStyle? passwordTextStyle;
   final LoginTranslations translations;
   final ValidationService? validationService;
+  final bool showObscurePassword;
 
   ValidationService get validations =>
       validationService ?? LoginValidationService(this);
