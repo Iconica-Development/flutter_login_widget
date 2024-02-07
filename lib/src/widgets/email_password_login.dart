@@ -5,9 +5,9 @@ import 'package:flutter_login/flutter_login.dart';
 
 class EmailPasswordLoginForm extends StatefulWidget {
   const EmailPasswordLoginForm({
+    required this.onLogin,
     super.key,
     this.onForgotPassword,
-    required this.onLogin,
     this.onRegister,
     this.options = const LoginOptions(),
   });
@@ -40,7 +40,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
   }
 
   void _validate() {
-    late bool isValid =
+    late var isValid =
         widget.options.validations.validateEmail(_currentEmail) == null &&
             widget.options.validations.validatePassword(_currentPassword) ==
                 null;
@@ -96,7 +96,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                     options.title,
                     theme.textTheme.headlineSmall,
                   ),
-                )
+                ),
               ],
               if (options.spacers.spacerAfterTitle != null) ...[
                 Spacer(flex: options.spacers.spacerAfterTitle!),
@@ -111,7 +111,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                     options.subtitle,
                     theme.textTheme.titleSmall,
                   ),
-                )
+                ),
               ],
               if (options.spacers.spacerAfterSubtitle != null) ...[
                 Spacer(flex: options.spacers.spacerAfterSubtitle!),
@@ -159,7 +159,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                               keyboardType: TextInputType.visiblePassword,
                               textInputAction: TextInputAction.done,
                               style: options.passwordTextStyle,
-                              onFieldSubmitted: (_) => _handleLogin(),
+                              onFieldSubmitted: (_) async => _handleLogin(),
                               decoration: options.passwordDecoration.copyWith(
                                 suffixIcon: options.showObscurePassword
                                     ? IconButton(
@@ -199,22 +199,20 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                           const SizedBox(height: 8),
                           AnimatedBuilder(
                             animation: _formValid,
-                            builder: (context, _) {
-                              return options.loginButtonBuilder(
-                                context,
-                                _handleLogin,
-                                !_formValid.value,
-                                () {
-                                  _formKey.currentState?.validate();
-                                },
-                                options,
-                              );
-                            },
+                            builder: (context, _) => options.loginButtonBuilder(
+                              context,
+                              _handleLogin,
+                              !_formValid.value,
+                              () {
+                                _formKey.currentState?.validate();
+                              },
+                              options,
+                            ),
                           ),
                           if (widget.onRegister != null) ...[
                             options.registrationButtonBuilder(
                               context,
-                              () {
+                              () async {
                                 widget.onRegister?.call(
                                   _currentEmail,
                                   _currentPassword,

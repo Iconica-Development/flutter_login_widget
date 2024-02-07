@@ -42,7 +42,8 @@ class LoginOptions {
   final Widget? title;
   final Widget? subtitle;
 
-  /// Option to modify the spacing between the title, subtitle, image, form, and button.
+  /// Option to modify the spacing between the title, subtitle, image, form,
+  /// and button.
   final LoginSpacerOptions spacers;
 
   /// Maximum width of the form. Defaults to 400.
@@ -98,15 +99,14 @@ Widget _createLoginButton(
   bool disabled,
   OptionalAsyncCallback onDisabledPress,
   LoginOptions options,
-) {
-  return Opacity(
-    opacity: disabled ? 0.5 : 1.0,
-    child: ElevatedButton(
-      onPressed: !disabled ? onPressed : onDisabledPress,
-      child: Text(options.translations.loginButton),
-    ),
-  );
-}
+) =>
+    Opacity(
+      opacity: disabled ? 0.5 : 1.0,
+      child: ElevatedButton(
+        onPressed: !disabled ? onPressed : onDisabledPress,
+        child: Text(options.translations.loginButton),
+      ),
+    );
 
 Widget _createForgotPasswordButton(
   BuildContext context,
@@ -114,15 +114,14 @@ Widget _createForgotPasswordButton(
   bool disabled,
   OptionalAsyncCallback onDisabledPress,
   LoginOptions options,
-) {
-  return Opacity(
-    opacity: disabled ? 0.5 : 1.0,
-    child: ElevatedButton(
-      onPressed: !disabled ? onPressed : onDisabledPress,
-      child: Text(options.translations.forgotPasswordButton),
-    ),
-  );
-}
+) =>
+    Opacity(
+      opacity: disabled ? 0.5 : 1.0,
+      child: ElevatedButton(
+        onPressed: !disabled ? onPressed : onDisabledPress,
+        child: Text(options.translations.forgotPasswordButton),
+      ),
+    );
 
 Widget _createRequestForgotPasswordButton(
   BuildContext context,
@@ -130,15 +129,14 @@ Widget _createRequestForgotPasswordButton(
   bool disabled,
   OptionalAsyncCallback onDisabledPress,
   LoginOptions options,
-) {
-  return Opacity(
-    opacity: disabled ? 0.5 : 1.0,
-    child: ElevatedButton(
-      onPressed: !disabled ? onPressed : onDisabledPress,
-      child: Text(options.translations.requestForgotPasswordButton),
-    ),
-  );
-}
+) =>
+    Opacity(
+      opacity: disabled ? 0.5 : 1.0,
+      child: ElevatedButton(
+        onPressed: !disabled ? onPressed : onDisabledPress,
+        child: Text(options.translations.requestForgotPasswordButton),
+      ),
+    );
 
 Widget _createRegisterButton(
   BuildContext context,
@@ -146,19 +144,19 @@ Widget _createRegisterButton(
   bool disabled,
   OptionalAsyncCallback onDisabledPress,
   LoginOptions options,
-) {
-  return Opacity(
-    opacity: disabled ? 0.5 : 1.0,
-    child: ElevatedButton(
-      onPressed: !disabled ? onPressed : onDisabledPress,
-      child: Text(options.translations.registrationButton),
-    ),
-  );
-}
+) =>
+    Opacity(
+      opacity: disabled ? 0.5 : 1.0,
+      child: ElevatedButton(
+        onPressed: !disabled ? onPressed : onDisabledPress,
+        child: Text(options.translations.registrationButton),
+      ),
+    );
 
 typedef ButtonBuilder = Widget Function(
   BuildContext context,
   OptionalAsyncCallback onPressed,
+  // ignore: avoid_positional_boolean_parameters
   bool isDisabled,
   OptionalAsyncCallback onDisabledPress,
   LoginOptions options,

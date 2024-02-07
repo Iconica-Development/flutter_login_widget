@@ -5,10 +5,10 @@ import 'package:flutter_login/flutter_login.dart';
 
 class ForgotPasswordForm extends StatefulWidget {
   const ForgotPasswordForm({
-    super.key,
     required this.options,
     required this.description,
     required this.onRequestForgotPassword,
+    super.key,
     this.title,
   });
 
@@ -50,7 +50,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
   }
 
   void _validate() {
-    late bool isValid =
+    late var isValid =
         widget.options.validations.validateEmail(_currentEmail) == null;
     if (isValid != _formValid.value) {
       _formValid.value = isValid;
@@ -99,24 +99,22 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
             ),
             AnimatedBuilder(
               animation: _formValid,
-              builder: (context, snapshot) {
-                return Align(
-                  child: widget.options.requestForgotPasswordButtonBuilder(
-                    context,
-                    () {
-                      _formKey.currentState?.validate();
-                      if (_formValid.value) {
-                        widget.onRequestForgotPassword(_currentEmail);
-                      }
-                    },
-                    !_formValid.value,
-                    () {
-                      _formKey.currentState?.validate();
-                    },
-                    options,
-                  ),
-                );
-              },
+              builder: (context, snapshot) => Align(
+                child: widget.options.requestForgotPasswordButtonBuilder(
+                  context,
+                  () async {
+                    _formKey.currentState?.validate();
+                    if (_formValid.value) {
+                      widget.onRequestForgotPassword(_currentEmail);
+                    }
+                  },
+                  !_formValid.value,
+                  () {
+                    _formKey.currentState?.validate();
+                  },
+                  options,
+                ),
+              ),
             ),
           ],
         ),

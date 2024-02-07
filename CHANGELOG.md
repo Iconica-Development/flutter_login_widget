@@ -1,3 +1,6 @@
+## 5.1.1
+* Added Ci and linter
+
 ## 5.1.0
 * Added the option to disable the showPassword button on the passwordfield.
 

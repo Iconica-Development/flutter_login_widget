@@ -22,6 +22,8 @@ class MFAWidget extends StatefulWidget {
   }) : assert(
           (onSubmitted == null && submitButtonBuilder == null) ||
               (onSubmitted != null && submitButtonBuilder != null),
+          'onSubmitted and submitButtonBuilder must be both null or both'
+          ' not null',
         );
 
   final Function(String code) onCompleted;
@@ -48,35 +50,33 @@ class _MFAWidgetState extends State<MFAWidget> {
   final TextEditingController _controller = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Pinput(
-          defaultPinTheme: widget.defaultPinTheme,
-          focusedPinTheme: widget.focusedPinTheme,
-          submittedPinTheme: widget.submittedPinTheme,
-          followingPinTheme: widget.followingPinTheme,
-          disabledPinTheme: widget.disabledPinTheme,
-          errorPinTheme: widget.errorPinTheme,
-          separatorPositions: widget.seperatorPositions,
-          errorBuilder: widget.errorBuilder,
-          errorText: widget.errorText,
-          errorTextStyle: widget.errorTextStyle,
-          validator: widget.validator,
-          controller: _controller,
-          length: widget.length,
-          onCompleted: (_) {
-            widget.onCompleted(_controller.text);
-          },
-        ),
-        if (widget.onSubmitted != null &&
-            widget.submitButtonBuilder != null) ...[
-          widget.submitButtonBuilder!(() {
-            widget.onSubmitted!(_controller.text);
-          }),
+  Widget build(BuildContext context) => Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Pinput(
+            defaultPinTheme: widget.defaultPinTheme,
+            focusedPinTheme: widget.focusedPinTheme,
+            submittedPinTheme: widget.submittedPinTheme,
+            followingPinTheme: widget.followingPinTheme,
+            disabledPinTheme: widget.disabledPinTheme,
+            errorPinTheme: widget.errorPinTheme,
+            separatorPositions: widget.seperatorPositions,
+            errorBuilder: widget.errorBuilder,
+            errorText: widget.errorText,
+            errorTextStyle: widget.errorTextStyle,
+            validator: widget.validator,
+            controller: _controller,
+            length: widget.length,
+            onCompleted: (_) {
+              widget.onCompleted(_controller.text);
+            },
+          ),
+          if (widget.onSubmitted != null &&
+              widget.submitButtonBuilder != null) ...[
+            widget.submitButtonBuilder!(() {
+              widget.onSubmitted!(_controller.text);
+            }),
+          ],
         ],
-      ],
-    );
-  }
+      );
 }

@@ -30,6 +30,7 @@ class LoginSpacerOptions {
   /// Flex value for the spacer after the button.
   final int? spacerAfterButton;
 
-  /// Flex value for the form. Defaults to 1. Use this when also using the other spacer options.
+  /// Flex value for the form. Defaults to 1. Use this when also using the 
+  /// other spacer options.
   final int formFlexValue;
 }
