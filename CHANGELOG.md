@@ -1,3 +1,6 @@
+## 5.1.2
+* Removed bottom padding from password text field
+
 ## 5.1.1
 * Added Ci and linter
 
