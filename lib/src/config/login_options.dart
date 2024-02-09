@@ -88,10 +88,7 @@ Widget _createEmailInputContainer(Widget child) => Padding(
       child: child,
     );
 
-Widget _createPasswordInputContainer(Widget child) => Padding(
-      padding: const EdgeInsets.only(bottom: 15),
-      child: child,
-    );
+Widget _createPasswordInputContainer(Widget child) => child;
 
 Widget _createLoginButton(
   BuildContext context,
