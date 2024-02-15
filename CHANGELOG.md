@@ -1,3 +1,6 @@
+## 5.1.3
+* Added title spacer
+
 ## 5.1.2
 * Removed bottom padding from password text field
 

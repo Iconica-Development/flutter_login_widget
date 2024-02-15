@@ -10,6 +10,7 @@ class LoginSpacerOptions {
     this.spacerAfterForm,
     this.spacerAfterButton,
     this.formFlexValue = 1,
+    this.titleSpacer = 1,
   });
 
   /// Flex value for the spacer before the title.
@@ -33,4 +34,6 @@ class LoginSpacerOptions {
   /// Flex value for the form. Defaults to 1. Use this when also using the
   /// other spacer options.
   final int formFlexValue;
+
+  final int titleSpacer;
 }
