@@ -58,8 +58,8 @@ class LoginScreen extends StatelessWidget {
       body: EmailPasswordLoginForm(
         options: loginOptions,
         onLogin: (email, password) => print('$email:$password'),
-        onRegister: (email, password) => print('Register!'),
-        onForgotPassword: (email) {
+        onRegister: (email, password, ctx) => print('Register!'),
+        onForgotPassword: (email, ctx) {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) {
