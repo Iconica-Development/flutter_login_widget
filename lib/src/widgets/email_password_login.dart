@@ -13,8 +13,12 @@ class EmailPasswordLoginForm extends StatefulWidget {
   });
 
   final LoginOptions options;
-  final void Function(String email)? onForgotPassword;
-  final FutureOr<void> Function(String email, String password)? onRegister;
+  final void Function(String email, BuildContext ctx)? onForgotPassword;
+  final FutureOr<void> Function(
+    String email,
+    String password,
+    BuildContext context,
+  )? onRegister;
   final FutureOr<void> Function(String email, String password) onLogin;
 
   @override
@@ -181,7 +185,8 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                             child: options.forgotPasswordButtonBuilder(
                               context,
                               () {
-                                widget.onForgotPassword?.call(_currentEmail);
+                                widget.onForgotPassword
+                                    ?.call(_currentEmail, context);
                               },
                               false,
                               () {},
@@ -211,6 +216,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                               widget.onRegister?.call(
                                 _currentEmail,
                                 _currentPassword,
+                                context,
                               );
                             },
                             false,

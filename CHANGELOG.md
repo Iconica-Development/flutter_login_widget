@@ -1,3 +1,7 @@
+## 5.1.4
+
+* Added BuildContext to the `onForgotPassword` and `onRegister`.
+
 ## 5.1.3
 * Added title spacer
 
