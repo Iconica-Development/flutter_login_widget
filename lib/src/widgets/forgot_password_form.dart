@@ -4,6 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 
 class ForgotPasswordForm extends StatefulWidget {
+  /// Constructs a [ForgotPasswordForm] widget.
+  ///
+  /// [options]: The options for configuring the forgot password form.
+  /// [description]: Widget to display description.
+  /// [onRequestForgotPassword]: Callback function for requesting
+  /// password reset.
+  /// [title]: Widget to display title.
   const ForgotPasswordForm({
     required this.options,
     required this.description,

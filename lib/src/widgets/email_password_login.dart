@@ -4,6 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 
 class EmailPasswordLoginForm extends StatefulWidget {
+  /// Constructs an [EmailPasswordLoginForm] widget.
+  ///
+  /// [onLogin]: Callback function for user login.
+  /// [onForgotPassword]: Callback function for when the user
+  /// forgets their password.
+  /// [onRegister]: Callback function for user registration.
+  /// [options]: The options for configuring the login form.
   const EmailPasswordLoginForm({
     required this.onLogin,
     super.key,

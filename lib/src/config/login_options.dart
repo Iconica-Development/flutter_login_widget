@@ -31,15 +31,31 @@ class LoginOptions {
     this.showObscurePassword = true,
   });
 
+  /// Builds the login button.
   final ButtonBuilder loginButtonBuilder;
+
+  /// Builds the registration button.
   final ButtonBuilder registrationButtonBuilder;
+
+  /// Builds the forgot password button.
   final ButtonBuilder forgotPasswordButtonBuilder;
+
+  /// Builds the request forgot password button.
   final ButtonBuilder requestForgotPasswordButtonBuilder;
+
+  /// Builds the email input container.
   final InputContainerBuilder emailInputContainerBuilder;
+
+  /// Builds the password input container.
   final InputContainerBuilder passwordInputContainerBuilder;
 
+  /// The image to display on the login screen.
   final Widget? image;
+
+  /// The title widget to display on the login screen.
   final Widget? title;
+
+  /// The subtitle widget to display on the login screen.
   final Widget? subtitle;
 
   /// Option to modify the spacing between the title, subtitle, image, form,
@@ -49,16 +65,34 @@ class LoginOptions {
   /// Maximum width of the form. Defaults to 400.
   final double? maxFormWidth;
 
+  /// Decoration for the email input field.
   final InputDecoration emailDecoration;
+
+  /// Decoration for the password input field.
   final InputDecoration passwordDecoration;
+
+  /// The initial email value for the email input field.
   final String initialEmail;
+
+  /// The initial password value for the password input field.
   final String initialPassword;
+
+  /// The text style for the email input field.
   final TextStyle? emailTextStyle;
+
+  /// The text style for the password input field.
   final TextStyle? passwordTextStyle;
+
+  /// Translations for various texts on the login screen.
   final LoginTranslations translations;
+
+  /// The validation service used for validating email and password inputs.
   final ValidationService? validationService;
+
+  /// Determines whether the password field should be obscured.
   final bool showObscurePassword;
 
+  /// Get validations.
   ValidationService get validations =>
       validationService ?? LoginValidationService(this);
 }
