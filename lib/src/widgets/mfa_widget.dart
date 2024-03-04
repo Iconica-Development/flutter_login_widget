@@ -2,6 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 
 class MFAWidget extends StatefulWidget {
+  /// Constructs an [MFAWidget].
+  ///
+  /// [onCompleted]: Callback function triggered when the MFA code is completed.
+  /// [onSubmitted]: Callback function triggered when the MFA code is submitted.
+  /// [length]: The length of the MFA code.
+  /// [defaultPinTheme]: The theme for the default state of the input pins.
+  /// [focusedPinTheme]: The theme for the focused state of the input pins.
+  /// [submittedPinTheme]: The theme for the submitted state of the input pins.
+  /// [followingPinTheme]: The theme for the pins following the submitted pin.
+  /// [disabledPinTheme]: The theme for disabled input pins.
+  /// [errorPinTheme]: The theme for input pins in error state.
+  /// [seperatorPositions]: Positions for separators between input pins.
+  /// [errorText]: Text to display when there's an error.
+  /// [validator]: Validator function to validate the input.
+  /// [errorBuilder]: Builder function to customize the error display.
+  /// [errorTextStyle]: Style for the error text.
+  /// [submitButtonBuilder]: Builder function to customize the submit button.
   const MFAWidget({
     required this.onCompleted,
     this.onSubmitted,
@@ -26,20 +43,49 @@ class MFAWidget extends StatefulWidget {
           ' not null',
         );
 
+  /// Callback function triggered when the MFA code is completed.
   final Function(String code) onCompleted;
+
+  /// Callback function triggered when the MFA code is submitted.
   final Function(String code)? onSubmitted;
+
+  /// The length of the MFA code.
   final int length;
+
+  /// The theme for the default state of the input pins.
   final PinTheme? defaultPinTheme;
+
+  /// The theme for the focused state of the input pins.
   final PinTheme? focusedPinTheme;
+
+  /// The theme for the submitted state of the input pins.
   final PinTheme? submittedPinTheme;
+
+  /// The theme for the pins following the submitted pin.
   final PinTheme? followingPinTheme;
+
+  /// The theme for disabled input pins.
   final PinTheme? disabledPinTheme;
+
+  /// The theme for input pins in error state.
   final PinTheme? errorPinTheme;
+
+  /// Positions for separators between input pins.
   final List<int>? seperatorPositions;
+
+  /// Text to display when there's an error.
   final String? errorText;
+
+  /// Validator function to validate the input.
   final String? Function(String?)? validator;
+
+  /// Builder function to customize the error display.
   final Widget Function(String?, String)? errorBuilder;
+
+  /// Style for the error text.
   final TextStyle? errorTextStyle;
+
+  /// Builder function to customize the submit button.
   final Widget Function(Function onTap)? submitButtonBuilder;
 
   @override
