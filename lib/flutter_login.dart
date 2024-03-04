@@ -1,6 +1,7 @@
 ///
 library flutter_login;
 
+export 'src/config/forgot_password_spacer_options.dart';
 export 'src/config/login_options.dart';
 export 'src/config/spacer_options.dart';
 export 'src/service/login_validation.dart';

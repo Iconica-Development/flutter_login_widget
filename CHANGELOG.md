@@ -1,3 +1,7 @@
+## 5.2.0
+
+* Added spacer options for the ForogotPasswordForm.
+
 ## 5.1.4
 
 * Added BuildContext to the `onForgotPassword` and `onRegister`.
