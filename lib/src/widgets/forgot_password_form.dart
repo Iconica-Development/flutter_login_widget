@@ -78,17 +78,37 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            if (options.forgotPasswordSpacerOptions.spacerBeforeTitle !=
+                null) ...[
+              Spacer(
+                flex: options.forgotPasswordSpacerOptions.spacerBeforeTitle!,
+              ),
+            ],
             _wrapWithDefaultStyle(
                   widget.title,
                   theme.textTheme.displaySmall,
                 ) ??
                 const SizedBox.shrink(),
+            if (options.forgotPasswordSpacerOptions.spacerAfterTitle !=
+                null) ...[
+              Spacer(
+                flex: options.forgotPasswordSpacerOptions.spacerAfterTitle!,
+              ),
+            ],
             _wrapWithDefaultStyle(
                   widget.description,
                   theme.textTheme.bodyMedium,
                 ) ??
                 const SizedBox.shrink(),
+            if (options.forgotPasswordSpacerOptions.spacerAfterDescription !=
+                null) ...[
+              Spacer(
+                flex:
+                    options.forgotPasswordSpacerOptions.spacerAfterDescription!,
+              ),
+            ],
             Expanded(
+              flex: options.forgotPasswordSpacerOptions.formFlexValue,
               child: Align(
                 child: options.emailInputContainerBuilder(
                   TextFormField(
@@ -104,6 +124,12 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                 ),
               ),
             ),
+            if (options.forgotPasswordSpacerOptions.spacerBeforeButton !=
+                null) ...[
+              Spacer(
+                flex: options.forgotPasswordSpacerOptions.spacerBeforeButton!,
+              ),
+            ],
             AnimatedBuilder(
               animation: _formValid,
               builder: (context, snapshot) => Align(
@@ -123,6 +149,12 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                 ),
               ),
             ),
+            if (options.forgotPasswordSpacerOptions.spacerAfterButton !=
+                null) ...[
+              Spacer(
+                flex: options.forgotPasswordSpacerOptions.spacerAfterButton!,
+              ),
+            ],
           ],
         ),
       ),

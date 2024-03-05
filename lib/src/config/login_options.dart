@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_login/src/config/forgot_password_spacer_options.dart';
 import 'package:flutter_login/src/config/spacer_options.dart';
 import 'package:flutter_login/src/service/login_validation.dart';
 import 'package:flutter_login/src/service/validation.dart';
@@ -29,6 +30,7 @@ class LoginOptions {
     this.emailInputContainerBuilder = _createEmailInputContainer,
     this.passwordInputContainerBuilder = _createPasswordInputContainer,
     this.showObscurePassword = true,
+    this.forgotPasswordSpacerOptions = const ForgotPasswordSpacerOptions(),
   });
 
   /// Builds the login button.
@@ -61,6 +63,9 @@ class LoginOptions {
   /// Option to modify the spacing between the title, subtitle, image, form,
   /// and button.
   final LoginSpacerOptions spacers;
+
+  /// Option to modify the spacing between the items on the forgotPasswordForm.
+  final ForgotPasswordSpacerOptions forgotPasswordSpacerOptions;
 
   /// Maximum width of the form. Defaults to 400.
   final double? maxFormWidth;
