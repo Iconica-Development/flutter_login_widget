@@ -9,3 +9,4 @@ export 'src/service/validation.dart';
 export 'src/widgets/email_password_login.dart';
 export 'src/widgets/forgot_password_form.dart';
 export 'src/widgets/mfa_widget.dart';
+export 'src/widgets/two_step_login.dart';
