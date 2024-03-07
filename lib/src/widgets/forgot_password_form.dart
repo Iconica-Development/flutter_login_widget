@@ -122,6 +122,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                       alignment: Alignment.center,
                       child: options.emailInputContainerBuilder(
                         TextFormField(
+                          textAlign: options.emailTextAlign ?? TextAlign.start,
                           focusNode: _focusNode,
                           onChanged: _updateCurrentEmail,
                           validator: widget.options.validations.validateEmail,

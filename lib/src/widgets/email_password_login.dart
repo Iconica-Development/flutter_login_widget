@@ -148,6 +148,8 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                       children: [
                         options.emailInputContainerBuilder(
                           TextFormField(
+                            textAlign:
+                                options.emailTextAlign ?? TextAlign.start,
                             onChanged: _updateCurrentEmail,
                             validator: widget.options.validations.validateEmail,
                             initialValue: options.initialEmail,
@@ -159,6 +161,8 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                         ),
                         options.passwordInputContainerBuilder(
                           TextFormField(
+                            textAlign:
+                                options.passwordTextAlign ?? TextAlign.start,
                             obscureText: _obscurePassword,
                             onChanged: _updateCurrentPassword,
                             validator:
