@@ -66,106 +66,112 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
 
   @override
   Widget build(BuildContext context) {
-    var options = widget.options;
     var theme = Theme.of(context);
-    return Form(
-      key: _formKey,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          maxWidth: 300,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (options.forgotPasswordSpacerOptions.spacerBeforeTitle !=
-                null) ...[
-              Spacer(
-                flex: options.forgotPasswordSpacerOptions.spacerBeforeTitle!,
-              ),
-            ],
-            _wrapWithDefaultStyle(
+    var options = widget.options;
+
+    return CustomScrollView(
+      physics: const ScrollPhysics(),
+      slivers: [
+        SliverFillRemaining(
+          hasScrollBody: false,
+          fillOverscroll: true,
+          child: Column(
+            children: [
+              if (options.forgotPasswordSpacerOptions.spacerBeforeTitle !=
+                  null) ...[
+                Spacer(
+                  flex: options.forgotPasswordSpacerOptions.spacerBeforeTitle!,
+                ),
+              ],
+              Align(
+                alignment: Alignment.topCenter,
+                child: wrapWithDefaultStyle(
                   widget.title,
                   theme.textTheme.displaySmall,
-                ) ??
-                const SizedBox.shrink(),
-            if (options.forgotPasswordSpacerOptions.spacerAfterTitle !=
-                null) ...[
-              Spacer(
-                flex: options.forgotPasswordSpacerOptions.spacerAfterTitle!,
+                ),
               ),
-            ],
-            _wrapWithDefaultStyle(
+              if (options.forgotPasswordSpacerOptions.spacerAfterTitle !=
+                  null) ...[
+                Spacer(
+                  flex: options.forgotPasswordSpacerOptions.spacerAfterTitle!,
+                ),
+              ],
+              Align(
+                alignment: Alignment.topCenter,
+                child: wrapWithDefaultStyle(
                   widget.description,
                   theme.textTheme.bodyMedium,
-                ) ??
-                const SizedBox.shrink(),
-            if (options.forgotPasswordSpacerOptions.spacerAfterDescription !=
-                null) ...[
-              Spacer(
-                flex:
-                    options.forgotPasswordSpacerOptions.spacerAfterDescription!,
+                ),
               ),
-            ],
-            Expanded(
-              flex: options.forgotPasswordSpacerOptions.formFlexValue,
-              child: Align(
-                child: options.emailInputContainerBuilder(
-                  TextFormField(
-                    focusNode: _focusNode,
-                    onChanged: _updateCurrentEmail,
-                    validator: widget.options.validations.validateEmail,
-                    initialValue: options.initialEmail,
-                    keyboardType: TextInputType.emailAddress,
-                    textInputAction: TextInputAction.next,
-                    style: options.emailTextStyle,
-                    decoration: options.emailDecoration,
+              if (options.forgotPasswordSpacerOptions.spacerAfterDescription !=
+                  null) ...[
+                Spacer(
+                  flex: options
+                      .forgotPasswordSpacerOptions.spacerAfterDescription!,
+                ),
+              ],
+              Expanded(
+                flex: options.forgotPasswordSpacerOptions.formFlexValue,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: options.maxFormWidth ?? 300,
+                  ),
+                  child: Form(
+                    key: _formKey,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: options.emailInputContainerBuilder(
+                        TextFormField(
+                          textAlign: options.emailTextAlign ?? TextAlign.start,
+                          focusNode: _focusNode,
+                          onChanged: _updateCurrentEmail,
+                          validator: widget.options.validations.validateEmail,
+                          initialValue: options.initialEmail,
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.next,
+                          style: options.emailTextStyle,
+                          decoration: options.emailDecoration,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-            if (options.forgotPasswordSpacerOptions.spacerBeforeButton !=
-                null) ...[
-              Spacer(
-                flex: options.forgotPasswordSpacerOptions.spacerBeforeButton!,
-              ),
-            ],
-            AnimatedBuilder(
-              animation: _formValid,
-              builder: (context, snapshot) => Align(
-                child: widget.options.requestForgotPasswordButtonBuilder(
-                  context,
-                  () async {
-                    _formKey.currentState?.validate();
-                    if (_formValid.value) {
-                      widget.onRequestForgotPassword(_currentEmail);
-                    }
-                  },
-                  !_formValid.value,
-                  () {
-                    _formKey.currentState?.validate();
-                  },
-                  options,
+              if (options.forgotPasswordSpacerOptions.spacerBeforeButton !=
+                  null) ...[
+                Spacer(
+                  flex: options.forgotPasswordSpacerOptions.spacerBeforeButton!,
+                ),
+              ],
+              AnimatedBuilder(
+                animation: _formValid,
+                builder: (context, snapshot) => Align(
+                  child: widget.options.requestForgotPasswordButtonBuilder(
+                    context,
+                    () async {
+                      _formKey.currentState?.validate();
+                      if (_formValid.value) {
+                        widget.onRequestForgotPassword(_currentEmail);
+                      }
+                    },
+                    !_formValid.value,
+                    () {
+                      _formKey.currentState?.validate();
+                    },
+                    options,
+                  ),
                 ),
               ),
-            ),
-            if (options.forgotPasswordSpacerOptions.spacerAfterButton !=
-                null) ...[
-              Spacer(
-                flex: options.forgotPasswordSpacerOptions.spacerAfterButton!,
-              ),
+              if (options.forgotPasswordSpacerOptions.spacerAfterButton !=
+                  null) ...[
+                Spacer(
+                  flex: options.forgotPasswordSpacerOptions.spacerAfterButton!,
+                ),
+              ],
             ],
-          ],
+          ),
         ),
-      ),
+      ],
     );
-  }
-
-  Widget? _wrapWithDefaultStyle(Widget? widget, TextStyle? style) {
-    if (style == null || widget == null) {
-      return widget;
-    } else {
-      return DefaultTextStyle(style: style, child: widget);
-    }
   }
 }

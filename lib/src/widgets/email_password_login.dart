@@ -102,7 +102,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                     if (options.title != null) ...[
                       Align(
                         alignment: Alignment.topCenter,
-                        child: _wrapWithDefaultStyle(
+                        child: wrapWithDefaultStyle(
                           options.title,
                           theme.textTheme.headlineSmall,
                         ),
@@ -114,7 +114,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                     if (options.subtitle != null) ...[
                       Align(
                         alignment: Alignment.topCenter,
-                        child: _wrapWithDefaultStyle(
+                        child: wrapWithDefaultStyle(
                           options.subtitle,
                           theme.textTheme.titleSmall,
                         ),
@@ -148,6 +148,8 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                       children: [
                         options.emailInputContainerBuilder(
                           TextFormField(
+                            textAlign:
+                                options.emailTextAlign ?? TextAlign.start,
                             onChanged: _updateCurrentEmail,
                             validator: widget.options.validations.validateEmail,
                             initialValue: options.initialEmail,
@@ -159,6 +161,8 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                         ),
                         options.passwordInputContainerBuilder(
                           TextFormField(
+                            textAlign:
+                                options.passwordTextAlign ?? TextAlign.start,
                             obscureText: _obscurePassword,
                             onChanged: _updateCurrentPassword,
                             validator:
@@ -245,12 +249,12 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
       ],
     );
   }
+}
 
-  Widget? _wrapWithDefaultStyle(Widget? widget, TextStyle? style) {
-    if (style == null || widget == null) {
-      return widget;
-    } else {
-      return DefaultTextStyle(style: style, child: widget);
-    }
+Widget? wrapWithDefaultStyle(Widget? widget, TextStyle? style) {
+  if (style == null || widget == null) {
+    return widget;
+  } else {
+    return DefaultTextStyle(style: style, child: widget);
   }
 }

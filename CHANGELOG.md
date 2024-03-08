@@ -1,3 +1,8 @@
+## 6.0.0
+
+* Changed ForgotPasswordform to use the same layout as the EmailPasswordLoginForm.
+* Add option for textalignment for email and password fields.
+
 ## 5.2.0
 
 * Added spacer options for the ForogotPasswordForm.

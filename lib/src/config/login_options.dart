@@ -15,6 +15,8 @@ class LoginOptions {
     this.maxFormWidth,
     this.emailTextStyle,
     this.passwordTextStyle,
+    this.emailTextAlign,
+    this.passwordTextAlign,
     this.emailDecoration = const InputDecoration(),
     this.passwordDecoration = const InputDecoration(),
     this.initialEmail = '',
@@ -87,6 +89,12 @@ class LoginOptions {
 
   /// The text style for the password input field.
   final TextStyle? passwordTextStyle;
+
+  /// The text alignment for the email input field.
+  final TextAlign? emailTextAlign;
+
+  /// The text alignment for the password input field.
+  final TextAlign? passwordTextAlign;
 
   /// Translations for various texts on the login screen.
   final LoginTranslations translations;
