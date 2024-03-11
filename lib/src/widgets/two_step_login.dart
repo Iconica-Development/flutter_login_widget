@@ -23,7 +23,6 @@ class TwoStepLoginForm extends StatefulWidget {
 class _TwoStepLoginFormState extends State<TwoStepLoginForm> {
   final _formKey = GlobalKey<FormState>();
   final ValueNotifier<bool> _formValid = ValueNotifier(false);
-  bool _obscurePassword = true;
 
   String _currentEmail = '';
 

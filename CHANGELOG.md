@@ -1,3 +1,7 @@
+## 6.1.0
+* Add 2 step login option
+* Add immediate validation check on forgot password screen
+
 ## 6.0.0
 
 * Changed ForgotPasswordform to use the same layout as the EmailPasswordLoginForm.
