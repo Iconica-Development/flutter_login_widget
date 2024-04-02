@@ -35,6 +35,17 @@ class LoginOptions {
     this.forgotPasswordSpacerOptions = const ForgotPasswordSpacerOptions(),
   });
 
+  factory LoginOptions.defaults() => const LoginOptions(
+        emailDecoration: InputDecoration(
+          labelText: 'Email',
+          hintText: 'Enter your email',
+        ),
+        passwordDecoration: InputDecoration(
+          labelText: 'Password',
+          hintText: 'Enter your password',
+        ),
+      );
+
   /// Builds the login button.
   final ButtonBuilder loginButtonBuilder;
 
