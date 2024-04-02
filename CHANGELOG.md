@@ -1,7 +1,3 @@
-## 6.0.1
-
-* Added default loginOptions for email and password fields.
-
 ## 6.0.0
 
 * Changed ForgotPasswordform to use the same layout as the EmailPasswordLoginForm.
