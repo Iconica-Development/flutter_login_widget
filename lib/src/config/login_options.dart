@@ -35,14 +35,131 @@ class LoginOptions {
     this.forgotPasswordSpacerOptions = const ForgotPasswordSpacerOptions(),
   });
 
-  factory LoginOptions.defaults() => const LoginOptions(
-        emailDecoration: InputDecoration(
-          labelText: 'Email',
-          hintText: 'Enter your email',
+  factory LoginOptions.defaults() => LoginOptions(
+        spacers: const LoginSpacerOptions(
+          spacerBeforeTitle: 8,
+          spacerAfterTitle: 2,
+          formFlexValue: 2,
         ),
-        passwordDecoration: InputDecoration(
+        title: const Text(
+          'Log in',
+          style: TextStyle(
+            color: Color(0xff71C6D1),
+            fontWeight: FontWeight.w800,
+            fontSize: 24,
+          ),
+        ),
+        emailDecoration: const InputDecoration(
+          contentPadding: EdgeInsets.symmetric(horizontal: 8),
+          labelText: 'Email address',
+          border: OutlineInputBorder(),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0xff71C6D1),
+            ),
+          ),
+          labelStyle: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w400,
+            fontSize: 16,
+          ),
+        ),
+        passwordDecoration: const InputDecoration(
+          contentPadding: EdgeInsets.symmetric(horizontal: 8),
           labelText: 'Password',
-          hintText: 'Enter your password',
+          border: OutlineInputBorder(),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0xff71C6D1),
+            ),
+          ),
+          labelStyle: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w400,
+            fontSize: 16,
+          ),
+        ),
+        loginButtonBuilder:
+            (context, onPressed, isDisabled, onDisabledPress, options) =>
+                InkWell(
+          onTap: () async => onPressed.call(),
+          child: Container(
+            height: 44,
+            width: 254,
+            decoration: const BoxDecoration(
+              color: Color(0xff71C6D1),
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            child: const Center(
+              child: Text(
+                'Log in',
+                style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+        registrationButtonBuilder:
+            (context, onPressed, isDisabled, onDisabledPress, options) =>
+                TextButton(
+          onPressed: () async {
+            await onPressed.call();
+          },
+          child: const Text(
+            'Create account',
+            style: TextStyle(
+              decoration: TextDecoration.underline,
+              decorationColor: Color(0xff71C6D1),
+              color: Color(0xff71C6D1),
+              fontSize: 18,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+        forgotPasswordButtonBuilder:
+            (context, onPressed, isDisabled, onDisabledPress, options) =>
+                TextButton(
+          onPressed: () async {
+            await onPressed.call();
+          },
+          child: const Text(
+            'Forgot password?',
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Color(0xff8D8D8D),
+            ),
+          ),
+        ),
+        forgotPasswordSpacerOptions: const ForgotPasswordSpacerOptions(
+          spacerAfterButton: 3,
+          spacerBeforeTitle: 1,
+        ),
+        requestForgotPasswordButtonBuilder:
+            (context, onPressed, isDisabled, onDisabledPress, options) =>
+                InkWell(
+          onTap: onPressed,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: const Color(0xff71C6D1),
+            ),
+            height: 44,
+            width: 254,
+            child: const Center(
+              child: Text(
+                'Send link',
+                style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
         ),
       );
 
