@@ -204,6 +204,8 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                               options,
                             ),
                           ),
+                        ] else ...[
+                          const SizedBox(height: 16),
                         ],
                         if (options.spacers.spacerAfterForm != null) ...[
                           Spacer(flex: options.spacers.spacerAfterForm!),

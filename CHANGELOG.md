@@ -1,3 +1,7 @@
+## 6.0.2
+
+* Added more default loginOptions for login, forgot password and register.
+
 ## 6.0.1
 
 * Added default loginOptions for email and password fields.
