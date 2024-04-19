@@ -10,18 +10,57 @@ import 'package:flutter_login/src/service/validation.dart';
 class LoginOptions {
   const LoginOptions({
     this.image,
-    this.title,
+    this.title = const Text(
+      'Log in',
+      style: TextStyle(
+        color: Color(0xff71C6D1),
+        fontWeight: FontWeight.w800,
+        fontSize: 24,
+      ),
+    ),
     this.subtitle,
     this.maxFormWidth,
     this.emailTextStyle,
     this.passwordTextStyle,
     this.emailTextAlign,
     this.passwordTextAlign,
-    this.emailDecoration = const InputDecoration(),
-    this.passwordDecoration = const InputDecoration(),
+    this.emailDecoration = const InputDecoration(
+      contentPadding: EdgeInsets.symmetric(horizontal: 8),
+      labelText: 'Email address',
+      border: OutlineInputBorder(),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Color(0xff71C6D1),
+        ),
+      ),
+      labelStyle: TextStyle(
+        color: Colors.black,
+        fontWeight: FontWeight.w400,
+        fontSize: 16,
+      ),
+    ),
+    this.passwordDecoration = const InputDecoration(
+      contentPadding: EdgeInsets.symmetric(horizontal: 8),
+      labelText: 'Password',
+      border: OutlineInputBorder(),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Color(0xff71C6D1),
+        ),
+      ),
+      labelStyle: TextStyle(
+        color: Colors.black,
+        fontWeight: FontWeight.w400,
+        fontSize: 16,
+      ),
+    ),
     this.initialEmail = '',
     this.initialPassword = '',
-    this.spacers = const LoginSpacerOptions(),
+    this.spacers = const LoginSpacerOptions(
+      spacerBeforeTitle: 8,
+      spacerAfterTitle: 2,
+      formFlexValue: 2,
+    ),
     this.translations = const LoginTranslations(),
     this.validationService,
     this.loginButtonBuilder = _createLoginButton,
@@ -32,136 +71,17 @@ class LoginOptions {
     this.emailInputContainerBuilder = _createEmailInputContainer,
     this.passwordInputContainerBuilder = _createPasswordInputContainer,
     this.showObscurePassword = true,
-    this.forgotPasswordSpacerOptions = const ForgotPasswordSpacerOptions(),
+    this.forgotPasswordSpacerOptions = const ForgotPasswordSpacerOptions(
+      spacerAfterButton: 3,
+      spacerBeforeTitle: 1,
+    ),
+    this.loginBackgroundColor = const Color(0xffFAF9F6),
+    this.forgotPasswordBackgroundColor = const Color(0xffFAF9F6),
+    this.forgotPasswordScreenPadding = const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 60),
+    ),
+    this.forgotPasswordCustomAppBar,
   });
-
-  factory LoginOptions.defaults() => LoginOptions(
-        spacers: const LoginSpacerOptions(
-          spacerBeforeTitle: 8,
-          spacerAfterTitle: 2,
-          formFlexValue: 2,
-        ),
-        title: const Text(
-          'Log in',
-          style: TextStyle(
-            color: Color(0xff71C6D1),
-            fontWeight: FontWeight.w800,
-            fontSize: 24,
-          ),
-        ),
-        emailDecoration: const InputDecoration(
-          contentPadding: EdgeInsets.symmetric(horizontal: 8),
-          labelText: 'Email address',
-          border: OutlineInputBorder(),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Color(0xff71C6D1),
-            ),
-          ),
-          labelStyle: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w400,
-            fontSize: 16,
-          ),
-        ),
-        passwordDecoration: const InputDecoration(
-          contentPadding: EdgeInsets.symmetric(horizontal: 8),
-          labelText: 'Password',
-          border: OutlineInputBorder(),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Color(0xff71C6D1),
-            ),
-          ),
-          labelStyle: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w400,
-            fontSize: 16,
-          ),
-        ),
-        loginButtonBuilder:
-            (context, onPressed, isDisabled, onDisabledPress, options) =>
-                InkWell(
-          onTap: () async => onPressed.call(),
-          child: Container(
-            height: 44,
-            width: 254,
-            decoration: const BoxDecoration(
-              color: Color(0xff71C6D1),
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-            ),
-            child: const Center(
-              child: Text(
-                'Log in',
-                style: TextStyle(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 20,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        ),
-        registrationButtonBuilder:
-            (context, onPressed, isDisabled, onDisabledPress, options) =>
-                TextButton(
-          onPressed: () async {
-            await onPressed.call();
-          },
-          child: const Text(
-            'Create account',
-            style: TextStyle(
-              decoration: TextDecoration.underline,
-              decorationColor: Color(0xff71C6D1),
-              color: Color(0xff71C6D1),
-              fontSize: 18,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-        ),
-        forgotPasswordButtonBuilder:
-            (context, onPressed, isDisabled, onDisabledPress, options) =>
-                TextButton(
-          onPressed: () async {
-            await onPressed.call();
-          },
-          child: const Text(
-            'Forgot password?',
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: Color(0xff8D8D8D),
-            ),
-          ),
-        ),
-        forgotPasswordSpacerOptions: const ForgotPasswordSpacerOptions(
-          spacerAfterButton: 3,
-          spacerBeforeTitle: 1,
-        ),
-        requestForgotPasswordButtonBuilder:
-            (context, onPressed, isDisabled, onDisabledPress, options) =>
-                InkWell(
-          onTap: onPressed,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: const Color(0xff71C6D1),
-            ),
-            height: 44,
-            width: 254,
-            child: const Center(
-              child: Text(
-                'Send link',
-                style: TextStyle(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 20,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
 
   /// Builds the login button.
   final ButtonBuilder loginButtonBuilder;
@@ -236,6 +156,18 @@ class LoginOptions {
   /// Get validations.
   ValidationService get validations =>
       validationService ?? LoginValidationService(this);
+
+  /// The background color for the login screen.
+  final Color loginBackgroundColor;
+
+  /// The background color for the forgot password screen.
+  final Color forgotPasswordBackgroundColor;
+
+  /// The padding for the forgot password screen.
+  final Padding forgotPasswordScreenPadding;
+
+  /// forgot password custom AppBar
+  final AppBar? forgotPasswordCustomAppBar;
 }
 
 class LoginTranslations {
@@ -245,7 +177,7 @@ class LoginTranslations {
     this.emailInvalid = 'Enter a valid email address',
     this.loginButton = 'Login',
     this.forgotPasswordButton = 'Forgot password?',
-    this.requestForgotPasswordButton = 'Send request',
+    this.requestForgotPasswordButton = 'Send link',
     this.registrationButton = 'Create Account',
   });
 
@@ -274,9 +206,27 @@ Widget _createLoginButton(
 ) =>
     Opacity(
       opacity: disabled ? 0.5 : 1.0,
-      child: ElevatedButton(
-        onPressed: !disabled ? onPressed : onDisabledPress,
-        child: Text(options.translations.loginButton),
+      child: InkWell(
+        onTap: () async =>
+            !disabled ? await onPressed() : await onDisabledPress(),
+        child: Container(
+          height: 44,
+          width: 254,
+          decoration: const BoxDecoration(
+            color: Color(0xff71C6D1),
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          child: Center(
+            child: Text(
+              options.translations.loginButton,
+              style: const TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: 20,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
       ),
     );
 
@@ -289,9 +239,18 @@ Widget _createForgotPasswordButton(
 ) =>
     Opacity(
       opacity: disabled ? 0.5 : 1.0,
-      child: ElevatedButton(
+      child: TextButton(
         onPressed: !disabled ? onPressed : onDisabledPress,
-        child: Text(options.translations.forgotPasswordButton),
+        child: Text(
+          options.translations.forgotPasswordButton,
+          style: const TextStyle(
+            decoration: TextDecoration.underline,
+            decorationColor: Color(0xff8D8D8D),
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            color: Color(0xff8D8D8D),
+          ),
+        ),
       ),
     );
 
@@ -304,9 +263,26 @@ Widget _createRequestForgotPasswordButton(
 ) =>
     Opacity(
       opacity: disabled ? 0.5 : 1.0,
-      child: ElevatedButton(
-        onPressed: !disabled ? onPressed : onDisabledPress,
-        child: Text(options.translations.requestForgotPasswordButton),
+      child: InkWell(
+        onTap: !disabled ? onPressed : onDisabledPress,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: const Color(0xff71C6D1),
+          ),
+          height: 44,
+          width: 254,
+          child: Center(
+            child: Text(
+              options.translations.requestForgotPasswordButton,
+              style: const TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: 20,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
       ),
     );
 
@@ -319,9 +295,18 @@ Widget _createRegisterButton(
 ) =>
     Opacity(
       opacity: disabled ? 0.5 : 1.0,
-      child: ElevatedButton(
+      child: TextButton(
         onPressed: !disabled ? onPressed : onDisabledPress,
-        child: Text(options.translations.registrationButton),
+        child: Text(
+          options.translations.registrationButton,
+          style: const TextStyle(
+            decoration: TextDecoration.underline,
+            decorationColor: Color(0xff71C6D1),
+            color: Color(0xff71C6D1),
+            fontSize: 18,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
       ),
     );
 
