@@ -1,3 +1,7 @@
+## 6.1.0
+
+* Added 'suffixIconSize' and 'suffixIconPadding' to LoginOptions.
+
 ## 6.0.2
 
 * Added more default loginOptions for login, forgot password and register.

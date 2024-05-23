@@ -178,6 +178,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                               decoration: options.passwordDecoration.copyWith(
                                 suffixIcon: options.showObscurePassword
                                     ? IconButton(
+                                        padding: options.suffixIconPadding,
                                         onPressed: () {
                                           setState(() {
                                             _obscurePassword =
@@ -188,6 +189,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                                           _obscurePassword
                                               ? Icons.visibility
                                               : Icons.visibility_off,
+                                          size: options.suffixIconSize,
                                         ),
                                       )
                                     : null,
