@@ -8,16 +8,16 @@ class ForgotPasswordForm extends StatefulWidget {
   /// Constructs a [ForgotPasswordForm] widget.
   ///
   /// [options]: The options for configuring the forgot password form.
-  /// [description]: Widget to display description.
   /// [onRequestForgotPassword]: Callback function for requesting
   /// password reset.
   /// [title]: Widget to display title.
+  /// [description]: Widget to display description.
   ForgotPasswordForm({
     required this.options,
     required this.onRequestForgotPassword,
+    this.title,
     this.description,
     super.key,
-    this.title,
   }) {
     title == null
         ? title = const Padding(

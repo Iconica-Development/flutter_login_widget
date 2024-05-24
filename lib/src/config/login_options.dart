@@ -10,15 +10,6 @@ import 'package:flutter_login/src/service/validation.dart';
 class LoginOptions {
   const LoginOptions({
     this.image,
-    this.title = const Text(
-      'Log in',
-      style: TextStyle(
-        color: Color(0xff71C6D1),
-        fontWeight: FontWeight.w800,
-        fontSize: 24,
-      ),
-    ),
-    this.subtitle,
     this.maxFormWidth,
     this.emailTextStyle,
     this.passwordTextStyle,
@@ -105,12 +96,6 @@ class LoginOptions {
 
   /// The image to display on the login screen.
   final Widget? image;
-
-  /// The title widget to display on the login screen.
-  final Widget? title;
-
-  /// The subtitle widget to display on the login screen.
-  final Widget? subtitle;
 
   /// Option to modify the spacing between the title, subtitle, image, form,
   /// and button.
