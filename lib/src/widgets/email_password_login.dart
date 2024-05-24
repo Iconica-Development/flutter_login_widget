@@ -6,6 +6,8 @@ import 'package:flutter_login/flutter_login.dart';
 class EmailPasswordLoginForm extends StatefulWidget {
   /// Constructs an [EmailPasswordLoginForm] widget.
   ///
+  /// [title]: The title to display above the form.
+  /// [subtitle]: A subtitle to display below the title.
   /// [onLogin]: Callback function for user login.
   /// [onForgotPassword]: Callback function for when the user
   /// forgets their password.
@@ -13,13 +15,19 @@ class EmailPasswordLoginForm extends StatefulWidget {
   /// [options]: The options for configuring the login form.
   const EmailPasswordLoginForm({
     required this.onLogin,
-    super.key,
+    this.title,
+    this.subtitle,
     this.onForgotPassword,
     this.onRegister,
     this.options = const LoginOptions(),
+    super.key,
   });
 
   final LoginOptions options;
+
+  final Widget? title;
+  final Widget? subtitle;
+
   final void Function(String email, BuildContext ctx)? onForgotPassword;
   final FutureOr<void> Function(
     String email,
@@ -101,11 +109,11 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                       if (options.spacers.spacerBeforeTitle != null) ...[
                         Spacer(flex: options.spacers.spacerBeforeTitle!),
                       ],
-                      if (options.title != null) ...[
+                      if (widget.title != null) ...[
                         Align(
                           alignment: Alignment.topCenter,
                           child: wrapWithDefaultStyle(
-                            options.title,
+                            widget.title,
                             theme.textTheme.headlineSmall,
                           ),
                         ),
@@ -113,11 +121,11 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                       if (options.spacers.spacerAfterTitle != null) ...[
                         Spacer(flex: options.spacers.spacerAfterTitle!),
                       ],
-                      if (options.subtitle != null) ...[
+                      if (widget.subtitle != null) ...[
                         Align(
                           alignment: Alignment.topCenter,
                           child: wrapWithDefaultStyle(
-                            options.subtitle,
+                            widget.subtitle,
                             theme.textTheme.titleSmall,
                           ),
                         ),

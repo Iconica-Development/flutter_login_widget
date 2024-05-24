@@ -3,53 +3,26 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 
-// ignore: must_be_immutable
 class ForgotPasswordForm extends StatefulWidget {
   /// Constructs a [ForgotPasswordForm] widget.
   ///
   /// [options]: The options for configuring the forgot password form.
-  /// [description]: Widget to display description.
   /// [onRequestForgotPassword]: Callback function for requesting
   /// password reset.
   /// [title]: Widget to display title.
-  ForgotPasswordForm({
+  /// [description]: Widget to display description.
+  const ForgotPasswordForm({
     required this.options,
     required this.onRequestForgotPassword,
+    this.title,
     this.description,
     super.key,
-    this.title,
-  }) {
-    title == null
-        ? title = const Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              'Forgot Password',
-              style: TextStyle(
-                color: Color(0xff71C6D1),
-                fontWeight: FontWeight.w800,
-                fontSize: 24,
-              ),
-            ),
-          )
-        : title = title;
-
-    description == null
-        ? description = const Padding(
-            padding: EdgeInsets.only(bottom: 16),
-            child: Text(
-              'No worries. Enter your email address below so we can'
-              ' send you a link to reset your password.',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
-            ),
-          )
-        : description = description;
-  }
+  });
 
   final LoginOptions options;
 
-  Widget? title;
-  Widget? description;
+  final Widget? title;
+  final Widget? description;
 
   final FutureOr<void> Function(String email) onRequestForgotPassword;
 

@@ -12,7 +12,6 @@ final loginOptions = LoginOptions(
     prefixIcon: Icon(Icons.password),
     border: OutlineInputBorder(),
   ),
-  title: const Text('Login Demo'),
   image: const FlutterLogo(
     size: 200,
   ),
@@ -56,6 +55,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: EmailPasswordLoginForm(
+        title: const Text('Login Demo'),
         options: loginOptions,
         onLogin: (email, password) => print('$email:$password'),
         onRegister: (email, password, ctx) => print('Register!'),

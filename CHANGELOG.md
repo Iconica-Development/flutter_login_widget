@@ -1,3 +1,7 @@
+## 7.0.0
+
+* Removed `title` and `subtitle` parameters from `LoginOptions` in favour of passing them directly to the `EmailPasswordLoginForm` widget directly
+
 ## 6.1.0
 
 * Added 'suffixIconSize' and 'suffixIconPadding' to LoginOptions.
