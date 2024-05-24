@@ -81,6 +81,8 @@ class LoginOptions {
       padding: EdgeInsets.symmetric(horizontal: 60),
     ),
     this.forgotPasswordCustomAppBar,
+    this.suffixIconSize,
+    this.suffixIconPadding,
   });
 
   /// Builds the login button.
@@ -152,6 +154,8 @@ class LoginOptions {
 
   /// Determines whether the password field should be obscured.
   final bool showObscurePassword;
+  final double? suffixIconSize;
+  final EdgeInsets? suffixIconPadding;
 
   /// Get validations.
   ValidationService get validations =>
