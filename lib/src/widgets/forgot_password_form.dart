@@ -129,21 +129,24 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                       ),
                       child: Form(
                         key: _formKey,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: options.emailInputContainerBuilder(
-                            TextFormField(
-                              textAlign:
-                                  options.emailTextAlign ?? TextAlign.start,
-                              focusNode: _focusNode,
-                              onChanged: _updateCurrentEmail,
-                              validator:
-                                  widget.options.validations.validateEmail,
-                              initialValue: options.initialEmail,
-                              keyboardType: TextInputType.emailAddress,
-                              textInputAction: TextInputAction.next,
-                              style: options.emailTextStyle,
-                              decoration: options.emailDecoration,
+                        child: AutofillGroup(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: options.emailInputContainerBuilder(
+                              TextFormField(
+                                autofillHints: const [AutofillHints.email],
+                                textAlign:
+                                    options.emailTextAlign ?? TextAlign.start,
+                                focusNode: _focusNode,
+                                onChanged: _updateCurrentEmail,
+                                validator:
+                                    widget.options.validations.validateEmail,
+                                initialValue: options.initialEmail,
+                                keyboardType: TextInputType.emailAddress,
+                                textInputAction: TextInputAction.next,
+                                style: options.emailTextStyle,
+                                decoration: options.emailDecoration,
+                              ),
                             ),
                           ),
                         ),

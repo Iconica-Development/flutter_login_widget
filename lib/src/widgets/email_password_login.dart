@@ -90,8 +90,94 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     var options = widget.options;
+
+    var emailTextFormField = TextFormField(
+      autofillHints: const [
+        AutofillHints.email,
+        AutofillHints.username,
+      ],
+      textAlign: options.emailTextAlign ?? TextAlign.start,
+      onChanged: _updateCurrentEmail,
+      validator: widget.options.validations.validateEmail,
+      initialValue: options.initialEmail,
+      keyboardType: TextInputType.emailAddress,
+      textInputAction: TextInputAction.next,
+      style: options.emailTextStyle,
+      decoration: options.emailDecoration,
+    );
+
+    var passwordTextFormField = TextFormField(
+      autofillHints: const [
+        AutofillHints.password,
+      ],
+      textAlign: options.passwordTextAlign ?? TextAlign.start,
+      obscureText: _obscurePassword,
+      onChanged: _updateCurrentPassword,
+      validator: widget.options.validations.validatePassword,
+      initialValue: options.initialPassword,
+      keyboardType: TextInputType.visiblePassword,
+      textInputAction: TextInputAction.done,
+      style: options.passwordTextStyle,
+      onFieldSubmitted: (_) async => _handleLogin(),
+      decoration: options.passwordDecoration.copyWith(
+        suffixIcon: options.showObscurePassword
+            ? IconButton(
+                padding: options.suffixIconPadding,
+                onPressed: () {
+                  setState(() {
+                    _obscurePassword = !_obscurePassword;
+                  });
+                },
+                icon: Icon(
+                  _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                  size: options.suffixIconSize,
+                ),
+              )
+            : null,
+      ),
+    );
+
+    var forgotPasswordButton = widget.onForgotPassword != null
+        ? Align(
+            alignment: Alignment.topRight,
+            child: options.forgotPasswordButtonBuilder(
+              context,
+              () => widget.onForgotPassword?.call(_currentEmail, context),
+              false,
+              () {},
+              options,
+            ),
+          )
+        : const SizedBox(height: 16);
+
+    var loginButton = AnimatedBuilder(
+      animation: _formValid,
+      builder: (context, _) => options.loginButtonBuilder(
+        context,
+        _handleLogin,
+        !_formValid.value,
+        () {
+          _formKey.currentState?.validate();
+        },
+        options,
+      ),
+    );
+
+    var registerButton = options.registrationButtonBuilder(
+      context,
+      () async {
+        widget.onRegister?.call(
+          _currentEmail,
+          _currentPassword,
+          context,
+        );
+      },
+      false,
+      () {},
+      options,
+    );
+
     return Scaffold(
       backgroundColor: options.loginBackgroundColor,
       body: CustomScrollView(
@@ -104,45 +190,10 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
               children: [
                 Expanded(
                   flex: options.spacers.titleSpacer,
-                  child: Column(
-                    children: [
-                      if (options.spacers.spacerBeforeTitle != null) ...[
-                        Spacer(flex: options.spacers.spacerBeforeTitle!),
-                      ],
-                      if (widget.title != null) ...[
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: wrapWithDefaultStyle(
-                            widget.title,
-                            theme.textTheme.headlineSmall,
-                          ),
-                        ),
-                      ],
-                      if (options.spacers.spacerAfterTitle != null) ...[
-                        Spacer(flex: options.spacers.spacerAfterTitle!),
-                      ],
-                      if (widget.subtitle != null) ...[
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: wrapWithDefaultStyle(
-                            widget.subtitle,
-                            theme.textTheme.titleSmall,
-                          ),
-                        ),
-                      ],
-                      if (options.spacers.spacerAfterSubtitle != null) ...[
-                        Spacer(flex: options.spacers.spacerAfterSubtitle!),
-                      ],
-                      if (options.image != null) ...[
-                        Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: options.image,
-                        ),
-                      ],
-                      if (options.spacers.spacerAfterImage != null) ...[
-                        Spacer(flex: options.spacers.spacerAfterImage!),
-                      ],
-                    ],
+                  child: LoginTitle(
+                    options: options,
+                    title: widget.title,
+                    subtitle: widget.subtitle,
                   ),
                 ),
                 Expanded(
@@ -153,108 +204,29 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                     ),
                     child: Form(
                       key: _formKey,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          options.emailInputContainerBuilder(
-                            TextFormField(
-                              textAlign:
-                                  options.emailTextAlign ?? TextAlign.start,
-                              onChanged: _updateCurrentEmail,
-                              validator:
-                                  widget.options.validations.validateEmail,
-                              initialValue: options.initialEmail,
-                              keyboardType: TextInputType.emailAddress,
-                              textInputAction: TextInputAction.next,
-                              style: options.emailTextStyle,
-                              decoration: options.emailDecoration,
+                      child: AutofillGroup(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            options.emailInputContainerBuilder(
+                              emailTextFormField,
                             ),
-                          ),
-                          options.passwordInputContainerBuilder(
-                            TextFormField(
-                              textAlign:
-                                  options.passwordTextAlign ?? TextAlign.start,
-                              obscureText: _obscurePassword,
-                              onChanged: _updateCurrentPassword,
-                              validator:
-                                  widget.options.validations.validatePassword,
-                              initialValue: options.initialPassword,
-                              keyboardType: TextInputType.visiblePassword,
-                              textInputAction: TextInputAction.done,
-                              style: options.passwordTextStyle,
-                              onFieldSubmitted: (_) async => _handleLogin(),
-                              decoration: options.passwordDecoration.copyWith(
-                                suffixIcon: options.showObscurePassword
-                                    ? IconButton(
-                                        padding: options.suffixIconPadding,
-                                        onPressed: () {
-                                          setState(() {
-                                            _obscurePassword =
-                                                !_obscurePassword;
-                                          });
-                                        },
-                                        icon: Icon(
-                                          _obscurePassword
-                                              ? Icons.visibility
-                                              : Icons.visibility_off,
-                                          size: options.suffixIconSize,
-                                        ),
-                                      )
-                                    : null,
-                              ),
+                            options.passwordInputContainerBuilder(
+                              passwordTextFormField,
                             ),
-                          ),
-                          if (widget.onForgotPassword != null) ...[
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: options.forgotPasswordButtonBuilder(
-                                context,
-                                () {
-                                  widget.onForgotPassword
-                                      ?.call(_currentEmail, context);
-                                },
-                                false,
-                                () {},
-                                options,
-                              ),
-                            ),
-                          ] else ...[
-                            const SizedBox(height: 16),
+                            forgotPasswordButton,
+                            if (options.spacers.spacerAfterForm != null) ...[
+                              Spacer(flex: options.spacers.spacerAfterForm!),
+                            ],
+                            loginButton,
+                            if (widget.onRegister != null) ...[
+                              registerButton,
+                            ],
+                            if (options.spacers.spacerAfterButton != null) ...[
+                              Spacer(flex: options.spacers.spacerAfterButton!),
+                            ],
                           ],
-                          if (options.spacers.spacerAfterForm != null) ...[
-                            Spacer(flex: options.spacers.spacerAfterForm!),
-                          ],
-                          AnimatedBuilder(
-                            animation: _formValid,
-                            builder: (context, _) => options.loginButtonBuilder(
-                              context,
-                              _handleLogin,
-                              !_formValid.value,
-                              () {
-                                _formKey.currentState?.validate();
-                              },
-                              options,
-                            ),
-                          ),
-                          if (widget.onRegister != null) ...[
-                            options.registrationButtonBuilder(
-                              context,
-                              () async {
-                                widget.onRegister?.call(
-                                  _currentEmail,
-                                  _currentPassword,
-                                  context,
-                                );
-                              },
-                              false,
-                              () {},
-                              options,
-                            ),
-                          ],
-                          if (options.spacers.spacerAfterButton != null) ...[
-                            Spacer(flex: options.spacers.spacerAfterButton!),
-                          ],
-                        ],
+                        ),
                       ),
                     ),
                   ),
@@ -264,6 +236,64 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class LoginTitle extends StatelessWidget {
+  const LoginTitle({
+    required this.options,
+    this.title,
+    this.subtitle,
+    super.key,
+  });
+
+  final LoginOptions options;
+  final Widget? title;
+  final Widget? subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    return Column(
+      children: [
+        if (options.spacers.spacerBeforeTitle != null) ...[
+          Spacer(flex: options.spacers.spacerBeforeTitle!),
+        ],
+        if (title != null) ...[
+          Align(
+            alignment: Alignment.topCenter,
+            child: wrapWithDefaultStyle(
+              title,
+              theme.textTheme.headlineSmall,
+            ),
+          ),
+        ],
+        if (options.spacers.spacerAfterTitle != null) ...[
+          Spacer(flex: options.spacers.spacerAfterTitle!),
+        ],
+        if (subtitle != null) ...[
+          Align(
+            alignment: Alignment.topCenter,
+            child: wrapWithDefaultStyle(
+              subtitle,
+              theme.textTheme.titleSmall,
+            ),
+          ),
+        ],
+        if (options.spacers.spacerAfterSubtitle != null) ...[
+          Spacer(flex: options.spacers.spacerAfterSubtitle!),
+        ],
+        if (options.image != null) ...[
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: options.image,
+          ),
+        ],
+        if (options.spacers.spacerAfterImage != null) ...[
+          Spacer(flex: options.spacers.spacerAfterImage!),
+        ],
+      ],
     );
   }
 }

@@ -1,3 +1,8 @@
+## 7.1.0
+
+* Added autofillgroup to support native password managers
+
+
 ## 7.0.0
 
 * Removed `title` and `subtitle` parameters from `LoginOptions` in favour of passing them directly to the `EmailPasswordLoginForm` widget directly
