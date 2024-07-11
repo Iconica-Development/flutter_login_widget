@@ -2,8 +2,10 @@ name: flutter_login
 description: Flutter Login Component
 version: 7.1.0
 
+publish_to: https://forgejo.internal.iconica.nl/api/packages/internal/pub
+
 environment:
-  sdk: ">=2.18.1 <3.0.0"
+  sdk: ">=3.0.0 <4.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
