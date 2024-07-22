@@ -38,3 +38,7 @@ example/linux/
 example/windows/
 example/macos/
 example/web/
+
+# FVM Version Cache
+.fvm/
+.fvmrc
