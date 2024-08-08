@@ -63,7 +63,7 @@ class LoginOptions {
     this.passwordInputContainerBuilder = _createPasswordInputContainer,
     this.showObscurePassword = true,
     this.forgotPasswordSpacerOptions = const ForgotPasswordSpacerOptions(
-      spacerAfterButton: 3,
+      spacerAfterButton: 4,
       spacerBeforeTitle: 1,
     ),
     this.loginBackgroundColor = const Color(0xffFAF9F6),
@@ -164,10 +164,10 @@ class LoginTranslations {
     this.emailEmpty = 'Email is required',
     this.passwordEmpty = 'Password is required',
     this.emailInvalid = 'Enter a valid email address',
-    this.loginButton = 'Login',
+    this.loginButton = 'Log in',
     this.forgotPasswordButton = 'Forgot password?',
     this.requestForgotPasswordButton = 'Send link',
-    this.registrationButton = 'Create Account',
+    this.registrationButton = 'Create account',
   });
 
   final String emailInvalid;
@@ -195,27 +195,25 @@ Widget _createLoginButton(
 ) =>
     Opacity(
       opacity: disabled ? 0.5 : 1.0,
-      child: InkWell(
-        onTap: () async =>
-            !disabled ? await onPressed() : await onDisabledPress(),
-        child: Container(
-          height: 44,
-          width: 254,
-          decoration: const BoxDecoration(
-            color: Color(0xff71C6D1),
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-          ),
-          child: Center(
-            child: Text(
-              options.translations.loginButton,
-              style: const TextStyle(
-                fontWeight: FontWeight.w800,
-                fontSize: 20,
-                color: Colors.white,
+      child: Row(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: FilledButton(
+                onPressed: () async =>
+                    !disabled ? await onPressed() : await onDisabledPress(),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Text(
+                    options.translations.loginButton,
+                    style: Theme.of(context).textTheme.displayLarge,
+                  ),
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
 
@@ -288,13 +286,9 @@ Widget _createRegisterButton(
         onPressed: !disabled ? onPressed : onDisabledPress,
         child: Text(
           options.translations.registrationButton,
-          style: const TextStyle(
-            decoration: TextDecoration.underline,
-            decorationColor: Color(0xff71C6D1),
-            color: Color(0xff71C6D1),
-            fontSize: 18,
-            fontWeight: FontWeight.w800,
-          ),
+          style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                decoration: TextDecoration.underline,
+              ),
         ),
       ),
     );

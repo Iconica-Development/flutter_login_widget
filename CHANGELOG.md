@@ -1,3 +1,7 @@
+## 7.1.1
+
+* Changed default theme
+
 ## 7.1.0
 
 * Added autofillgroup to support native password managers
