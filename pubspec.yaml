@@ -1,6 +1,6 @@
 name: flutter_login
 description: Flutter Login Component
-version: 7.1.1
+version: 7.1.2
 
 publish_to: https://forgejo.internal.iconica.nl/api/packages/internal/pub
 
