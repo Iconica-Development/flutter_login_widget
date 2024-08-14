@@ -1,3 +1,7 @@
+## 7.1.2
+
+* Added padding to the forgotpasswordRequestButton
+
 ## 7.1.1
 
 * Changed default theme

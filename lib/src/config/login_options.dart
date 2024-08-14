@@ -250,22 +250,25 @@ Widget _createRequestForgotPasswordButton(
 ) =>
     Opacity(
       opacity: disabled ? 0.5 : 1.0,
-      child: InkWell(
-        onTap: !disabled ? onPressed : onDisabledPress,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: const Color(0xff71C6D1),
-          ),
-          height: 44,
-          width: 254,
-          child: Center(
-            child: Text(
-              options.translations.requestForgotPasswordButton,
-              style: const TextStyle(
-                fontWeight: FontWeight.w800,
-                fontSize: 20,
-                color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: InkWell(
+          onTap: !disabled ? onPressed : onDisabledPress,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: const Color(0xff71C6D1),
+            ),
+            height: 44,
+            width: 254,
+            child: Center(
+              child: Text(
+                options.translations.requestForgotPasswordButton,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
