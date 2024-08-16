@@ -1,3 +1,8 @@
+## 7.1.3
+
+* Fixed forgotpassword description line height.
+* Fixed default text.
+
 ## 7.1.2
 
 * Added padding to the forgotpasswordRequestButton

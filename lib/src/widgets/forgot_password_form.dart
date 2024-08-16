@@ -110,7 +110,9 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                     alignment: Alignment.topCenter,
                     child: wrapWithDefaultStyle(
                       widget.description,
-                      theme.textTheme.bodyMedium,
+                      theme.textTheme.bodyMedium?.copyWith(
+                        height: 1.4,
+                      ),
                     ),
                   ),
                   if (options
