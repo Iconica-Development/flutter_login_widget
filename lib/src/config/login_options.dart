@@ -161,9 +161,9 @@ class LoginOptions {
 
 class LoginTranslations {
   const LoginTranslations({
-    this.emailEmpty = 'Email is required',
-    this.passwordEmpty = 'Password is required',
-    this.emailInvalid = 'Enter a valid email address',
+    this.emailEmpty = 'Please enter your email address',
+    this.passwordEmpty = 'Please enter your password',
+    this.emailInvalid = 'Please enter a valid email address',
     this.loginButton = 'Log in',
     this.forgotPasswordButton = 'Forgot password?',
     this.requestForgotPasswordButton = 'Send link',
