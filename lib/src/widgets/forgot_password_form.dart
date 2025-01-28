@@ -1,7 +1,7 @@
-import 'dart:async';
+import "dart:async";
 
-import 'package:flutter/material.dart';
-import 'package:flutter_login/flutter_login.dart';
+import "package:flutter/material.dart";
+import "package:flutter_login/flutter_login.dart";
 
 class ForgotPasswordForm extends StatefulWidget {
   /// Constructs a [ForgotPasswordForm] widget.
@@ -49,7 +49,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
 
   final ValueNotifier<bool> _formValid = ValueNotifier(false);
 
-  String _currentEmail = '';
+  String _currentEmail = "";
 
   void _updateCurrentEmail(String email) {
     _currentEmail = email;

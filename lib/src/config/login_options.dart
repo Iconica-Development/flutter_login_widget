@@ -1,10 +1,10 @@
-import 'dart:async';
+import "dart:async";
 
-import 'package:flutter/material.dart';
-import 'package:flutter_login/src/config/forgot_password_spacer_options.dart';
-import 'package:flutter_login/src/config/spacer_options.dart';
-import 'package:flutter_login/src/service/login_validation.dart';
-import 'package:flutter_login/src/service/validation.dart';
+import "package:flutter/material.dart";
+import "package:flutter_login/src/config/forgot_password_spacer_options.dart";
+import "package:flutter_login/src/config/spacer_options.dart";
+import "package:flutter_login/src/service/login_validation.dart";
+import "package:flutter_login/src/service/validation.dart";
 
 @immutable
 class LoginOptions {
@@ -17,7 +17,7 @@ class LoginOptions {
     this.passwordTextAlign,
     this.emailDecoration = const InputDecoration(
       contentPadding: EdgeInsets.symmetric(horizontal: 8),
-      labelText: 'Email address',
+      labelText: "Email address",
       border: OutlineInputBorder(),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
@@ -32,7 +32,7 @@ class LoginOptions {
     ),
     this.passwordDecoration = const InputDecoration(
       contentPadding: EdgeInsets.symmetric(horizontal: 8),
-      labelText: 'Password',
+      labelText: "Password",
       border: OutlineInputBorder(),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
@@ -45,8 +45,8 @@ class LoginOptions {
         fontSize: 16,
       ),
     ),
-    this.initialEmail = '',
-    this.initialPassword = '',
+    this.initialEmail = "",
+    this.initialPassword = "",
     this.spacers = const LoginSpacerOptions(
       spacerBeforeTitle: 8,
       spacerAfterTitle: 2,
@@ -161,13 +161,13 @@ class LoginOptions {
 
 class LoginTranslations {
   const LoginTranslations({
-    this.emailEmpty = 'Please enter your email address',
-    this.passwordEmpty = 'Please enter your password',
-    this.emailInvalid = 'Please enter a valid email address',
-    this.loginButton = 'Log in',
-    this.forgotPasswordButton = 'Forgot password?',
-    this.requestForgotPasswordButton = 'Send link',
-    this.registrationButton = 'Create account',
+    this.emailEmpty = "Please enter your email address",
+    this.passwordEmpty = "Please enter your password",
+    this.emailInvalid = "Please enter a valid email address",
+    this.loginButton = "Log in",
+    this.forgotPasswordButton = "Forgot password?",
+    this.requestForgotPasswordButton = "Send link",
+    this.registrationButton = "Create account",
   });
 
   final String emailInvalid;

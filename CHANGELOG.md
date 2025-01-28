@@ -1,3 +1,6 @@
+## 7.2.0
+* Updated flutter_iconica_analysis to 7.0.0 with new rules
+
 ## 7.1.3
 
 * Fixed forgotpassword description line height.
