@@ -2,6 +2,7 @@ import "dart:async";
 
 import "package:flutter/material.dart";
 import "package:flutter_login/flutter_login.dart";
+import "package:flutter_login/src/widgets/custom_semantics.dart";
 
 class EmailPasswordLoginForm extends StatefulWidget {
   /// Constructs an [EmailPasswordLoginForm] widget.
@@ -92,90 +93,106 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
   Widget build(BuildContext context) {
     var options = widget.options;
 
-    var emailTextFormField = TextFormField(
-      autofillHints: const [
-        AutofillHints.email,
-        AutofillHints.username,
-      ],
-      textAlign: options.emailTextAlign ?? TextAlign.start,
-      onChanged: _updateCurrentEmail,
-      validator: widget.options.validations.validateEmail,
-      initialValue: options.initialEmail,
-      keyboardType: TextInputType.emailAddress,
-      textInputAction: TextInputAction.next,
-      style: options.emailTextStyle,
-      decoration: options.emailDecoration,
+    var emailTextFormField = CustomSemantics(
+      identifier: options.accessibilityIdentifiers.emailTextFieldIdentifier,
+      child: TextFormField(
+        autofillHints: const [
+          AutofillHints.email,
+          AutofillHints.username,
+        ],
+        textAlign: options.emailTextAlign ?? TextAlign.start,
+        onChanged: _updateCurrentEmail,
+        validator: widget.options.validations.validateEmail,
+        initialValue: options.initialEmail,
+        keyboardType: TextInputType.emailAddress,
+        textInputAction: TextInputAction.next,
+        style: options.emailTextStyle,
+        decoration: options.emailDecoration,
+      ),
     );
 
-    var passwordTextFormField = TextFormField(
-      autofillHints: const [
-        AutofillHints.password,
-      ],
-      textAlign: options.passwordTextAlign ?? TextAlign.start,
-      obscureText: _obscurePassword,
-      onChanged: _updateCurrentPassword,
-      validator: widget.options.validations.validatePassword,
-      initialValue: options.initialPassword,
-      keyboardType: TextInputType.visiblePassword,
-      textInputAction: TextInputAction.done,
-      style: options.passwordTextStyle,
-      onFieldSubmitted: (_) async => _handleLogin(),
-      decoration: options.passwordDecoration.copyWith(
-        suffixIcon: options.showObscurePassword
-            ? IconButton(
-                padding: options.suffixIconPadding,
-                onPressed: () {
-                  setState(() {
-                    _obscurePassword = !_obscurePassword;
-                  });
-                },
-                icon: Icon(
-                  _obscurePassword ? Icons.visibility : Icons.visibility_off,
-                  size: options.suffixIconSize,
-                ),
-              )
-            : null,
+    var passwordTextFormField = CustomSemantics(
+      identifier: options.accessibilityIdentifiers.passwordTextFieldIdentifier,
+      child: TextFormField(
+        autofillHints: const [
+          AutofillHints.password,
+        ],
+        textAlign: options.passwordTextAlign ?? TextAlign.start,
+        obscureText: _obscurePassword,
+        onChanged: _updateCurrentPassword,
+        validator: widget.options.validations.validatePassword,
+        initialValue: options.initialPassword,
+        keyboardType: TextInputType.visiblePassword,
+        textInputAction: TextInputAction.done,
+        style: options.passwordTextStyle,
+        onFieldSubmitted: (_) async => _handleLogin(),
+        decoration: options.passwordDecoration.copyWith(
+          suffixIcon: options.showObscurePassword
+              ? IconButton(
+                  padding: options.suffixIconPadding,
+                  onPressed: () {
+                    setState(() {
+                      _obscurePassword = !_obscurePassword;
+                    });
+                  },
+                  icon: Icon(
+                    _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                    size: options.suffixIconSize,
+                  ),
+                )
+              : null,
+        ),
       ),
     );
 
     var forgotPasswordButton = widget.onForgotPassword != null
         ? Align(
             alignment: Alignment.topRight,
-            child: options.forgotPasswordButtonBuilder(
-              context,
-              () => widget.onForgotPassword?.call(_currentEmail, context),
-              false,
-              () {},
-              options,
+            child: CustomSemantics(
+              identifier: options
+                  .accessibilityIdentifiers.forgotPasswordButtonIdentifier,
+              child: options.forgotPasswordButtonBuilder(
+                context,
+                () => widget.onForgotPassword?.call(_currentEmail, context),
+                false,
+                () {},
+                options,
+              ),
             ),
           )
         : const SizedBox(height: 16);
 
     var loginButton = AnimatedBuilder(
       animation: _formValid,
-      builder: (context, _) => options.loginButtonBuilder(
-        context,
-        _handleLogin,
-        !_formValid.value,
-        () {
-          _formKey.currentState?.validate();
-        },
-        options,
+      builder: (context, _) => CustomSemantics(
+        identifier: options.accessibilityIdentifiers.loginButtonIdentifier,
+        child: options.loginButtonBuilder(
+          context,
+          _handleLogin,
+          !_formValid.value,
+          () {
+            _formKey.currentState?.validate();
+          },
+          options,
+        ),
       ),
     );
 
-    var registerButton = options.registrationButtonBuilder(
-      context,
-      () async {
-        widget.onRegister?.call(
-          _currentEmail,
-          _currentPassword,
-          context,
-        );
-      },
-      false,
-      () {},
-      options,
+    var registrationButton = CustomSemantics(
+      identifier: options.accessibilityIdentifiers.registrationButtonIdentifier,
+      child: options.registrationButtonBuilder(
+        context,
+        () async {
+          widget.onRegister?.call(
+            _currentEmail,
+            _currentPassword,
+            context,
+          );
+        },
+        false,
+        () {},
+        options,
+      ),
     );
 
     return Scaffold(
@@ -220,7 +237,7 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                             ],
                             loginButton,
                             if (widget.onRegister != null) ...[
-                              registerButton,
+                              registrationButton,
                             ],
                             if (options.spacers.spacerAfterButton != null) ...[
                               Spacer(flex: options.spacers.spacerAfterButton!),
