@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:pinput/pinput.dart';
+import "package:flutter/material.dart";
+import "package:pinput/pinput.dart";
 
 class MFAWidget extends StatefulWidget {
   /// Constructs an [MFAWidget].
@@ -39,8 +39,8 @@ class MFAWidget extends StatefulWidget {
   }) : assert(
           (onSubmitted == null && submitButtonBuilder == null) ||
               (onSubmitted != null && submitButtonBuilder != null),
-          'onSubmitted and submitButtonBuilder must be both null or both'
-          ' not null',
+          "onSubmitted and submitButtonBuilder must be both null or both"
+          " not null",
         );
 
   /// Callback function triggered when the MFA code is completed.
