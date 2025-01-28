@@ -1,4 +1,6 @@
 ## 7.2.0
+
+* Upgraded pinput to 5.0.1 from 2.3.0
 * Updated flutter_iconica_analysis to 7.0.0 with new rules
 
 ## 7.1.3

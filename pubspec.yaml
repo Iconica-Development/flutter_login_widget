@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  pinput: ^2.2.31
+  pinput: ^5.0.1
 
 dev_dependencies:
   flutter_test:

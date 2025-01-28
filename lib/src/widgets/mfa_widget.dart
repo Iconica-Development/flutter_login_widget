@@ -106,7 +106,11 @@ class _MFAWidgetState extends State<MFAWidget> {
             followingPinTheme: widget.followingPinTheme,
             disabledPinTheme: widget.disabledPinTheme,
             errorPinTheme: widget.errorPinTheme,
-            separatorPositions: widget.seperatorPositions,
+            separatorBuilder: (index) {
+              var seperatorSize =
+                  widget.seperatorPositions?[index].toDouble() ?? 8.0;
+              return SizedBox(width: seperatorSize);
+            },
             errorBuilder: widget.errorBuilder,
             errorText: widget.errorText,
             errorTextStyle: widget.errorTextStyle,
