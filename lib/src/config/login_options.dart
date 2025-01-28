@@ -53,6 +53,7 @@ class LoginOptions {
       formFlexValue: 2,
     ),
     this.translations = const LoginTranslations(),
+    this.accessibilityIdentifiers = const LoginAccessibilityIdentifiers.empty(),
     this.validationService,
     this.loginButtonBuilder = _createLoginButton,
     this.forgotPasswordButtonBuilder = _createForgotPasswordButton,
@@ -134,6 +135,12 @@ class LoginOptions {
   /// Translations for various texts on the login screen.
   final LoginTranslations translations;
 
+  /// Accessibility identifiers for the standard widgets in the component.
+  /// The inputfields and buttons have accessibility identifiers and their own
+  /// container so they are visible in the accessibility tree.
+  /// This is used for testing purposes.
+  final LoginAccessibilityIdentifiers accessibilityIdentifiers;
+
   /// The validation service used for validating email and password inputs.
   final ValidationService? validationService;
 
@@ -159,7 +166,9 @@ class LoginOptions {
   final AppBar? forgotPasswordCustomAppBar;
 }
 
+/// Translations for all the texts in the component
 class LoginTranslations {
+  /// Provide your own translations to override the default english translations
   const LoginTranslations({
     this.emailEmpty = "Please enter your email address",
     this.passwordEmpty = "Please enter your password",
@@ -177,6 +186,52 @@ class LoginTranslations {
   final String forgotPasswordButton;
   final String requestForgotPasswordButton;
   final String registrationButton;
+}
+
+/// Accessibility identifiers for the standard widgets in the component.
+class LoginAccessibilityIdentifiers {
+  /// Default [LoginAccessibilityIdentifiers] constructor where all the
+  /// identifiers are required. This is to ensure that apps automatically break
+  /// when new identifiers are added.
+  const LoginAccessibilityIdentifiers({
+    required this.emailTextFieldIdentifier,
+    required this.passwordTextFieldIdentifier,
+    required this.loginButtonIdentifier,
+    required this.forgotPasswordButtonIdentifier,
+    required this.requestForgotPasswordButtonIdentifier,
+    required this.registrationButtonIdentifier,
+  });
+
+  /// Empty [LoginAccessibilityIdentifiers] constructor where all the
+  /// identifiers are already set to their default values. You can override all
+  /// or some of the default values.
+  const LoginAccessibilityIdentifiers.empty({
+    this.emailTextFieldIdentifier = "email_text_field",
+    this.passwordTextFieldIdentifier = "password_text_field",
+    this.loginButtonIdentifier = "login_button",
+    this.forgotPasswordButtonIdentifier = "forgot_password_button",
+    this.requestForgotPasswordButtonIdentifier =
+        "request_forgot_password_button",
+    this.registrationButtonIdentifier = "registration_button",
+  });
+
+  /// Identifier for the email text field.
+  final String emailTextFieldIdentifier;
+
+  /// Identifier for the password text field.
+  final String passwordTextFieldIdentifier;
+
+  /// Identifier for the login button.
+  final String loginButtonIdentifier;
+
+  /// Identifier for the forgot password button.
+  final String forgotPasswordButtonIdentifier;
+
+  /// Identifier for the request forgot password button.
+  final String requestForgotPasswordButtonIdentifier;
+
+  /// Identifier for the registration button.
+  final String registrationButtonIdentifier;
 }
 
 Widget _createEmailInputContainer(Widget child) => Padding(

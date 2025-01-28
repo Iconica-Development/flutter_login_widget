@@ -2,6 +2,7 @@ import "dart:async";
 
 import "package:flutter/material.dart";
 import "package:flutter_login/flutter_login.dart";
+import "package:flutter_login/src/widgets/custom_semantics.dart";
 
 class ForgotPasswordForm extends StatefulWidget {
   /// Constructs a [ForgotPasswordForm] widget.
@@ -135,19 +136,23 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                           child: Align(
                             alignment: Alignment.center,
                             child: options.emailInputContainerBuilder(
-                              TextFormField(
-                                autofillHints: const [AutofillHints.email],
-                                textAlign:
-                                    options.emailTextAlign ?? TextAlign.start,
-                                focusNode: _focusNode,
-                                onChanged: _updateCurrentEmail,
-                                validator:
-                                    widget.options.validations.validateEmail,
-                                initialValue: options.initialEmail,
-                                keyboardType: TextInputType.emailAddress,
-                                textInputAction: TextInputAction.next,
-                                style: options.emailTextStyle,
-                                decoration: options.emailDecoration,
+                              CustomSemantics(
+                                identifier: options.accessibilityIdentifiers
+                                    .emailTextFieldIdentifier,
+                                child: TextFormField(
+                                  autofillHints: const [AutofillHints.email],
+                                  textAlign:
+                                      options.emailTextAlign ?? TextAlign.start,
+                                  focusNode: _focusNode,
+                                  onChanged: _updateCurrentEmail,
+                                  validator:
+                                      widget.options.validations.validateEmail,
+                                  initialValue: options.initialEmail,
+                                  keyboardType: TextInputType.emailAddress,
+                                  textInputAction: TextInputAction.next,
+                                  style: options.emailTextStyle,
+                                  decoration: options.emailDecoration,
+                                ),
                               ),
                             ),
                           ),
@@ -165,19 +170,24 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                   AnimatedBuilder(
                     animation: _formValid,
                     builder: (context, snapshot) => Align(
-                      child: widget.options.requestForgotPasswordButtonBuilder(
-                        context,
-                        () async {
-                          _formKey.currentState?.validate();
-                          if (_formValid.value) {
-                            widget.onRequestForgotPassword(_currentEmail);
-                          }
-                        },
-                        !_formValid.value,
-                        () {
-                          _formKey.currentState?.validate();
-                        },
-                        options,
+                      child: CustomSemantics(
+                        identifier: options.accessibilityIdentifiers
+                            .requestForgotPasswordButtonIdentifier,
+                        child:
+                            widget.options.requestForgotPasswordButtonBuilder(
+                          context,
+                          () async {
+                            _formKey.currentState?.validate();
+                            if (_formValid.value) {
+                              widget.onRequestForgotPassword(_currentEmail);
+                            }
+                          },
+                          !_formValid.value,
+                          () {
+                            _formKey.currentState?.validate();
+                          },
+                          options,
+                        ),
                       ),
                     ),
                   ),
