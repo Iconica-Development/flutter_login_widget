@@ -1,3 +1,7 @@
+## 7.3.0
+
+* Added Biometrics support to the LoginOptions
+
 ## 7.2.0
 
 * Added CustomSemantics widget that is used to wrap all the inputfields and buttons to make the component accessible for e2e testing.

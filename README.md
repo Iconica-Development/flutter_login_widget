@@ -9,6 +9,44 @@ A package facilitating the basic ingredients for creating functional yet customi
 
 To use this package, add `flutter_login` as a dependency in your pubspec.yaml file.
 
+
+### Biometrics authentication
+You can use faceID or fingerprint by adding:
+```dart
+  loginWithBiometrics: true,
+  triggerBiometricsAutomatically: true,
+```
+to the `LoginOptions` object. This will trigger the biometrics authentication immediately when the EmailPasswordLoginForm is shown.
+
+For the full biometrics setup you can follow the instructions in the [local_auth](https://pub.dev/packages/local_auth) package. 
+
+You need to add the following permissions to your AndroidManifest.xml file:
+
+```xml
+  <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
+```
+
+```java
+import io.flutter.embedding.android.FlutterFragmentActivity;
+
+public class MainActivity extends FlutterFragmentActivity {
+    // ...
+}
+```
+
+or MainActivity.kt:
+
+```kotlin
+import io.flutter.embedding.android.FlutterFragmentActivity
+
+class MainActivity: FlutterFragmentActivity() {
+    // ...
+}
+```
+
+to inherit from `FlutterFragmentActivity`.
+
+
 ## How to use
 
 ```dart

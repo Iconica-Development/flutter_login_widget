@@ -75,6 +75,7 @@ class LoginOptions {
     this.forgotPasswordCustomAppBar,
     this.suffixIconSize,
     this.suffixIconPadding,
+    this.biometricsOptions = const LoginBiometricsOptions(),
   });
 
   /// Builds the login button.
@@ -164,6 +165,41 @@ class LoginOptions {
 
   /// forgot password custom AppBar
   final AppBar? forgotPasswordCustomAppBar;
+
+  /// Options for enabling and customizing biometrics login
+  final LoginBiometricsOptions biometricsOptions;
+}
+
+class LoginBiometricsOptions {
+  const LoginBiometricsOptions({
+    this.loginWithBiometrics = false,
+    this.triggerBiometricsAutomatically = false,
+    this.allowBiometricsAlternative = true,
+    this.onBiometricsSuccess,
+    this.onBiometricsError,
+    this.onBiometricsFail,
+  });
+
+  /// Ask the user to login with biometrics instead of email and password.
+  final bool loginWithBiometrics;
+
+  /// Allow the user to login with biometrics even if they have no biometrics
+  /// set up on their device. This will use their device native login methods.
+  final bool allowBiometricsAlternative;
+
+  /// Automatically open the native biometrics UI instead of waiting for the
+  /// user to press the biometrics button
+  final bool triggerBiometricsAutomatically;
+
+  /// The callback function to be called when the biometrics login is
+  /// successful.
+  final OptionalAsyncCallback? onBiometricsSuccess;
+
+  /// The callback function to be called when the biometrics login fails.
+  final OptionalAsyncCallback? onBiometricsFail;
+
+  /// The callback function to be called when the biometrics login errors.
+  final OptionalAsyncCallback? onBiometricsError;
 }
 
 /// Translations for all the texts in the component
@@ -177,6 +213,7 @@ class LoginTranslations {
     this.forgotPasswordButton = "Forgot password?",
     this.requestForgotPasswordButton = "Send link",
     this.registrationButton = "Create account",
+    this.biometricsLoginMessage = "Log in with biometrics",
   });
 
   final String emailInvalid;
@@ -186,6 +223,7 @@ class LoginTranslations {
   final String forgotPasswordButton;
   final String requestForgotPasswordButton;
   final String registrationButton;
+  final String biometricsLoginMessage;
 }
 
 /// Accessibility identifiers for the standard widgets in the component.
