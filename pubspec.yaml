@@ -1,6 +1,6 @@
 name: flutter_login
 description: Flutter Login Component
-version: 7.2.0
+version: 7.3.0
 
 publish_to: https://forgejo.internal.iconica.nl/api/packages/internal/pub
 
@@ -11,12 +11,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  local_auth: ^2.3.0
   pinput: ^5.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_iconica_analysis:
-    git:
-      url: https://github.com/Iconica-Development/flutter_iconica_analysis
-      ref: 7.0.0
+    hosted: https://forgejo.internal.iconica.nl/api/packages/internal/pub
+    version: ^7.0.0
+
+flutter:
+  assets:
+    - assets/
+    - assets/2.0x/
+    - assets/3.0x/

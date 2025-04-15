@@ -2,6 +2,8 @@ import "dart:async";
 
 import "package:flutter/material.dart";
 import "package:flutter_login/flutter_login.dart";
+import "package:flutter_login/src/service/local_auth_service.dart";
+import "package:flutter_login/src/widgets/biometrics_button.dart";
 import "package:flutter_login/src/widgets/custom_semantics.dart";
 
 class EmailPasswordLoginForm extends StatefulWidget {
@@ -49,6 +51,8 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
   String _currentEmail = "";
   String _currentPassword = "";
 
+  final LocalAuthService _localAuthService = LocalAuthService();
+
   void _updateCurrentEmail(String email) {
     _currentEmail = email;
     _validate();
@@ -87,6 +91,13 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
     _currentEmail = widget.options.initialEmail;
     _currentPassword = widget.options.initialPassword;
     _validate();
+
+    if (widget.options.biometricsOptions.loginWithBiometrics &&
+        widget.options.biometricsOptions.triggerBiometricsAutomatically) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await _localAuthService.authenticate(widget.options);
+      });
+    }
   }
 
   @override
@@ -195,6 +206,10 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
       ),
     );
 
+    var biometricsButton = BiometricsButton(
+      onPressed: () async => LocalAuthService().authenticate(options),
+    );
+
     return Scaffold(
       backgroundColor: options.loginBackgroundColor,
       body: CustomScrollView(
@@ -235,7 +250,22 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
                             if (options.spacers.spacerAfterForm != null) ...[
                               Spacer(flex: options.spacers.spacerAfterForm!),
                             ],
-                            loginButton,
+                            if (options
+                                .biometricsOptions.loginWithBiometrics) ...[
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width: BiometricsButton.buttonSize.width,
+                                  ),
+                                  loginButton,
+                                  biometricsButton,
+                                ],
+                              ),
+                            ] else ...[
+                              loginButton,
+                            ],
                             if (widget.onRegister != null) ...[
                               registrationButton,
                             ],
