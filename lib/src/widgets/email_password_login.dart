@@ -206,9 +206,15 @@ class _EmailPasswordLoginFormState extends State<EmailPasswordLoginForm> {
       ),
     );
 
-    var biometricsButton = BiometricsButton(
-      onPressed: () async => LocalAuthService().authenticate(options),
-    );
+    var biometricsButton =
+        widget.options.biometricsOptions.biometricsIconBuilder != null
+            ? widget.options.biometricsOptions.biometricsIconBuilder!(
+                () async => _localAuthService.authenticate(options),
+                BiometricsButton.buttonSize,
+              )
+            : BiometricsButton(
+                onPressed: () async => LocalAuthService().authenticate(options),
+              );
 
     return Scaffold(
       backgroundColor: options.loginBackgroundColor,

@@ -178,6 +178,7 @@ class LoginBiometricsOptions {
     this.onBiometricsSuccess,
     this.onBiometricsError,
     this.onBiometricsFail,
+    this.biometricsIconBuilder,
   });
 
   /// Ask the user to login with biometrics instead of email and password.
@@ -200,6 +201,14 @@ class LoginBiometricsOptions {
 
   /// The callback function to be called when the biometrics login errors.
   final OptionalAsyncCallback? onBiometricsError;
+
+  /// Function to provide the icon to be displayed
+  /// as the biometrics login button.
+  /// If null, a default icon will be used based on the platform.
+  ///
+  /// The function provides the onPressed callback and the size of the button
+  final Widget Function(VoidCallback onPressed, Size size)?
+      biometricsIconBuilder;
 }
 
 /// Translations for all the texts in the component
